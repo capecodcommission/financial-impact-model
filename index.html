@@ -29,6 +29,8 @@
             .style("position", "absolute")
             .style("z-index", "10")
             .style("visibility", "hidden");
+        var toolIcon = tooltip.append('img').attr('class', 'toolIcon');
+        var toolText = tooltip.append('p').attr('class', 'toolText');
 
         $('#userInput').keyup(function (event) {
             if (event.keyCode == 13) {
@@ -535,7 +537,7 @@
             var Monitoring = row.insertCell(5);
             Monitoring.className = 'Monitoring';
             var MonitoringInput = document.createElement('input');
-            MonitoringInput.value = 100;
+            MonitoringInput.value = 0;
             Monitoring.appendChild(MonitoringInput);
             MonitoringInput.onchange = updateTotalOMCost;
 
@@ -604,10 +606,21 @@
                 range: true,
                 step: 1,
                 slide: function (e, ui) {
-                    //this function prevents start and end year from being the same
-                    if (ui.values[1] - ui.values[0] < 1 || ui.values[1]-ui.values[0] > 20) {
+                    //this function prevents start and end year from being the same, enables dragging of
+                    //range when threshold is met
+                    if (ui.value < ui.values[1] && ui.values[1] - ui.value > 20) {
+                        var values = [ui.value, (ui.value + 20)]
+                        ui.values[1] = ui.value + 20;
+                        $(this).slider('option', 'values', values);
+                    }
+                    if (ui.value > ui.values[0] && ui.value - ui.values[0] > 20) {
+                        var values = [(ui.value - 20), ui.value]
+                        ui.values[0] = ui.value - 20;
+                        $(this).slider('option', 'values', values);
+                    }
+                    if (ui.values[1] - ui.values[0] < 1 || ui.values[1] - ui.values[0] > 20) {
                         return false;
-                    };
+                    }
                     $(".ui-slider-handle")[0].innerHTML = ui.values[0];
                     $(".ui-slider-handle")[1].innerHTML = ui.values[1];
                 }
@@ -948,13 +961,10 @@
 
            function hover(d) {
                //console.log(d3.event)
-               var toolX =(d3.event.offsetX > 300-60)?(d3.event.offsetX - 60)+'px' : (d3.event.offsetX+10)+'px';
-               var toolY = (d3.event.offsetY > 225 - 60) ? (d3.event.offsetY - 60) + 'px' : (d3.event.offsetY + 10) + 'px';
                var toolL = (d3.event.offsetX > 350 / 2) ? 'auto' : (d3.event.offsetX + 10) + 'px';
                var toolR = (d3.event.offsetX > 350 / 2) ? (350 - (d3.event.offsetX)) + 'px' : 'auto';
                var toolT = (d3.event.offsetY > 300 / 2) ? 'auto' : (d3.event.offsetY + 10) + 'px';
                var toolB = (d3.event.offsetY > 300 / 2) ? (300 - (d3.event.offsetY)) + 'px' : 'auto';
-               //tooltip.style('top', toolY).style('left', toolX).style('visibility', 'visible');
                tooltip.style('top', toolT).style('bottom', toolB).style('left', toolL).style('right', toolR).style('visibility', 'visible');
                 var cx = d3.round(chartx(d3.event.offsetX), 0);
                 d3.selectAll(".line").style('opacity', 0.2)
@@ -971,7 +981,8 @@
                     var who = "";
                 }
 
-                tooltip.text(who + ' year ' + cx + ': $' + commas(d3.round(value, 0)));
+                toolText.text(who + ' year ' + cx + ': $' + commas(d3.round(value, 0)));
+                toolIcon.style('display', 'none');
                //d3.select(this).select('title').text(who+' year ' + cx + ': $' + commas(d3.round(value, 0)));
            }
 
@@ -1019,16 +1030,23 @@
             })
             .style('fill', function (d) { return d.color })
 
-            rectangles.select('title').text(function (d) { return treatmentStyles[d.name].name });
-            rectangles.on('mouseover', recthover).on('mouseout', rectunhover)
+            //rectangles.select('title').text(function (d) { return treatmentStyles[d.name].name });
+            rectangles.on('mouseover', recthover).on('mouseout', rectunhover).on('mousemove', recthover)
 
             function rectunhover(d) {
+                tooltip.style('visibility', 'hidden');
                 d3.selectAll(".treatment").style("opacity", 1)
+                //d3.selectAll(".treatment").style("opacity", 1)
             }
 
             function recthover(d) {
-                d3.selectAll(".treatment").style("opacity", 0.2)
-                d3.select(this).style("opacity",1)
+                toolIcon.attr('src', 'TreatIcons/' + treatmentStyles[d.name].icon).style('display','block')
+                var toolL = (d3.event.offsetX > 350 / 2) ? 'auto' : (d3.event.offsetX + 10) + 'px';
+                var toolR = (d3.event.offsetX > 350 / 2) ? (350 - (d3.event.offsetX)) + 'px' : 'auto';
+                var toolT = (d3.event.offsetY > 300 / 2) ? 'auto' : (d3.event.offsetY + 10) + 'px';
+                var toolB = (d3.event.offsetY > 300 / 2) ? (300 - (d3.event.offsetY)) + 'px' : 'auto';
+                tooltip.style('top', toolT).style('bottom', toolB).style('left', toolL).style('right', toolR).style('visibility', 'visible');
+                toolText.text(treatmentStyles[d.name].name);
             }
 
 
@@ -1312,13 +1330,26 @@
             text-align:center;
           }
           .tooltip{
-            font-size: 10px;
+            line-height:50px;
+            vertical-align:middle;
             max-height:50px;
-            max-width:150px;
+            max-width:200px;
             background-color:rgba(255,255,255,1);
             padding:2px;
             border-radius: 5px
         }
+          .toolText {
+              line-height:12px;
+              /*height:45px;*/
+              min-width:140px;
+              font-size:14px;
+          }
+          .toolIcon {
+              height:45px;
+              width:45px;
+              float:left;
+              margin-right:3px;
+          }
 
       </style>
   </head>
