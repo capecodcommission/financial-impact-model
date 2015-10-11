@@ -802,8 +802,8 @@
             var Years = endY - startY;//
             var OMCost = row.children('.TotalOM').children('input').attr('om');
             OMCost = (OMCost == 'null') ? 0 : parseFloat(OMCost);
-            var TotalOMCostValue = MonitoringCost + OMCost;
-            //var TotalOMCostValue = (MonitoringCost * Years) + OMCost;
+            //var TotalOMCostValue = MonitoringCost + OMCost;
+            var TotalOMCostValue = (MonitoringCost * Years) + OMCost;
             row.children('.TotalOM').children('input').val(TotalOMCostValue);
             row.children('.TotalOM').children('span').html(commas(d3.round(TotalOMCostValue)));
             updateTotalTechCost(row);
