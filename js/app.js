@@ -42,6 +42,24 @@ $(document).ready(function () {
       this.page.buttonCont.style.display = 'block';
       var scenario = this.page.userInput.value;
       this.ajaxScenario(scenario);
+    },
+    ajaxScenario:function(thisScenario){
+      $.ajax({
+          type: "GET",
+          url: "http://www.cch2o.org/FinancialModel/financial1.php?id=" + thisScenario,
+          dataType: "json",
+          success: function (json) {
+              var d = buildDataJson(json);
+              getScenarioInfo(json,thisScenario);
+              buildCharts(d.Treatments.length,d.Towns.length);
+              buildWhoPaysTable();
+              buildSplitsTable(d.Towns);
+              buildTreatmentTable(d.Treatments);
+              getIcons(json.Treatments);
+              simIconClick(0);
+          },
+          //error:
+      })//ajax
     }
   }
 
@@ -51,30 +69,30 @@ $(document).ready(function () {
         }
     });
 
-    $("#submitter").on('click', function () {
-        document.getElementById('home-container').style.display = 'none';
-        document.getElementById('home-container').className = 'container';
-        document.getElementById('treatmentInput-container').style.display = 'block';
-        document.getElementById('treatmentInput-container').className = 'container showing';
-        document.getElementById('buttons').style.display = 'block';
-        var thisScenario = document.getElementById('userInput').value;
-        $.ajax({
-            type: "GET",
-            url: "http://www.cch2o.org/FinancialModel/financial1.php?id=" + thisScenario,
-            dataType: "json",
-            success: function (json) {
-                var d = buildDataJson(json);
-                getScenarioInfo(json,thisScenario);
-                buildCharts(d.Treatments.length,d.Towns.length);
-                buildWhoPaysTable();
-                buildSplitsTable(d.Towns);
-                buildTreatmentTable(d.Treatments);
-                getIcons(json.Treatments);
-                simIconClick(0);
-            },
-            //error:
-        })//ajax
-    })//submitter on click
+    // $("#submitter").on('click', function () {
+    //     document.getElementById('home-container').style.display = 'none';
+    //     document.getElementById('home-container').className = 'container';
+    //     document.getElementById('treatmentInput-container').style.display = 'block';
+    //     document.getElementById('treatmentInput-container').className = 'container showing';
+    //     document.getElementById('buttons').style.display = 'block';
+    //     var thisScenario = document.getElementById('userInput').value;
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://www.cch2o.org/FinancialModel/financial1.php?id=" + thisScenario,
+    //         dataType: "json",
+    //         success: function (json) {
+    //             var d = buildDataJson(json);
+    //             getScenarioInfo(json,thisScenario);
+    //             buildCharts(d.Treatments.length,d.Towns.length);
+    //             buildWhoPaysTable();
+    //             buildSplitsTable(d.Towns);
+    //             buildTreatmentTable(d.Treatments);
+    //             getIcons(json.Treatments);
+    //             simIconClick(0);
+    //         },
+    //         //error:
+    //     })//ajax
+    // })//submitter on click
 
     $("#rightBtn").on('click', function () {
         var showing = $('.container.showing');
