@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <!--<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; user-scalable=yes; width=device-width;" >-->
+
+    <title>Financial Model</title>
+    <link href="assets/styles.css" rel="stylesheet" />
+    <script src="assets/prettify.js"></script>
+    <link href="styles/styles.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+    <script src="assets/treatment_styles.js" charset="utf-8"></script>
+
+  </head>
+  <body>
+      <div id="money"></div>
+      <div id="app-container">
+        <div id="scenarioIcons"></div>
+        <div id="scenarioInfo"></div>
+        <div id="home-container" class="container showing">
+              <h1>Financial Model</h1>
+          <div id="scenarioInput-container">
+              <input id="userInput" type="number" placeholder="Enter a scenario ID"/><div id="submitter"></div>
+          </div>
+        </div>
+        <div id="treatmentInput-container" class="container">
+            <div id="treatmentInputs"></div>
+         </div>
+         <div id='financialInput-container' class='container'>
+            <div id='financialInputs'></div>
+         </div>
+         <div id="graphs" class="container"></div>
+
+              <div id="buttons">
+                  <div id="leftBtn" class="showButton" style="border-right:16px solid gray;float:left;"></div>
+                  <div id="rightBtn" class="showButton" style="border-left:16px solid gray;float:right;"></div>
+              </div>
+
+      </div>
+      <div style="position:absolute;top:400px;left:20px">
+          <table id="mainTable"></table>
+          <table id="totalCosts"></table>
+          <table id="townCosts"></table>
+      </div>
+    <script type="text/javascript" src='js/app.js'>
+
+    </script>
+  </body>
+</html>

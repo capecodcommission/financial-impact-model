@@ -1,0 +1,295 @@
+html, body, h1 {
+    padding:0;
+    margin:0;
+    height:100%;
+    font-family:Tahoma, Geneva, sans-serif;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+input {
+    line-height: 1;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 11px;
+}
+input::-ms-clear {
+    display: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#scenarioInput-container input[type=number] {
+    -moz-appearance:textfield;
+    border: none;
+    vertical-align:middle;
+    float:left;
+    font-size: 14px;
+    line-height: 15px;
+    padding-top: 16px;
+    padding-left:10px;
+    padding:16px;
+    padding-right:10px;
+    color: #444;
+    background: none;
+    width: 145px;
+    display:inline-block;
+}
+input:focus{
+    outline:none;
+}
+
+table{
+  margin-top:20px;
+  border-collapse:collapse;
+  vertical-align:middle;
+}
+td{
+  padding:3px;
+  min-height:30px;
+  border:1px solid black;
+}
+#app-container,#money {
+    position: absolute;
+    height: 300px;
+    width:350px;
+    left:20px;
+    top: 20px;
+    border-radius: 10px;
+}
+#money {
+    background:url("images/dollars.jpg");
+}
+#app-container {
+    border:3px solid;
+    border-color:gray;
+    background-color:rgba(255,255,255,0.96);
+}
+.center {
+  text-align:left;
+  margin-left: auto;
+  margin-right: auto;
+  width:575px;
+}
+#scenarioInput-container {
+    border:2px solid gray;
+    position:relative;
+    margin:100px auto;
+    width:165px;
+    height:50px;
+    background-color:white;
+    z-index:0;
+}
+#submitter {
+    float:left;
+    width:14px;
+    height:14px;
+    margin-top:16px;
+    background-color:none;
+    background-image: url("images/search.png");
+    background-repeat:no-repeat;
+    cursor:pointer;
+}
+#submitter:hover {
+
+    background-image: url("images/search_hov.png");
+}
+
+#scenarioIcons{
+    position:absolute;
+    top:0;left:0;
+    height:295px;
+    width:60px;
+    border:0px solid black;
+    overflow-y:hidden;
+    overflow-x:hidden;
+}
+.scenarioIcon{
+    display:inline-block;
+    height:50px;
+    width:50px;
+    margin:2.5px 5px;
+    background-size:cover;
+    cursor:pointer;
+    border-radius:100%;
+    border:2px solid gray;
+}
+.scenarioIcon.active{
+    border:2px solid black;
+}
+#treatmentInputs,#financialInputs{
+    position:absolute;
+    top:0;
+    left:60px;
+    width:290px;
+    height:300px;
+    border:0px solid black;
+}
+#treatmentInputs td,#treatmentInputs p,#treatmentInputs select,
+#financialInputs td,#financialInputs p,#financialInputs select,
+.graphTable td,.graphTable select{
+    margin:0;
+    padding-left:5px;
+    font-size:12px;
+    color:black;
+    font-family:Tahoma, Geneva, sans-serif;
+}
+.graphTable {
+    position:absolute;
+    bottom:5px;
+    left:20px;
+}
+.graphTable td {
+  padding-top:2px;
+  padding-bottom:2px;
+}
+.innerTable,.graphTable{
+    margin-top:0;
+}
+.cellT{
+    text-align:right;
+}
+.cellV{
+    width:150px;
+}
+.innerTable .cellV{
+    max-width:75px;
+}
+.innerTable .cellV .slider{
+    height:10px;
+    vertical-align:middle;
+}
+.innerTable td,.graphTable td{
+    border:0px solid black;
+}
+#treatmentInputs .name,
+#financialInputs .name{
+    font-size:16px;
+    margin-top:5px;
+    text-align:center;
+    padding-left:0px;
+}
+#treatmentInputs .years{
+    width:30px;
+}
+#treatmentInputs .mon{
+    width:60px;
+}
+#treatmentInputs select,
+#financialInputs select{
+    border:1px solid gray;
+    width:155px;
+}
+#buttons{
+    position:absolute;
+    bottom:5px;right:5px;
+    display:none;
+    width:36px;
+}
+.showButton{
+    width:0;
+    height:0;
+    border-top:10px solid transparent;
+    border-bottom:10px solid transparent;
+    cursor:pointer;
+}
+.ui-slider .ui-slider-handle {
+    font-size:10px;
+    height:14px;
+    width:14px;
+    padding-bottom:2px;
+    text-align:center;
+}
+.scroll{
+position:absolute;
+right:0px;
+width: 0;
+height: 0;
+border-left: 6px solid transparent;
+border-right: 6px solid transparent;
+}
+.scroll.down{
+bottom:2px;
+border-top: 8px solid gray;
+}
+.scroll.up{
+top:2px;
+border-bottom: 8px solid gray;
+}
+#graphs,#treatmentInput-container,#financialInput-container{
+display:none;
+position:absolute;
+height:300px;
+}
+.yaxis path{
+fill: none;
+stroke: #000;
+shape-rendering: crispEdges;
+}
+.xaxis path {
+  stroke: none;
+  fill:none;
+}
+.xaxis text {
+  background-color: rgba(255,255,255,0.5);
+}
+.line {
+stroke-width: 3px;
+}
+.affordline {
+stroke-width: 2px;
+stroke-dasharray:5px 2px;
+}
+.T5replaceline {
+stroke-width: 2px;
+stroke-dasharray:5px 2px;
+}
+input.afford {
+  border-color: red;
+}
+input.T5 {
+  border-color: blue;
+}
+.yaxis, .xaxis {
+font-size:12px;
+}
+.graphSelect option{
+vertical-align:top
+}
+#scenarioInfo {
+position:absolute;
+bottom:10px;
+left:65px;
+width:245px;
+font-size:14px;
+}
+#home-container h1{
+position:absolute;
+top:25px;
+width:100%;
+text-align:center;
+}
+.tooltip{
+line-height:50px;
+vertical-align:middle;
+max-height:50px;
+max-width:200px;
+background-color:rgba(255,255,255,1);
+padding:2px;
+border-radius: 5px
+}
+.toolText {
+  line-height:12px;
+  /*height:45px;*/
+  min-width:140px;
+  font-size:14px;
+}
+.toolIcon {
+  height:45px;
+  width:45px;
+  float:left;
+  margin-right:3px;
+}
