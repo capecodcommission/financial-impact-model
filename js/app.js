@@ -1,16 +1,49 @@
 $(document).ready(function () {
-    var data;
-    var commas = d3.format("0,000");
-    var horizon = 50;
-    var techDur = 20;
-    var tooltip = d3.select("#app-container")
-        .append("div")
-        .attr('class', 'tooltip')
-        .style("position", "absolute")
-        .style("z-index", "10")
-        .style("visibility", "hidden");
-    var toolIcon = tooltip.append('img').attr('class', 'toolIcon');
-    var toolText = tooltip.append('p').attr('class', 'toolText');
+  var fim={
+    data:null,
+    utils:{
+      commas=d3.format("0,000")
+    },
+    variables{
+      horizon:50,
+      techDur:20
+    },
+    page:{},
+    getPageComponents:function(){
+      this.page.homeCont=document.getElementById('home-container');
+      this.page.icons=document.getElementById('scenarioIcons');
+      this.page.scenarioInfo=document.getElementById('scenarioInfo');
+      this.page.userInput=document.getElementById('userInput');
+      this.page.treatCont=document.getElementById('treatmentInput-container');
+      this.page.treatInput=document.getElementById('treatmentInputs');
+      this.page.finCont=document.getElementById('financialInput-container');
+      this.page.finInput=document.getElementById('financialInputs');
+      this.page.graphs=document.getElementById('graphs');
+      this.page.buttonCont=document.getElementById('buttons')
+      this.page.buttons=document.getElementsByClassName('showButton');
+      this.page.tooltip=null,
+      this.buildTooltip();
+    },
+    buildTooltip:function(){
+      this.page.tooltip.container = d3.select("#app-container")
+          .append("div")
+          .attr('class', 'tooltip')
+          .style("position", "absolute")
+          .style("z-index", "10")
+          .style("visibility", "hidden");
+      this.page.tooltip.img = tooltip.append('img').attr('class', 'toolIcon');
+      this.page.tooltip.text = tooltip.append('p').attr('class', 'toolText');
+    },
+    getScenario:function(){
+      this.page.homeCont.style.display = 'none';
+      this.page.homeCont.className = 'container';
+      this.page.treatCont.style.display = 'block';
+      this.page.treatCont.className = 'container showing';
+      this.page.buttonCont.style.display = 'block';
+      var scenario = this.page.userInput.value;
+      this.ajaxScenario(scenario);
+    }
+  }
 
     $('#userInput').keyup(function (event) {
         if (event.keyCode == 13) {
