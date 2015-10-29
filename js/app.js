@@ -19,20 +19,15 @@
       this.page.finCont=document.getElementById('financialInput-container');
       this.page.finInput=document.getElementById('financialInputs');
       this.page.graphs=document.getElementById('graphs');
-      this.page.buttonCont=document.getElementById('buttons')
+      this.page.buttonCont=document.getElementById('buttons');
+      this.page.submitter=document.getElementById('submitter');
       this.page.buttons=document.getElementsByClassName('showButton');
-      this.page.tooltip=null,
-      this.buildTooltip();
+      this.page.tooltip=null;
+      //this.buildTooltip();
     },
     buildTooltip:function(){
-      this.page.tooltip.container = d3.select("#app-container")
-          .append("div")
-          .attr('class', 'tooltip')
-          .style("position", "absolute")
-          .style("z-index", "10")
-          .style("visibility", "hidden");
-      this.page.tooltip.img = tooltip.append('img').attr('class', 'toolIcon');
-      this.page.tooltip.text = tooltip.append('p').attr('class', 'toolText');
+      //function that builds tooltip and tooltip components using d3
+      //creates elements like so: this.page.tooltip.whatever
     },
     getScenario:function(){
       this.page.homeCont.style.display = 'none';
@@ -54,8 +49,17 @@
           },
           //error:
       });
+    },
+    addEvents:function(){
+      var that = this;
+      console.log(that);
+      this.page.submitter.addEventListener("click",function(){
+        that.getScenario();
+      })
     }
   }
+  fim.getPageComponents();
+  fim.addEvents();
 //});//document.onready
 
     // $('#userInput').keyup(function (event) {
