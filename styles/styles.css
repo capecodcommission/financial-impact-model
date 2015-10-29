@@ -61,7 +61,7 @@ td{
     border-radius: 10px;
 }
 #money {
-    background:url("images/dollars.jpg");
+    /*background:url("images/dollars.jpg");*/
 }
 #app-container {
     border:3px solid;
@@ -89,13 +89,13 @@ td{
     height:14px;
     margin-top:16px;
     background-color:none;
-    background-image: url("images/search.png");
+    /*background-image: url("images/search.png");*/
     background-repeat:no-repeat;
     cursor:pointer;
 }
 #submitter:hover {
 
-    background-image: url("images/search_hov.png");
+    /*background-image: url("images/search_hov.png");*/
 }
 
 #scenarioIcons{

@@ -1,97 +1,72 @@
-//$(document).ready(function () {
-  var fim = {
-    data:null,
-    utils:{
-      commas:d3.format("0,000")
-    },
-    variables:{
-      horizon:50,
-      techDur:20
-    },
-    page:{},
-    getPageComponents:function(){
-      this.page.homeCont=document.getElementById('home-container');
-      this.page.icons=document.getElementById('scenarioIcons');
-      this.page.scenarioInfo=document.getElementById('scenarioInfo');
-      this.page.userInput=document.getElementById('userInput');
-      this.page.treatCont=document.getElementById('treatmentInput-container');
-      this.page.treatInput=document.getElementById('treatmentInputs');
-      this.page.finCont=document.getElementById('financialInput-container');
-      this.page.finInput=document.getElementById('financialInputs');
-      this.page.graphs=document.getElementById('graphs');
-      this.page.buttonCont=document.getElementById('buttons');
-      this.page.submitter=document.getElementById('submitter');
-      this.page.buttons=document.getElementsByClassName('showButton');
-      this.page.tooltip=null;
-      //this.buildTooltip();
-    },
-    buildTooltip:function(){
-      //function that builds tooltip and tooltip components using d3
-      //creates elements like so: this.page.tooltip.whatever
-    },
-    getScenario:function(){
-      this.page.homeCont.style.display = 'none';
-      this.page.homeCont.className = 'container';
-      this.page.treatCont.style.display = 'block';
-      this.page.treatCont.className = 'container showing';
-      this.page.buttonCont.style.display = 'block';
-      var scenario = this.page.userInput.value;
-      this.ajaxScenario(scenario);
-    },
-    ajaxScenario:function(thisScenario){
-      var that = this;
-      $.ajax({
-          type: "GET",
-          url: "http://www.cch2o.org/FinancialModel/financial1.php?id=" + thisScenario,
-          dataType: "json",
-          success: function (json) {
-            that.data = json;
-          },
-          //error:
-      });
-    },
-    addEvents:function(){
-      var that = this;
-      console.log(that);
-      this.page.submitter.addEventListener("click",function(){
+var fim = {
+  data:null,
+  utils:{
+    commas:d3.format("0,000")
+  },
+  variables:{
+    horizon:50,
+    techDur:20
+  },
+  page:{},
+  getPageComponents:function(){
+    this.page.homeCont=document.getElementById('home-container');
+    this.page.icons=document.getElementById('scenarioIcons');
+    this.page.scenarioInfo=document.getElementById('scenarioInfo');
+    this.page.userInput=document.getElementById('userInput');
+    this.page.treatCont=document.getElementById('treatmentInput-container');
+    this.page.treatInput=document.getElementById('treatmentInputs');
+    this.page.finCont=document.getElementById('financialInput-container');
+    this.page.finInput=document.getElementById('financialInputs');
+    this.page.graphs=document.getElementById('graphs');
+    this.page.buttonCont=document.getElementById('buttons');
+    this.page.submitter=document.getElementById('submitter');
+    this.page.buttons=document.getElementsByClassName('showButton');
+    this.page.tooltip=null;
+    //this.buildTooltip();
+  },
+  buildTooltip:function(){
+    //function that builds tooltip and tooltip components using d3
+    //creates elements like so: this.page.tooltip.whatever
+  },
+  getScenario:function(){
+    //don't change styles inline but by adding classes
+    //
+    // this.page.homeCont.style.display = 'none';
+    // this.page.homeCont.className = 'container';
+    // this.page.treatCont.style.display = 'block';
+    // this.page.treatCont.className = 'container showing';
+    // this.page.buttonCont.style.display = 'block';
+    //
+    var scenario = this.page.userInput.value;
+    this.ajaxScenario(scenario);
+  },
+  ajaxScenario:function(thisScenario){
+    var that = this;
+    $.ajax({
+        type: "GET",
+        url: "http://www.cch2o.org/FinancialModel/financial1.php?id=" + thisScenario,
+        dataType: "json",
+        success: function (json) {
+          that.data = json;
+        },
+        //error:
+    });
+  },
+  addEvents:function(){
+    var that = this;
+    this.page.submitter.addEventListener("click",function(){
+      that.getScenario();
+    });
+    this.page.userInput.addEventListener("keyup", function(evt){
+      if (evt.keyCode == 13){
         that.getScenario();
-      })
-    }
+      }
+    })
   }
-  fim.getPageComponents();
-  fim.addEvents();
-//});//document.onready
+}
+fim.getPageComponents();
+fim.addEvents();
 
-    // $('#userInput').keyup(function (event) {
-    //     if (event.keyCode == 13) {
-    //         $("#submitter").click();
-    //     }
-    // });
-
-    // $("#submitter").on('click', function () {
-    //     document.getElementById('home-container').style.display = 'none';
-    //     document.getElementById('home-container').className = 'container';
-    //     document.getElementById('treatmentInput-container').style.display = 'block';
-    //     document.getElementById('treatmentInput-container').className = 'container showing';
-    //     document.getElementById('buttons').style.display = 'block';
-    //     var thisScenario = document.getElementById('userInput').value;
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "http://www.cch2o.org/FinancialModel/financial1.php?id=" + thisScenario,
-    //         dataType: "json",
-    //         success: function (json) {
-    //             var d = buildDataJson(json);
-    //             getScenarioInfo(json,thisScenario);
-    //             buildCharts(d.Treatments.length,d.Towns.length);
-    //             buildWhoPaysTable();
-    //             buildSplitsTable(d.Towns);
-    //             buildTreatmentTable(d.Treatments);
-    //             getIcons(json.Treatments);
-    //             simIconClick(0);
-    //         },
-    //         //error:
-    //     })//ajax
-    // })//submitter on click
 
     // $("#rightBtn").on('click', function () {
     //     var showing = $('.container.showing');
