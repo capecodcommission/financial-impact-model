@@ -148,7 +148,7 @@ var fim = {
       var iconDiv = document.createElement('div');
       iconDiv.className = 'scenarioIcon';
       iconDiv.setAttribute('treatIndex',i);
-      // load icons to github, just makes a bunch of errors for me which are annoying
+      // load icons to github, just makes a bunch of console errors for me which are annoying
       //iconDiv.style.backgrounImage = 'url(TreatIcons/' + treatmentStyles[treatments[i].tName].icon + ')';
       iconDiv.addEventListener("click", function(){
         var treatIndex = this.getAttribute('treatIndex');
