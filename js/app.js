@@ -65,6 +65,7 @@ var fim = {
           that.phpData = json;
           that.parseScenario(that.phpData);
           that.getScenarioInfo();
+          that.buildSnapshot(0);
         },
         //error:
     });
@@ -202,8 +203,9 @@ var fim = {
     // and set their values, but i dont think we need to do that
     // anymore. i think it's more straightforward this way because
     // the table and inputs are the same for every treatment.
-    console.log(this.fimData.treatments[treatIndex]);
     var treatment = this.fimData.treatments[treatIndex];
+    this.tInputs.tName.textContent = treatment.name;
+    console.log(treatment);
   },
   addEvents:function(){
     var that = this;
