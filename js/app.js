@@ -10,6 +10,8 @@ var fim = {
     techDur:20
   },
   page:{},
+  tInputs:{},
+  fInputs:{},
   getPageComponents:function(){
     this.page.homeCont=document.getElementById('home-container');
     this.page.icons=document.getElementById('scenarioIcons');
@@ -26,19 +28,20 @@ var fim = {
     this.page.tooltip=null;
     //this.buildTooltip();
   },
+  getTreatmentComponents:function(){
+    // will be like above function but for inputs on treatment panel (panel 2?)
+    // add components using this.tInputs.whatever
+  },
+  getFinancialComponents:function(){
+    // will be like above function but for inputs on treatment panel (panel 3?)
+    // add components using this.fInputs.whatever
+  },
   buildTooltip:function(){
     //function that builds tooltip and tooltip components using d3
     //creates elements like so: this.page.tooltip.whatever
   },
   getScenario:function(){
     //don't change styles inline but by adding classes
-    //
-    // this.page.homeCont.style.display = 'none';
-    // this.page.homeCont.className = 'container';
-    // this.page.treatCont.style.display = 'block';
-    // this.page.treatCont.className = 'container showing';
-    // this.page.buttonCont.style.display = 'block';
-    //
     var scenario = this.page.userInput.value;
     this.scenarioInfo.SID = scenario;
     this.ajaxScenario(scenario);
@@ -188,8 +191,8 @@ var fim = {
     // changing the values of the inputs based on what's clicked.
     // in the previous code, we created all those html elements
     // and set their values, but i dont think we need to do that
-    // anymore. i think it's more straightforward this way.
-
+    // anymore. i think it's more straightforward this way because
+    // the table and inputs are the same for every treatment.
     console.log(this.fimData.treatments[treatIndex]);
   },
   addEvents:function(){
@@ -207,7 +210,7 @@ var fim = {
 fim.getPageComponents();
 fim.addEvents();
 
-//----LATER------
+    //----DO LATER------
     // $("#rightBtn").on('click', function () {
     //     var showing = $('.container.showing');
     //     var next = showing.next('.container');
@@ -245,34 +248,7 @@ fim.addEvents();
     //         $('#scenarioInfo').css('display','none');
     //     }
     // })
-    // ----DONE------
-    // function getScenarioInfo(json,thisScenario) {
-    //     var embayment = json.Splits.EMBAY_DISP;
-    //     var subembayment = json.Splits.SUBEM_DISP;
-    //     var div = document.getElementById('scenarioInfo');
-    //     div.innerHTML = "<strong>Scenario " + thisScenario+"</strong><br>" + "Embayment: " + embayment+"<br>" + "Subembayment: " + subembayment;
-    // }
-    //----DONE------
-    // function getIcons(treatments) {
-    //     var scenarioIcons = document.getElementById('scenarioIcons');
-    //     var innerDiv = document.createElement('div')
-    //     innerDiv.setAttribute("id", "innerDiv");
-    //
-    //     scenarioIcons.innerHTML = '';
-    //     for (var i = 0; i < treatments.length; i++) {
-    //         var div = document.createElement('div');
-    //         div.className = 'scenarioIcon';
-    //         div.style.backgroundImage = 'url(TreatIcons/' + treatmentStyles[treatments[i].tName].icon + ')';
-    //         div.onclick = iconClick;
-    //         innerDiv.appendChild(div);
-    //     }
-
-    //     if (treatments.length > 5) {
-    //         buildScroll();
-    //     }
-    //     scenarioIcons.appendChild(innerDiv);
-    // }
-    //----LAST------
+    //----DO LAST------
     // function buildCharts(length,townnumber) {
     //     document.getElementById('graphs').innerHTML = '';
     //     var graphSVG = d3.select('#graphs').append('svg').attr('width', '350px').attr('height', '250px')
