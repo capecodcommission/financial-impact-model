@@ -145,14 +145,22 @@ var fim = {
     for (var i=0;i<treatments.length;i++){
       var iconDiv = document.createElement('div');
       iconDiv.className = 'scenarioIcon';
+      iconDiv.setAttribute('treatIndex',i);
       //iconDiv.style.backgrounImage = 'url(TreatIcons/' + treatmentStyles[treatments[i].tName].icon + ')';
-      //iconDiv.addEventListener("click", iconClick);
+      iconDiv.addEventListener("click", this.iconClick);
       innerDiv.appendChild(iconDiv);
     }
     if (treatments.length > 5){
       //this.buildScroll();
     }
     this.page.icons.appendChild(innerDiv);
+  },
+  iconClick:function(){
+    // this function will get the index of the clicked icon, and
+    // update the contents of the treatment/financing containers
+    // to show information about the clicked icon
+    var treatIndex = this.getAttribute('treatIndex');
+    this.buildSnapshot(treatIndex);
   },
   addEvents:function(){
     var that = this;
