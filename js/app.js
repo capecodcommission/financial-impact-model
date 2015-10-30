@@ -1,6 +1,6 @@
 var fim = {
   phpData:null,
-  fimData:null,
+  fimData:{},
   utils:{
     commas:d3.format("0,000")
   },
@@ -49,7 +49,7 @@ var fim = {
         dataType: "json",
         success: function (json) {
           that.phpData = json;
-          parseScenario(that.phpData);
+          that.parseScenario(that.phpData);
         },
         //error:
     });
@@ -89,15 +89,15 @@ var fim = {
   },
   getTreatments:function(data){
     var treats = [];
-    for (var i = 0; i < json.Treatments.length; i++) {
-        var units = (json.Treatments[i].Units !== null)?json.Treatments[i].Units:json.Treatments[i].Parcels;
-        var capAdj = json.Treatments[i].Costs.capAdj;
-        var omAdj = json.Treatments[i].Costs.OMAdj;
-        var replace = json.Treatments[i].Costs.Replace;
+    for (var i = 0; i < data.Treatments.length; i++) {
+        var units = (data.Treatments[i].Units !== null)?data.Treatments[i].Units:data.Treatments[i].Parcels;
+        var capAdj = data.Treatments[i].Costs.capAdj;
+        var omAdj = data.Treatments[i].Costs.OMAdj;
+        var replace = data.Treatments[i].Costs.Replace;
         treats[i] = {
-            NReduction: json.Treatments[i].NReduction,
-            name: json.Treatments[i].tName,
-            color: treatmentStyles[json.Treatments[i].tName].color ,
+            NReduction: data.Treatments[i].NReduction,
+            name: data.Treatments[i].tName,
+            color: treatmentStyles[data.Treatments[i].tName].color ,
             units: units,
             capAdj:capAdj,
             omAdj:omAdj,
@@ -109,9 +109,9 @@ var fim = {
   parseScenario:function(data){
     // this will reformat phpData, get numbers used in calculations, and add them to a fimData object
     // to keep track-- similar to old 'buildDataJson' function
-    var townInfo = getTownInfo(data);
+    var townInfo = this.getTownInfo(data);
     this.fimData.splits = townInfo[0];
-    this.fimData.treatments = getTreatments(data);
+    this.fimData.treatments = this.getTreatments(data);
     this.fimData.counts = { InEmbay: data.Embayment, InSub: data.Subembayment, TownsAll:townInfo[1] };
     this.fimData.payers = {
       //hardcode these to beign
