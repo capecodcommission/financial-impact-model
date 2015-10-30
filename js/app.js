@@ -132,13 +132,17 @@ var fim = {
         var omAdj = data.Treatments[i].Costs.OMAdj;
         var replace = data.Treatments[i].Costs.Replace;
         treats[i] = {
-            NReduction: data.Treatments[i].NReduction,
-            name: data.Treatments[i].tName,
-            color: treatmentStyles[data.Treatments[i].tName].color ,
-            units: units,
-            capAdj:capAdj,
-            omAdj:omAdj,
-            replace:replace
+          NReduction: data.Treatments[i].NReduction,
+          name: data.Treatments[i].tName,
+          color: treatmentStyles[data.Treatments[i].tName].color ,
+          units: units,
+          capAdj:capAdj,
+          omAdj:omAdj,
+          replace:replace,
+          whoPays:0,
+          timeRange:[0,20],
+          financing:0,
+          monitoring:0
         }
     }
     this.getIcons(treats);
@@ -209,10 +213,10 @@ var fim = {
     //on html input change
     var treatment = this.fimData.treatments[treatIndex];
     this.tInputs.tName.textContent = treatment.name;
-    this.tInputs.finOpts.selectedIndex = 0;
-    this.tInputs.monInput.value = 10000;
-    //this.tInputs.yearSlider.values = [0,20]
-    this.tInputs.whoPays.selectedIndex = 0;
+    this.tInputs.finOpts.selectedIndex = treatment.financing;
+    this.tInputs.monInput.value = treatment.monitoring;
+    //this.tInputs.yearSlider.values = treatment.yearRange
+    this.tInputs.whoPays.selectedIndex = treatment.whoPays;
   },
   addEvents:function(){
     var that = this;
