@@ -26,7 +26,6 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance:textfield;
     border: none;
     vertical-align:middle;
-    float:left;
     font-size: 14px;
     line-height: 15px;
     padding-top: 16px;
@@ -41,7 +40,6 @@ input[type=number]::-webkit-outer-spin-button {
 input:focus{
     outline:none;
 }
-
 table{
   margin-top:20px;
   border-collapse:collapse;
@@ -94,7 +92,6 @@ td{
     cursor:pointer;
 }
 #submitter:hover {
-
     /*background-image: url("images/search_hov.png");*/
 }
 
@@ -292,4 +289,11 @@ border-radius: 5px
   width:45px;
   float:left;
   margin-right:3px;
+}
+.container{
+  transition:0.5s ease;
+  display:none;
+}
+.container.showing{
+  display:block;
 }

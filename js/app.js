@@ -18,7 +18,7 @@ var fim = {
     this.page.scenarioInfo=document.getElementById('scenarioInfo');
     this.page.userInput=document.getElementById('userInput');
     this.page.treatCont=document.getElementById('treatmentInput-container');
-    this.page.treatInput=document.getElementById('treatmentInputs');
+    this.page.treatInputs=document.getElementById('treatmentInputs');
     this.page.finCont=document.getElementById('financialInput-container');
     this.page.finInput=document.getElementById('financialInputs');
     this.page.graphs=document.getElementById('graphs');
@@ -26,9 +26,16 @@ var fim = {
     this.page.submitter=document.getElementById('submitter');
     this.page.buttons=document.getElementsByClassName('showButton');
     this.page.tooltip=null;
+
+    this.getTreatmentComponents();
     //this.buildTooltip();
   },
   getTreatmentComponents:function(){
+    this.tInputs.tName = this.page.treatInputs.querySelector(".name");
+    this.tInputs.finOpts = this.page.treatInputs.querySelector(".finSelect");
+    this.tInputs.monInput = this.page.treatInputs.querySelector(".mon");
+    this.tInputs.yearSlider = this.page.treatInputs.querySelector(".slider");
+    this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays")
     // will be like above function but for inputs on treatment panel (panel 2?)
     // add components using this.tInputs.whatever
   },
@@ -42,6 +49,8 @@ var fim = {
   },
   getScenario:function(){
     //don't change styles inline but by adding classes
+    this.page.homeCont.className = "container";
+    this.page.treatCont.className = "container showing";
     var scenario = this.page.userInput.value;
     this.scenarioInfo.SID = scenario;
     this.ajaxScenario(scenario);
@@ -194,6 +203,7 @@ var fim = {
     // anymore. i think it's more straightforward this way because
     // the table and inputs are the same for every treatment.
     console.log(this.fimData.treatments[treatIndex]);
+    var treatment = this.fimData.treatments[treatIndex];
   },
   addEvents:function(){
     var that = this;
