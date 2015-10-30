@@ -60,7 +60,6 @@ var fim = {
   parseScenario:function(data){
     // this will reformat phpData, get numbers used in calculations, and add them to a fimData object
     // to keep track-- similar to old 'buildDataJson' function
-
     this.scenarioInfo.embayment = data.Splits.EMBAY_DISP;
     this.scenarioInfo.subembayment = data.Splits.SUBEM_DISP;
 
@@ -146,21 +145,52 @@ var fim = {
       var iconDiv = document.createElement('div');
       iconDiv.className = 'scenarioIcon';
       iconDiv.setAttribute('treatIndex',i);
+      // load icons to github, just makes a bunch of errors for me which are annoying
       //iconDiv.style.backgrounImage = 'url(TreatIcons/' + treatmentStyles[treatments[i].tName].icon + ')';
-      iconDiv.addEventListener("click", this.iconClick);
+      iconDiv.addEventListener("click", function(){
+        var treatIndex = this.getAttribute('treatIndex');
+        that.buildSnapshot(treatIndex);
+      });
       innerDiv.appendChild(iconDiv);
     }
     if (treatments.length > 5){
-      //this.buildScroll();
+      //this.buildScroll();<--function not done yet
     }
     this.page.icons.appendChild(innerDiv);
   },
-  iconClick:function(){
-    // this function will get the index of the clicked icon, and
+  buildScroll:function(){
+    var down = document.createElement('div');
+    down.className = 'scroll down';
+    down.addEventListener('mousedown',this.scroll.scrollDown);
+    var up = document.createElement('div');
+    up.className = 'scroll up';
+    // up.style.display = 'none';<---do this in css or class
+    up.addEventListener('mousedown',this.scroll.scrollUp);
+    this.page.icons.appendChild(down);
+    this.page.icons.appendChild(up);
+  },
+  scroll:{
+    scrollDown:function(){
+      // Try to do all this in vanilla
+      // get code snippet from previous version
+    },
+    scrollUp:function(){
+      // Try to do all this in vanilla
+      // get code snippet from previous version
+    }
+  },
+  buildSnapshot:function(treatIndex){
+    // this function will run when an icon is clicked--
     // update the contents of the treatment/financing containers
     // to show information about the clicked icon
-    var treatIndex = this.getAttribute('treatIndex');
-    this.buildSnapshot(treatIndex);
+
+    // might consider coding treatment inputs in html, and just
+    // changing the values of the inputs based on what's clicked.
+    // in the previous code, we created all those html elements
+    // and set their values, but i dont think we need to do that
+    // anymore. i think it's more straightforward this way.
+
+    console.log(this.fimData.treatments[treatIndex]);
   },
   addEvents:function(){
     var that = this;
@@ -177,7 +207,7 @@ var fim = {
 fim.getPageComponents();
 fim.addEvents();
 
-
+//----LATER------
     // $("#rightBtn").on('click', function () {
     //     var showing = $('.container.showing');
     //     var next = showing.next('.container');
@@ -215,14 +245,14 @@ fim.addEvents();
     //         $('#scenarioInfo').css('display','none');
     //     }
     // })
-    //
+    // ----DONE------
     // function getScenarioInfo(json,thisScenario) {
     //     var embayment = json.Splits.EMBAY_DISP;
     //     var subembayment = json.Splits.SUBEM_DISP;
     //     var div = document.getElementById('scenarioInfo');
     //     div.innerHTML = "<strong>Scenario " + thisScenario+"</strong><br>" + "Embayment: " + embayment+"<br>" + "Subembayment: " + subembayment;
     // }
-    //
+    //----DONE------
     // function getIcons(treatments) {
     //     var scenarioIcons = document.getElementById('scenarioIcons');
     //     var innerDiv = document.createElement('div')
@@ -242,7 +272,7 @@ fim.addEvents();
     //     }
     //     scenarioIcons.appendChild(innerDiv);
     // }
-    //
+    //----LAST------
     // function buildCharts(length,townnumber) {
     //     document.getElementById('graphs').innerHTML = '';
     //     var graphSVG = d3.select('#graphs').append('svg').attr('width', '350px').attr('height', '250px')
