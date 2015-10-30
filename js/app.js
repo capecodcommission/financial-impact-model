@@ -12,6 +12,7 @@ var fim = {
   page:{},
   tInputs:{},
   fInputs:{},
+  treatIndex:null,
   getPageComponents:function(){
     this.page.homeCont=document.getElementById('home-container');
     this.page.icons=document.getElementById('scenarioIcons');
@@ -33,7 +34,7 @@ var fim = {
   },
   getTreatmentComponents:function(){
     this.tInputs.tName = this.page.treatInputs.querySelector(".name");
-    this.tInputs.finOpts = this.page.treatInputs.querySelector(".finSelect");
+    this.tInputs.finOpts = this.page.treatInputs.querySelector(".FinSelect");
     this.tInputs.monInput = this.page.treatInputs.querySelector(".mon");
     this.tInputs.yearSlider = this.page.treatInputs.querySelector(".slider");
     this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays")
@@ -198,6 +199,7 @@ var fim = {
     }
   },
   buildSnapshot:function(treatIndex){
+    this.treatIndex = treatIndex;
     // this function will run when an icon is clicked--
     // update the contents of the treatment/financing containers
     // to show information about the clicked icon
@@ -218,6 +220,14 @@ var fim = {
     //this.tInputs.yearSlider.values = treatment.yearRange
     this.tInputs.whoPays.selectedIndex = treatment.whoPays;
   },
+  //sets the value of the financing option for the selected treatment
+  //use this approach for setting other inputs.
+  // might want to consider keeping these values somewhere other than
+  // the fimData.treatments[x].object 
+  changeFinancing:function(option){
+    var treatment = this.fimData.treatments[this.treatIndex];
+    treatment.financing = option;
+  },
   addEvents:function(){
     var that = this;
     this.page.submitter.addEventListener("click",function(){
@@ -227,6 +237,10 @@ var fim = {
       if (evt.keyCode == 13){
         that.getScenario();
       }
+    })
+    this.tInputs.finOpts.addEventListener("change",function(evt){
+      var option = this.selectedIndex;
+      that.changeFinancing(option);
     })
   }
 }
