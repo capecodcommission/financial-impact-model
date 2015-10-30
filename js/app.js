@@ -1,5 +1,6 @@
 var fim = {
-  data:null,
+  phpData:null,
+  fimData:null,
   utils:{
     commas:d3.format("0,000")
   },
@@ -47,10 +48,80 @@ var fim = {
         url: "http://www.cch2o.org/FinancialModel/financial1.php?id=" + thisScenario,
         dataType: "json",
         success: function (json) {
-          that.data = json;
+          that.phpData = json;
+          parseScenario(that.phpData);
         },
         //error:
     });
+  },
+  getTownInfo:function(data){
+    var splits = data.Splits;
+    //household counts hardcoded, should be in SQL
+    var percentages = [
+        [splits.Barnstable, "Barnstable", 27180],
+        [splits.Bourne, "Bourne",11028],
+        [splits.Brewster, "Brewster",7822],
+        [splits.Chatham, "Chatham",7304],
+        [splits.Dennis, "Dennis",15467],
+        [splits.Eastham, "Eastham",5725],
+        [splits.Falmouth, "Falmouth",22039],
+        [splits.Harwich, "Harwich",9915],
+        [splits.Mashpee, "Mashpee",9866],
+        [splits.Orleans, "Orleans",5111],
+        [splits.Provincetown, "Provincetown",4300],
+        [splits.Sandwich, "Sandwich",9426],
+        [splits.Truro, "Truro",3249],
+        [splits.Wellfleet, "Wellfleet",4606],
+        [splits.Yarmouth, "Yarmouth",17448]
+    ];
+    for (var i = percentages.length - 1; i >= 0; i--) {
+        if (percentages[i][0] == 0) {
+            percentages.splice(i, 1);
+        }
+    }
+    var t = [];
+    var townSum = 0;
+    for (var i = 0; i < percentages.length; i++) {
+        t[i] = { town: percentages[i][1], split: percentages[i][0], households: percentages[i][2] }
+        townSum += percentages[i][2];
+    }
+    return [t,townSum];
+  },
+  getTreatments:function(data){
+    var treats = [];
+    for (var i = 0; i < json.Treatments.length; i++) {
+        var units = (json.Treatments[i].Units !== null)?json.Treatments[i].Units:json.Treatments[i].Parcels;
+        var capAdj = json.Treatments[i].Costs.capAdj;
+        var omAdj = json.Treatments[i].Costs.OMAdj;
+        var replace = json.Treatments[i].Costs.Replace;
+        treats[i] = {
+            NReduction: json.Treatments[i].NReduction,
+            name: json.Treatments[i].tName,
+            color: treatmentStyles[json.Treatments[i].tName].color ,
+            units: units,
+            capAdj:capAdj,
+            omAdj:omAdj,
+            replace:replace
+        }
+    }
+    return treats;
+  },
+  parseScenario:function(data){
+    // this will reformat phpData, get numbers used in calculations, and add them to a fimData object
+    // to keep track-- similar to old 'buildDataJson' function
+    var townInfo = getTownInfo(data);
+    this.fimData.splits = townInfo[0];
+    this.fimData.treatments = getTreatments(data);
+    this.fimData.counts = { InEmbay: data.Embayment, InSub: data.Subembayment, TownsAll:townInfo[1] };
+    this.fimData.payers = {
+      //hardcode these to beign
+      townsAll:null,
+      towns:{},
+      watershed:null,
+      state:null,
+      region:null,
+      federal:null
+    }
   },
   addEvents:function(){
     var that = this;
