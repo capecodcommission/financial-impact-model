@@ -28,6 +28,7 @@ var fim = {
     this.page.tooltip=null;
 
     this.getTreatmentComponents();
+    //this.getFinancialComponents();
     //this.buildTooltip();
   },
   getTreatmentComponents:function(){
@@ -92,7 +93,7 @@ var fim = {
   },
   getTownInfo:function(data){
     var splits = data.Splits;
-    //household counts hardcoded, should be in SQL
+    //household counts hardcoded here, should be in SQL
     var percentages = [
         [splits.Barnstable, "Barnstable", 27180],
         [splits.Bourne, "Bourne",11028],
@@ -203,9 +204,15 @@ var fim = {
     // and set their values, but i dont think we need to do that
     // anymore. i think it's more straightforward this way because
     // the table and inputs are the same for every treatment.
+
+    //each treatment in fimData needs key/values for these things, which get set
+    //on html input change
     var treatment = this.fimData.treatments[treatIndex];
     this.tInputs.tName.textContent = treatment.name;
-    console.log(treatment);
+    this.tInputs.finOpts.selectedIndex = 0;
+    this.tInputs.monInput.value = 10000;
+    //this.tInputs.yearSlider.values = [0,20]
+    this.tInputs.whoPays.selectedIndex = 0;
   },
   addEvents:function(){
     var that = this;
@@ -410,15 +417,6 @@ fim.addEvents();
     //     document.getElementById('financialInputs').appendChild(tableContents[1]);
     // }
 
-    // function simIconClick(index) {
-    //     $('.scenarioIcon').removeClass('active');
-    //     $('.scenarioIcon:eq('+index+')').addClass('active')
-    //     document.getElementById('treatmentInputs').innerHTML = '';
-    //     document.getElementById('financialInputs').innerHTML = '';
-    //     var tableContents = generateInputs(index);
-    //     document.getElementById('treatmentInputs').appendChild(tableContents[0]);
-    //     document.getElementById('financialInputs').appendChild(tableContents[1]);
-    // }
     //
     // function generateInputs(index) {
     //     var row = document.getElementsByClassName('treatRow')[index];
