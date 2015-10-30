@@ -37,9 +37,44 @@ var fim = {
     this.tInputs.finOpts = this.page.treatInputs.querySelector(".FinSelect");
     this.tInputs.monInput = this.page.treatInputs.querySelector(".mon");
     this.tInputs.yearSlider = this.page.treatInputs.querySelector(".slider");
-    this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays")
+    this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays");
     // will be like above function but for inputs on treatment panel (panel 2?)
     // add components using this.tInputs.whatever
+    this.initYearSlider();
+  },
+  initYearSlider:function(){
+    var that = this;
+    var horizon = this.variables.horizon;
+    var techDur = this.variables.techDur;
+    //var treatment = this.fimData.treatments[this.treatIndex];
+    $(this.tInputs.yearSlider).slider({
+      max:that.variables.horizon,
+      min: 0,
+      range: true,
+      step: 1,
+      slide: function (e, ui) {
+          //this function prevents start and end year from being the same, enables dragging of
+          //range when threshold is met
+          if (ui.value < ui.values[1] && ui.value <= horizon-techDur) {//left handle is pulled/pushed
+              var values = [ui.value, (ui.value + techDur)];
+              ui.values[1] = ui.value + techDur;
+              $(this).slider('option', 'values', values);
+          }
+          if (ui.value > ui.values[0] && ui.value >= techDur) {//right handle pulled/pushed
+              var values = [(ui.value - techDur), ui.value];
+              ui.values[0] = ui.value - techDur;
+              $(this).slider('option', 'values', values);
+          }
+          if (ui.values[1]-ui.values[0]<techDur){
+              return false;
+          }
+          $(".ui-slider-handle")[0].innerHTML = ui.values[0];
+          $(".ui-slider-handle")[1].innerHTML = ui.values[1];
+      },
+      // stop: function(e,ui){
+      //   treatment.timeRange = ui.values;
+      // }
+    });
   },
   getFinancialComponents:function(){
     // will be like above function but for inputs on treatment panel (panel 3?)
@@ -96,21 +131,21 @@ var fim = {
     var splits = data.Splits;
     //household counts hardcoded here, should be in SQL
     var percentages = [
-        [splits.Barnstable, "Barnstable", 27180],
-        [splits.Bourne, "Bourne",11028],
-        [splits.Brewster, "Brewster",7822],
-        [splits.Chatham, "Chatham",7304],
-        [splits.Dennis, "Dennis",15467],
-        [splits.Eastham, "Eastham",5725],
-        [splits.Falmouth, "Falmouth",22039],
-        [splits.Harwich, "Harwich",9915],
-        [splits.Mashpee, "Mashpee",9866],
-        [splits.Orleans, "Orleans",5111],
-        [splits.Provincetown, "Provincetown",4300],
-        [splits.Sandwich, "Sandwich",9426],
-        [splits.Truro, "Truro",3249],
-        [splits.Wellfleet, "Wellfleet",4606],
-        [splits.Yarmouth, "Yarmouth",17448]
+      [splits.Barnstable, "Barnstable", 27180],
+      [splits.Bourne, "Bourne",11028],
+      [splits.Brewster, "Brewster",7822],
+      [splits.Chatham, "Chatham",7304],
+      [splits.Dennis, "Dennis",15467],
+      [splits.Eastham, "Eastham",5725],
+      [splits.Falmouth, "Falmouth",22039],
+      [splits.Harwich, "Harwich",9915],
+      [splits.Mashpee, "Mashpee",9866],
+      [splits.Orleans, "Orleans",5111],
+      [splits.Provincetown, "Provincetown",4300],
+      [splits.Sandwich, "Sandwich",9426],
+      [splits.Truro, "Truro",3249],
+      [splits.Wellfleet, "Wellfleet",4606],
+      [splits.Yarmouth, "Yarmouth",17448]
     ];
     for (var i = percentages.length - 1; i >= 0; i--) {
         if (percentages[i][0] == 0) {
@@ -200,16 +235,6 @@ var fim = {
   },
   buildSnapshot:function(treatIndex){
     this.treatIndex = treatIndex;
-    // this function will run when an icon is clicked--
-    // update the contents of the treatment/financing containers
-    // to show information about the clicked icon
-
-    // might consider coding treatment inputs in html, and just
-    // changing the values of the inputs based on what's clicked.
-    // in the previous code, we created all those html elements
-    // and set their values, but i dont think we need to do that
-    // anymore. i think it's more straightforward this way because
-    // the table and inputs are the same for every treatment.
 
     //each treatment in fimData needs key/values for these things, which get set
     //on html input change
@@ -220,8 +245,6 @@ var fim = {
     //this.tInputs.yearSlider.values = treatment.yearRange
     this.tInputs.whoPays.selectedIndex = treatment.whoPays;
   },
-  //sets the value of the financing option for the selected treatment
-  //use this approach for setting other inputs.
   // might want to consider keeping these values somewhere other than
   // the fimData.treatments[x].object
   changeFinancing:function(option){
@@ -235,6 +258,9 @@ var fim = {
   changeMonitoring:function(value){
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment.monitoring = value;
+  },
+  changeYears:function(e,ui){
+    //console.log(e);
   },
   addEvents:function(){
     var that = this;
@@ -258,6 +284,7 @@ var fim = {
       var value = this.value;
       that.changeMonitoring(value);
     });
+    $(this.tInputs.yearSlider).slider("option", "stop", this.changeYears);
   }
 }
 fim.getPageComponents();
