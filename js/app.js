@@ -223,10 +223,18 @@ var fim = {
   //sets the value of the financing option for the selected treatment
   //use this approach for setting other inputs.
   // might want to consider keeping these values somewhere other than
-  // the fimData.treatments[x].object 
+  // the fimData.treatments[x].object
   changeFinancing:function(option){
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment.financing = option;
+  },
+  changeWhoPays:function(option){
+    var treatment = this.fimData.treatments[this.treatIndex];
+    treatment.whoPays = option;
+  },
+  changeMonitoring:function(value){
+    var treatment = this.fimData.treatments[this.treatIndex];
+    treatment.monitoring = value;
   },
   addEvents:function(){
     var that = this;
@@ -237,11 +245,19 @@ var fim = {
       if (evt.keyCode == 13){
         that.getScenario();
       }
-    })
+    });
     this.tInputs.finOpts.addEventListener("change",function(evt){
       var option = this.selectedIndex;
       that.changeFinancing(option);
-    })
+    });
+    this.tInputs.whoPays.addEventListener("change",function(evt){
+      var option = this.selectedIndex;
+      that.changeWhoPays(option);
+    });
+    this.tInputs.monInput.addEventListener("change",function(evt){
+      var value = this.value;
+      that.changeMonitoring(value);
+    });
   }
 }
 fim.getPageComponents();
