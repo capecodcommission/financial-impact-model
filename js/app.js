@@ -128,6 +128,7 @@ var fim = {
             replace:replace
         }
     }
+    this.getIcons(treats);
     return treats;
   },
   getScenarioInfo:function(){
@@ -135,6 +136,23 @@ var fim = {
     var subembayment = this.scenarioInfo.subembayment;
     var id = this.scenarioInfo.SID;
     this.page.scenarioInfo.innerHTML = "<b>Scenario " + id+"</b><br>" + "Embayment: " + embayment+"<br>" + "Subembayment: " + subembayment;
+  },
+  getIcons:function(treatments){
+    var innerDiv = document.createElement('div');
+    innerDiv.setAttribute('id','innerDiv');
+    this.page.icons.innerHTML = "";
+    var that = this;
+    for (var i=0;i<treatments.length;i++){
+      var iconDiv = document.createElement('div');
+      iconDiv.className = 'scenarioIcon';
+      //iconDiv.style.backgrounImage = 'url(TreatIcons/' + treatmentStyles[treatments[i].tName].icon + ')';
+      //iconDiv.addEventListener("click", iconClick);
+      innerDiv.appendChild(iconDiv);
+    }
+    if (treatments.length > 5){
+      //this.buildScroll();
+    }
+    this.page.icons.appendChild(innerDiv);
   },
   addEvents:function(){
     var that = this;
