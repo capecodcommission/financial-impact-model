@@ -1,6 +1,7 @@
 var fim = {
   phpData:null,
   fimData:{},
+  scenarioInfo:{},
   utils:{
     commas:d3.format("0,000")
   },
@@ -39,6 +40,7 @@ var fim = {
     // this.page.buttonCont.style.display = 'block';
     //
     var scenario = this.page.userInput.value;
+    this.scenarioInfo.SID = scenario;
     this.ajaxScenario(scenario);
   },
   ajaxScenario:function(thisScenario){
@@ -50,9 +52,31 @@ var fim = {
         success: function (json) {
           that.phpData = json;
           that.parseScenario(that.phpData);
+          that.getScenarioInfo();
         },
         //error:
     });
+  },
+  parseScenario:function(data){
+    // this will reformat phpData, get numbers used in calculations, and add them to a fimData object
+    // to keep track-- similar to old 'buildDataJson' function
+
+    this.scenarioInfo.embayment = data.Splits.EMBAY_DISP;
+    this.scenarioInfo.subembayment = data.Splits.SUBEM_DISP;
+
+    var townInfo = this.getTownInfo(data);
+    this.fimData.splits = townInfo[0];
+    this.fimData.treatments = this.getTreatments(data);
+    this.fimData.counts = { InEmbay: data.Embayment, InSub: data.Subembayment, TownsAll:townInfo[1] };
+    this.fimData.payers = {
+      //hardcode these to beign
+      townsAll:null,
+      towns:{},
+      watershed:null,
+      state:null,
+      region:null,
+      federal:null
+    }
   },
   getTownInfo:function(data){
     var splits = data.Splits;
@@ -106,22 +130,11 @@ var fim = {
     }
     return treats;
   },
-  parseScenario:function(data){
-    // this will reformat phpData, get numbers used in calculations, and add them to a fimData object
-    // to keep track-- similar to old 'buildDataJson' function
-    var townInfo = this.getTownInfo(data);
-    this.fimData.splits = townInfo[0];
-    this.fimData.treatments = this.getTreatments(data);
-    this.fimData.counts = { InEmbay: data.Embayment, InSub: data.Subembayment, TownsAll:townInfo[1] };
-    this.fimData.payers = {
-      //hardcode these to beign
-      townsAll:null,
-      towns:{},
-      watershed:null,
-      state:null,
-      region:null,
-      federal:null
-    }
+  getScenarioInfo:function(){
+    var embayment = this.scenarioInfo.embayment;
+    var subembayment = this.scenarioInfo.subembayment;
+    var id = this.scenarioInfo.SID;
+    this.page.scenarioInfo.innerHTML = "<b>Scenario " + id+"</b><br>" + "Embayment: " + embayment+"<br>" + "Subembayment: " + subembayment;
   },
   addEvents:function(){
     var that = this;
