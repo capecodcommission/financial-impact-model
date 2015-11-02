@@ -29,8 +29,8 @@ var fim = {
     this.page.tooltip=null;
 
     this.getTreatmentComponents();
-    //this.getFinancialComponents();
-    //this.buildTooltip();
+    this.getFinancialComponents();
+    this.buildTooltip();
   },
   getTreatmentComponents:function(){
     this.tInputs.tName = this.page.treatInputs.querySelector(".name");
@@ -42,8 +42,6 @@ var fim = {
     this.tInputs.yearSlider = this.page.treatInputs.querySelector(".slider");
     this.tInputs.Treat_Cost = this.page.treatInputs.querySelector(".Treat_Cost");
     this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays");
-    // will be like above function but for inputs on treatment panel (panel 2?)
-    // add components using this.tInputs.whatever
     this.initYearSlider();
   },
   initYearSlider:function(){
@@ -56,8 +54,6 @@ var fim = {
       range: true,
       step: 1,
       slide: function (e, ui) {
-          //this function prevents start and end year from being the same, enables dragging of
-          //range when threshold is met
           if (ui.value < ui.values[1] && ui.value <= horizon-techDur) {//left handle is pulled/pushed
               var values = [ui.value, (ui.value + techDur)];
               ui.values[1] = ui.value + techDur;
@@ -85,7 +81,6 @@ var fim = {
     //creates elements like so: this.page.tooltip.whatever
   },
   getScenario:function(){
-    //don't change styles inline but by adding classes
     this.page.homeCont.className = "container";
     this.page.treatCont.className = "container showing";
     var scenario = this.page.userInput.value;
@@ -108,8 +103,6 @@ var fim = {
     });
   },
   parseScenario:function(data){
-    // this will reformat phpData, get numbers used in calculations, and add them to a fimData object
-    // to keep track-- similar to old 'buildDataJson' function
     this.scenarioInfo.embayment = data.Splits.EMBAY_DISP;
     this.scenarioInfo.subembayment = data.Splits.SUBEM_DISP;
 
@@ -117,8 +110,7 @@ var fim = {
     this.fimData.splits = townInfo[0];
     this.fimData.treatments = this.getTreatments(data);
     this.fimData.counts = { InEmbay: data.Embayment, InSub: data.Subembayment, TownsAll:townInfo[1] };
-    this.fimData.payers = {
-      //hardcode these to beign
+    this.fimData.payers = {//hardcode these to beign
       townsAll:null,
       towns:{},
       watershed:null,
@@ -129,8 +121,7 @@ var fim = {
   },
   getTownInfo:function(data){
     var splits = data.Splits;
-    //household counts hardcoded here, should be in SQL
-    var percentages = [
+    var percentages = [//household counts hardcoded here, should be in SQL
       [splits.Barnstable, "Barnstable", 27180],
       [splits.Bourne, "Bourne",11028],
       [splits.Brewster, "Brewster",7822],
@@ -210,7 +201,7 @@ var fim = {
       innerDiv.appendChild(iconDiv);
     }
     if (treatments.length > 5){
-      //this.buildScroll();<--function not done yet
+      this.buildScroll();//function not done yet
     }
     this.page.icons.appendChild(innerDiv);
   },
@@ -221,15 +212,15 @@ var fim = {
     }
   },
   buildScroll:function(){
-    var down = document.createElement('div');
-    down.className = 'scroll down';
-    down.addEventListener('mousedown',this.scroll.scrollDown);
-    var up = document.createElement('div');
-    up.className = 'scroll up';
-    // up.style.display = 'none';<---do this in css or class
-    up.addEventListener('mousedown',this.scroll.scrollUp);
-    this.page.icons.appendChild(down);
-    this.page.icons.appendChild(up);
+    // var down = document.createElement('div');
+    // down.className = 'scroll down';
+    // down.addEventListener('mousedown',this.scroll.scrollDown);
+    // var up = document.createElement('div');
+    // up.className = 'scroll up';
+    // // up.style.display = 'none';<---do this in css or class
+    // up.addEventListener('mousedown',this.scroll.scrollUp);
+    // this.page.icons.appendChild(down);
+    // this.page.icons.appendChild(up);
   },
   scroll:{
     scrollDown:function(){
