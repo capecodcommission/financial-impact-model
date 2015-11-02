@@ -236,13 +236,13 @@ var fim = {
   buildSnapshot:function(treatIndex){
     this.treatIndex = treatIndex;
 
-    //each treatment in fimData needs key/values for these things, which get set
-    //on html input change
     var treatment = this.fimData.treatments[treatIndex];
     this.tInputs.tName.textContent = treatment.name;
     this.tInputs.finOpts.selectedIndex = treatment.financing;
     this.tInputs.monInput.value = treatment.monitoring;
-    //this.tInputs.yearSlider.values = treatment.yearRange
+    $(this.tInputs.yearSlider).slider("option", "values",treatment.timeRange);
+    $(this.tInputs.yearSlider).children(".ui-slider-handle")[0].innerHTML = treatment.timeRange[0];
+    $(this.tInputs.yearSlider).children(".ui-slider-handle")[1].innerHTML = treatment.timeRange[1];
     this.tInputs.whoPays.selectedIndex = treatment.whoPays;
   },
   // might want to consider keeping these values somewhere other than
@@ -259,8 +259,10 @@ var fim = {
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment.monitoring = value;
   },
-  changeYears:function(e,ui){
-    //console.log(e);
+  changeYears:function(e,ui,that){
+    var treatment = this.fimData.treatments[this.treatIndex];
+    var values = ui.values;
+    treatment.timeRange = values;
   },
   addEvents:function(){
     var that = this;
@@ -284,11 +286,16 @@ var fim = {
       var value = this.value;
       that.changeMonitoring(value);
     });
-    $(this.tInputs.yearSlider).slider("option", "stop", this.changeYears);
+    $(this.tInputs.yearSlider).slider("option", "stop", function(e,ui){
+      that.changeYears(e,ui,that);
+    });
+  },
+  init:function(){
+    this.getPageComponents();
+    this.addEvents();
   }
 }
-fim.getPageComponents();
-fim.addEvents();
+fim.init();
 
     //----DO LATER------
     // $("#rightBtn").on('click', function () {
