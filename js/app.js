@@ -199,6 +199,8 @@ var fim = {
       //iconDiv.style.backgrounImage = 'url(TreatIcons/' + treatmentStyles[treatments[i].tName].icon + ')';
       iconDiv.addEventListener("click", function(){
         var treatIndex = this.getAttribute('treatIndex');
+        that.resetIcons();
+        this.className = 'scenarioIcon active';
         that.buildSnapshot(treatIndex);
       });
       innerDiv.appendChild(iconDiv);
@@ -207,6 +209,12 @@ var fim = {
       //this.buildScroll();<--function not done yet
     }
     this.page.icons.appendChild(innerDiv);
+  },
+  resetIcons:function(){
+    var icons = this.page.icons.querySelectorAll('.scenarioIcon');
+    for (var i=0;i<icons.length;i++){
+      icons[i].className = 'scenarioIcon';
+    }
   },
   buildScroll:function(){
     var down = document.createElement('div');
