@@ -34,9 +34,13 @@ var fim = {
   },
   getTreatmentComponents:function(){
     this.tInputs.tName = this.page.treatInputs.querySelector(".name");
+    this.tInputs.Cap_Init = this.page.treatInputs.querySelector(".Cap_Init");
     this.tInputs.finOpts = this.page.treatInputs.querySelector(".FinSelect");
+    this.tInputs.Cap_after_Fin = this.page.treatInputs.querySelector(".Cap_after_Fin");
     this.tInputs.monInput = this.page.treatInputs.querySelector(".mon");
+    this.tInputs.OM_plus_Mon = this.page.treatInputs.querySelector(".OM_plus_Mon");
     this.tInputs.yearSlider = this.page.treatInputs.querySelector(".slider");
+    this.tInputs.Treat_Cost = this.page.treatInputs.querySelector(".Treat_Cost");
     this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays");
     // will be like above function but for inputs on treatment panel (panel 2?)
     // add components using this.tInputs.whatever
@@ -241,11 +245,16 @@ var fim = {
     this.treatIndex = treatIndex;
     var treatment = this.fimData.treatments[treatIndex];
     this.tInputs.tName.textContent = treatment.name;
+    this.tInputs.Cap_Init.textContent = '$'+this.utils.commas(treatment.capAdj);
     this.tInputs.finOpts.selectedIndex = treatment.financing;
+    var finVal = this.tInputs.finOpts.value;
+    this.tInputs.Cap_after_Fin.textContent = '$'+this.utils.commas(treatment.capAdj*finVal);
     this.tInputs.monInput.value = treatment.monitoring;
+    this.tInputs.OM_plus_Mon.textContent = '$'+this.utils.commas(treatment.monitoring + treatment.omAdj);
     $(this.tInputs.yearSlider).slider("option", "values",treatment.timeRange);
     $(this.tInputs.yearSlider).children(".ui-slider-handle")[0].innerHTML = treatment.timeRange[0];
     $(this.tInputs.yearSlider).children(".ui-slider-handle")[1].innerHTML = treatment.timeRange[1];
+    this.tInputs.Treat_Cost.textContent = '$'+this.utils.commas((treatment.capAdj*finVal)+treatment.monitoring + treatment.omAdj);
     this.tInputs.whoPays.selectedIndex = treatment.whoPays;
   },
   // might want to consider keeping these values somewhere other than
@@ -253,19 +262,23 @@ var fim = {
   changeFinancing:function(option){
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment.financing = option;
+    this.buildSnapshot(this.treatIndex);
   },
   changeWhoPays:function(option){
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment.whoPays = option;
+    this.buildSnapshot(this.treatIndex);
   },
   changeMonitoring:function(value){
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment.monitoring = value;
+    this.buildSnapshot(this.treatIndex);
   },
   changeYears:function(e,ui,that){
     var treatment = this.fimData.treatments[this.treatIndex];
     var values = ui.values;
     treatment.timeRange = values;
+    this.buildSnapshot(this.treatIndex);
   },
   addEvents:function(){
     var that = this;
