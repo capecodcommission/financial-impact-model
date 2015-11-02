@@ -244,17 +244,24 @@ var fim = {
   buildSnapshot:function(treatIndex){
     this.treatIndex = treatIndex;
     var treatment = this.fimData.treatments[treatIndex];
-    this.tInputs.tName.textContent = treatment.name;
-    this.tInputs.Cap_Init.textContent = '$'+this.utils.commas(treatment.capAdj);
-    this.tInputs.finOpts.selectedIndex = treatment.financing;
+
+    var initCap = treatment.capAdj;
     var finVal = this.tInputs.finOpts.value;
-    this.tInputs.Cap_after_Fin.textContent = '$'+this.utils.commas(treatment.capAdj*finVal);
-    this.tInputs.monInput.value = treatment.monitoring;
-    this.tInputs.OM_plus_Mon.textContent = '$'+this.utils.commas(treatment.monitoring + treatment.omAdj);
+    var finCap = initCap*finVal;
+    var monitoring = treatment.monitoring;
+    var initOM = treatment.omAdj;
+    var treatCost = finCap+monitoring + initOM;
+
+    this.tInputs.tName.textContent = treatment.name;
+    this.tInputs.Cap_Init.textContent = '$'+this.utils.commas(initCap);
+    this.tInputs.finOpts.selectedIndex = treatment.financing;
+    this.tInputs.Cap_after_Fin.textContent = '$'+this.utils.commas(finCap);
+    this.tInputs.monInput.value = monitoring;
+    this.tInputs.OM_plus_Mon.textContent = '$'+this.utils.commas(monitoring+initOM);
     $(this.tInputs.yearSlider).slider("option", "values",treatment.timeRange);
     $(this.tInputs.yearSlider).children(".ui-slider-handle")[0].innerHTML = treatment.timeRange[0];
     $(this.tInputs.yearSlider).children(".ui-slider-handle")[1].innerHTML = treatment.timeRange[1];
-    this.tInputs.Treat_Cost.textContent = '$'+this.utils.commas((treatment.capAdj*finVal)+treatment.monitoring + treatment.omAdj);
+    this.tInputs.Treat_Cost.textContent = '$'+this.utils.commas(treatCost);
     this.tInputs.whoPays.selectedIndex = treatment.whoPays;
   },
   // might want to consider keeping these values somewhere other than
