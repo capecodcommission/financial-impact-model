@@ -46,7 +46,6 @@ var fim = {
     var that = this;
     var horizon = this.variables.horizon;
     var techDur = this.variables.techDur;
-    //var treatment = this.fimData.treatments[this.treatIndex];
     $(this.tInputs.yearSlider).slider({
       max:that.variables.horizon,
       min: 0,
@@ -70,10 +69,7 @@ var fim = {
           }
           $(".ui-slider-handle")[0].innerHTML = ui.values[0];
           $(".ui-slider-handle")[1].innerHTML = ui.values[1];
-      },
-      // stop: function(e,ui){
-      //   treatment.timeRange = ui.values;
-      // }
+      }
     });
   },
   getFinancialComponents:function(){
@@ -235,7 +231,6 @@ var fim = {
   },
   buildSnapshot:function(treatIndex){
     this.treatIndex = treatIndex;
-
     var treatment = this.fimData.treatments[treatIndex];
     this.tInputs.tName.textContent = treatment.name;
     this.tInputs.finOpts.selectedIndex = treatment.financing;
