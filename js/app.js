@@ -193,7 +193,7 @@ var fim = {
     var that = this;
     for (var i=0;i<treatments.length;i++){
       var iconDiv = document.createElement('div');
-      iconDiv.className = 'scenarioIcon';
+      iconDiv.className = (i==0)?'scenarioIcon active':'scenarioIcon';
       iconDiv.setAttribute('treatIndex',i);
       // load icons to github, just makes a bunch of console errors for me which are annoying
       //iconDiv.style.backgrounImage = 'url(TreatIcons/' + treatmentStyles[treatments[i].tName].icon + ')';
