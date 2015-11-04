@@ -174,7 +174,7 @@ var fim = {
           omAdj:omAdj,
           replace:replace,
           other_fin:0,
-          other_nonfin:0,
+          other_nonfin:10,
           whoPays:0,
           timeRange:[0,20],
           financing:0,
@@ -253,6 +253,9 @@ var fim = {
     var initOM = treatment.omAdj;
     var treatCost = finCap+monitoring + initOM;
 
+    var otherIndex = this.tInputs.OtherSelect.value;
+    var otherValue = treatment["other_"+otherIndex];
+
     var unitMetric = this.utils.commas(d3.round(treatment.units,2)) + " ";
     unitMetric += (treatment.units>1)?treatment.metric+"s":treatment.metric;
 
@@ -269,6 +272,7 @@ var fim = {
     $(this.tInputs.yearSlider).children(".ui-slider-handle")[1].innerHTML = treatment.timeRange[1];
     this.tInputs.Treat_Cost.textContent = '$'+this.utils.commas(treatCost);
     this.tInputs.whoPays.selectedIndex = treatment.whoPays;
+    this.tInputs.OtherInput.value = otherValue;
   },
   // might want to consider keeping these values somewhere other than
   // the fimData.treatments[x].object
@@ -293,12 +297,15 @@ var fim = {
     treatment.timeRange = values;
     this.buildSnapshot(this.treatIndex);
   },
-  changeOtherSelect:function(option){
-    // var treatment = this.fimData.treatments[this.treatIndex];
-    console.log(option)
+  changeOtherSelect:function(value){
+    var treatment = this.fimData.treatments[this.treatIndex];
+    var otherValue = treatment["other_"+value];
+    this.tInputs.OtherInput.value = otherValue;
   },
   changeOtherInput:function(value){
-    console.log(value)
+    var otherIndex = this.tInputs.OtherSelect.value;
+    var treatment = this.fimData.treatments[this.treatIndex];
+    treatment["other_"+otherIndex] = value;
   },
   addEvents:function(){
     var that = this;
@@ -323,12 +330,12 @@ var fim = {
       that.changeMonitoring(value);
     });
     this.tInputs.OtherSelect.addEventListener("change",function(evt){
-      var option = this.selectedIndex;
-      that.changeOtherSelect(option);
+      var value = this.value;
+      that.changeOtherSelect(value);
     });
     this.tInputs.OtherInput.addEventListener("change",function(evt){
       var value = this.value;
-      that.changeOtherSelect(value);
+      that.changeOtherInput(value);
     });
     $(this.tInputs.yearSlider).slider("option", "stop", function(e,ui){
       that.changeYears(e,ui,that);
