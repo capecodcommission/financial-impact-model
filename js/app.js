@@ -34,6 +34,7 @@ var fim = {
   },
   getTreatmentComponents:function(){
     this.tInputs.tName = this.page.treatInputs.querySelector(".name");
+    this.tInputs.tUnits = this.page.treatInputs.querySelector(".units");
     this.tInputs.Cap_Init = this.page.treatInputs.querySelector(".Cap_Init");
     this.tInputs.finOpts = this.page.treatInputs.querySelector(".FinSelect");
     this.tInputs.Cap_after_Fin = this.page.treatInputs.querySelector(".Cap_after_Fin");
@@ -155,14 +156,17 @@ var fim = {
     var treats = [];
     for (var i = 0; i < data.Treatments.length; i++) {
         var units = (data.Treatments[i].Units !== null)?data.Treatments[i].Units:data.Treatments[i].Parcels;
+        var metric = data.Treatments[i].TreatMetric;
         var capAdj = data.Treatments[i].Costs.capAdj;
         var omAdj = data.Treatments[i].Costs.OMAdj;
         var replace = data.Treatments[i].Costs.Replace;
         treats[i] = {
           NReduction: data.Treatments[i].NReduction,
           name: data.Treatments[i].tName,
-          color: treatmentStyles[data.Treatments[i].tName].color ,
+          color:treatmentStyles[data.Treatments[i].tName].color,
+          displayName:treatmentStyles[data.Treatments[i].tName].name,
           units: units,
+          metric:metric,
           capAdj:capAdj,
           omAdj:omAdj,
           replace:replace,
@@ -243,7 +247,11 @@ var fim = {
     var initOM = treatment.omAdj;
     var treatCost = finCap+monitoring + initOM;
 
-    this.tInputs.tName.textContent = treatment.name;
+    var unitMetric = this.utils.commas(d3.round(treatment.units,2)) + " ";
+    unitMetric += (treatment.units>1)?treatment.metric+"s":treatment.metric;
+
+    this.tInputs.tName.textContent = treatment.displayName;
+    this.tInputs.tUnits.textContent = unitMetric;
     this.tInputs.Cap_Init.textContent = '$'+this.utils.commas(initCap);
     this.tInputs.finOpts.selectedIndex = treatment.financing;
     this.tInputs.Cap_after_Fin.textContent = '$'+this.utils.commas(finCap);
