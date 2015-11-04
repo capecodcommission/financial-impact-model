@@ -1,6 +1,6 @@
 var fim = {
   phpData:null,
-  fimData:{},
+  fimData:{scenarioTotal:0},
   scenarioInfo:{},
   utils:{
     commas:d3.format("0,000")
@@ -46,6 +46,7 @@ var fim = {
     this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays");
     this.tInputs.OtherSelect = this.page.treatInputs.querySelector(".Other_Cost select");
     this.tInputs.OtherInput = this.page.treatInputs.querySelector(".Other_Cost input");
+    this.tInputs.ScenarioTotal = this.page.treatInputs.querySelector(".scenarioTotal");
     this.initYearSlider();
   },
   initYearSlider:function(){
@@ -174,7 +175,7 @@ var fim = {
           omAdj:omAdj,
           replace:replace,
           other_fin:0,
-          other_nonfin:10,
+          other_nonfin:0,
           whoPays:0,
           timeRange:[0,20],
           financing:0,
@@ -251,7 +252,10 @@ var fim = {
     var finCap = initCap*finVal;
     var monitoring = treatment.monitoring;
     var initOM = treatment.omAdj;
-    var treatCost = finCap+monitoring + initOM;
+    var otherFin = treatment.other_fin;
+    var otherNonfin = treatment.other_nonfin;
+    // var treatCost = finCap+monitoring + initOM; // old
+    var treatCost = initCap + repCap + initOM + otherFin + otherNonfin;
 
     var otherIndex = this.tInputs.OtherSelect.value;
     var otherValue = treatment["other_"+otherIndex];
@@ -273,9 +277,27 @@ var fim = {
     this.tInputs.Treat_Cost.textContent = '$'+this.utils.commas(treatCost);
     this.tInputs.whoPays.selectedIndex = treatment.whoPays;
     this.tInputs.OtherInput.value = otherValue;
+
+    this.getScenarioTotal();
+
   },
-  // might want to consider keeping these values somewhere other than
-  // the fimData.treatments[x].object
+  getScenarioTotal:function(){
+    var Total = this.fimData.scenarioTotal;
+    Total = 0;
+    var treatments = this.fimData.treatments;
+    for (var i=0;i<treatments.length;i++){
+      var treatment = treatments[i];
+      var initCap = treatment.capAdj;
+      var repCap = treatment.replace;
+      var initOM = treatment.omAdj;
+      var otherFin = treatment.other_fin;
+      var otherNonfin = treatment.other_nonfin;
+      // var treatCost = finCap+monitoring + initOM; // old
+      var treatCost = initCap + repCap + initOM + otherFin + otherNonfin;
+      Total += treatCost;
+    }
+    this.tInputs.ScenarioTotal.textContent = "$"+this.utils.commas(d3.round(Total,2));
+  },
   changeFinancing:function(option){
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment.financing = option;
@@ -301,11 +323,13 @@ var fim = {
     var treatment = this.fimData.treatments[this.treatIndex];
     var otherValue = treatment["other_"+value];
     this.tInputs.OtherInput.value = otherValue;
+    this.buildSnapshot(this.treatIndex);
   },
   changeOtherInput:function(value){
     var otherIndex = this.tInputs.OtherSelect.value;
     var treatment = this.fimData.treatments[this.treatIndex];
     treatment["other_"+otherIndex] = value;
+    this.buildSnapshot(this.treatIndex);
   },
   addEvents:function(){
     var that = this;
@@ -334,7 +358,7 @@ var fim = {
       that.changeOtherSelect(value);
     });
     this.tInputs.OtherInput.addEventListener("change",function(evt){
-      var value = this.value;
+      var value = parseInt(this.value);//not sure why this is needed here and not for monitoring??//
       that.changeOtherInput(value);
     });
     $(this.tInputs.yearSlider).slider("option", "stop", function(e,ui){
