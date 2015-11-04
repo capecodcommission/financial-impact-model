@@ -36,6 +36,7 @@ var fim = {
     this.tInputs.tName = this.page.treatInputs.querySelector(".name");
     this.tInputs.tUnits = this.page.treatInputs.querySelector(".units");
     this.tInputs.Cap_Init = this.page.treatInputs.querySelector(".Cap_Init");
+    this.tInputs.Cap_Replace = this.page.treatInputs.querySelector(".Cap_Replace");
     this.tInputs.finOpts = this.page.treatInputs.querySelector(".FinSelect");
     this.tInputs.Cap_after_Fin = this.page.treatInputs.querySelector(".Cap_after_Fin");
     this.tInputs.monInput = this.page.treatInputs.querySelector(".mon");
@@ -170,6 +171,8 @@ var fim = {
           capAdj:capAdj,
           omAdj:omAdj,
           replace:replace,
+          other_fin:0,
+          other_nonfin:0,
           whoPays:0,
           timeRange:[0,20],
           financing:0,
@@ -241,6 +244,7 @@ var fim = {
     var treatment = this.fimData.treatments[treatIndex];
 
     var initCap = treatment.capAdj;
+    var repCap = treatment.replace;
     var finVal = this.tInputs.finOpts.value;
     var finCap = initCap*finVal;
     var monitoring = treatment.monitoring;
@@ -253,6 +257,7 @@ var fim = {
     this.tInputs.tName.textContent = treatment.displayName;
     this.tInputs.tUnits.textContent = unitMetric;
     this.tInputs.Cap_Init.textContent = '$'+this.utils.commas(initCap);
+    this.tInputs.Cap_Replace.textContent = '$'+this.utils.commas(repCap);
     this.tInputs.finOpts.selectedIndex = treatment.financing;
     this.tInputs.Cap_after_Fin.textContent = '$'+this.utils.commas(finCap);
     this.tInputs.monInput.value = monitoring;
