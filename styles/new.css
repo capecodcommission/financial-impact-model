@@ -187,3 +187,10 @@ p.units{
   top:2px;
   border-bottom: 8px solid gray;
 }
+.scenarioTotal{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  font-size: 18px;
+  font-weight: bold;
+}
