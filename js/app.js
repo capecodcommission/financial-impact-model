@@ -44,6 +44,8 @@ var fim = {
     this.tInputs.yearSlider = this.page.treatInputs.querySelector(".slider");
     this.tInputs.Treat_Cost = this.page.treatInputs.querySelector(".Treat_Cost");
     this.tInputs.whoPays = this.page.treatInputs.querySelector(".whoPays");
+    this.tInputs.OtherSelect = this.page.treatInputs.querySelector(".Other_Cost select");
+    this.tInputs.OtherInput = this.page.treatInputs.querySelector(".Other_Cost input");
     this.initYearSlider();
   },
   initYearSlider:function(){
@@ -291,6 +293,13 @@ var fim = {
     treatment.timeRange = values;
     this.buildSnapshot(this.treatIndex);
   },
+  changeOtherSelect:function(option){
+    // var treatment = this.fimData.treatments[this.treatIndex];
+    console.log(option)
+  },
+  changeOtherInput:function(value){
+    console.log(value)
+  },
   addEvents:function(){
     var that = this;
     this.page.submitter.addEventListener("click",function(){
@@ -312,6 +321,14 @@ var fim = {
     this.tInputs.monInput.addEventListener("change",function(evt){
       var value = this.value;
       that.changeMonitoring(value);
+    });
+    this.tInputs.OtherSelect.addEventListener("change",function(evt){
+      var option = this.selectedIndex;
+      that.changeOtherSelect(option);
+    });
+    this.tInputs.OtherInput.addEventListener("change",function(evt){
+      var value = this.value;
+      that.changeOtherSelect(value);
     });
     $(this.tInputs.yearSlider).slider("option", "stop", function(e,ui){
       that.changeYears(e,ui,that);
