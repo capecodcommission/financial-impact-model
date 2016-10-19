@@ -27,7 +27,7 @@
 		</div>
 	</div>
 </div>
-<pre>{{ rows | json}}</pre>
+<!-- <pre>{{ rows | json}}</pre> -->
 </template>
 
 <script>
