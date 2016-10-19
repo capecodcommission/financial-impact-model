@@ -151,6 +151,18 @@ export default {
     this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor)
     this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
     this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
+
+    var newarray = []
+
+    for (var i = 0; i < this.treatment.costTypes.length; i++) {
+
+      if (!Object.keys(this.treatment.costTypes[i].annualtownarray).length == 0) {
+
+        newarray.push(this.treatment.costTypes[i].annualtownarray)
+      }
+    }
+
+    this.primarysecondaryArray(this.treatment.treatmentId,newarray)
   }
 }
 </script>

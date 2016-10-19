@@ -6,7 +6,8 @@
 </div>
 <div class="col-sm-10">
   <router-view></router-view>
-  <pre>
+  <!-- UNCOMMENT WHEN DEBUGGING -->
+  <!-- <pre>
   {{ treatmentIndex | json }}
   </pre>
   <pre>
@@ -14,7 +15,7 @@
   </pre>
   <pre>
   {{ financeOptions | json }}
-  </pre>
+  </pre> -->
 </div>
 </div>
 

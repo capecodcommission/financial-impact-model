@@ -212,17 +212,6 @@ export default {
 	},
 
 	ready() {
-		var newarray = []
-
-	    for (var i = 0; i < this.treatment.costTypes.length; i++) {
-
-	      if (!Object.keys(this.treatment.costTypes[i].annualtownarray).length == 0) {
-
-	        newarray.push(this.treatment.costTypes[i].annualtownarray)
-	      }
-	    }
-
-    	this.primarysecondaryArray(this.treatment.treatmentId,newarray)
 	},
 
 	components: {
