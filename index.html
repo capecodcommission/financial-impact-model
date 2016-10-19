@@ -1,124 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-     <!--<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; user-scalable=yes; width=device-width;" >-->
-
-    <title>Financial Model</title>
-
-    <link href="assets/styles.css" rel="stylesheet" />
-    <script src="assets/prettify.js"></script>
-    <!-- <link href="styles/styles.css" rel="stylesheet" /> -->
-    <link rel="stylesheet" href="/styles/new.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
-    <script src="assets/treatment_styles.js" charset="utf-8"></script>
-
+    <meta charset="utf-8">
+    <title>fim-app</title>
   </head>
   <body>
-      <div id="app-container">
-        <div id="home-container" class="container showing">
-              <h1>Financial Model</h1>
-          <div id="scenarioInput-container">
-              <input id="userInput" type="number" placeholder="Enter a scenario ID"/><div id="submitter"></div>
-          </div>
-        </div>
-        <div id="scenarioIcons"></div>
-        <div id="scenarioInfo"></div>
-        <div id="treatmentInput-container" class="container">
-            <div id="treatmentInputs">
-              <p class="name"></p>
-              <p class="units"></p>
-              <table>
-                <tr>
-                  <td class="cellT">Project Duration:</td>
-                  <td class="cellV"><div class="slider"></div></td>
-                </tr>
-                <tr>
-                  <td class="cellT">Capital:</td>
-                  <td class="cellV Cap_Init"></td>
-                </tr>
-                <tr>
-                  <td class="cellT">Replacement:</td>
-                  <td class="cellV Cap_Replace"></td>
-                </tr>
-                <tr>
-                  <td class="cellT">O&amp;M:</td>
-                  <td class="cellV OM_plus_Mon"></td>
-                </tr>
-                <tr>
-                  <td class='cellT'>Other:</td>
-                  <td class='cellV Other_Cost'>
-                    <select>
-                      <option value='fin'>Financeable</option>
-                      <option value='nonfin'>Non-financeable</option>
-                    <select><br>
-                    $<input type="number">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="cellT">Project Total:</td>
-                  <td class="cellV Treat_Cost"></td>
-                </tr>
-              </table>
-              <p class='scenarioTotal'></p>
-              <table style='display:none'>
-                <tr>
-                  <td class="cellT">Monitoring Cost:</td>
-                  <td class="cellV">$<input class="mon" type="number"></td>
-                </tr>
-                <tr>
-                  <td class="cellT">Capital Financing:</td>
-                  <td class="cellV">
-                    <select class="FinSelect">
-                      <option value="1">SRF: 0% for 30 yrs</option>
-                      <option value="1.02">SRF: 2% for 30 yrs</option>
-                      <option value="1.05">USDA</option>
-                      <option value="1.05">Conventional Financing</option>
-                      <option value="1">No Financing</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="cellT">wMVP TC + CF:</td>
-                  <td class="cellV Cap_after_Fin"></td>
-                </tr>
-                <tr>
-                  <td class="cellT">Who Pays:</td>
-                  <td class="cellV">
-                    <select class="whoPays">
-                      <option value="0">Town User: Fee</option>
-                      <option value="0">Town User: Property Tax</option>
-                      <option value="1">Watershed User: Betterment</option>
-                      <option value="1">Watershed User: Fee</option>
-                      <option value="2">Regional User: Fee</option>
-                      <option value="3">State Grant</option>
-                      <option value="4">Federal Grant</option>
-                    </select>
-                  </td>
-                </tr>
-              </table>
-            </div>
-         </div>
-         <div id='financialInput-container' class='container'>
-            <div id='financialInputs'></div>
-         </div>
-         <div id="graphs" class="container"></div>
-
-        <div id="buttons">
-            <div id="leftBtn" class="showButton" style="border-right:16px solid gray;float:left;"></div>
-            <div id="rightBtn" class="showButton" style="border-left:16px solid gray;float:right;"></div>
-        </div>
-
-      </div>
-
-    <script type="text/javascript" src='js/app.js'>
-
-    </script>
+    <div id="app">
+      <app></app>
+      <!-- built files will be auto injected -->
+    </div>
   </body>
 </html>
