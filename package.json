@@ -52,5 +52,11 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
     "webpack-merge": "^0.8.3"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "url": "https://webrgp@bitbucket.org/ccc_fim/financial-model.git",
+    "type": "git"
+  },
+  "license": "MIT"
 }
