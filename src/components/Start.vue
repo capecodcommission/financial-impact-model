@@ -22,12 +22,17 @@
     </div>
   </div>
 </div>
+<!-- <pre>{{treatments | json}}</pre> -->
 
 </template>
 
 <script>
 
+import { loadScenario } from '../vuex/actions'
+import { getTreatments } from '../vuex/getters'
+
 export default {
+
   data () {
     return {
       active1: false,
@@ -35,17 +40,50 @@ export default {
       scenarioId: ''
     }
   },
+
+  vuex: {
+
+    actions: {
+
+      loadScenario
+    },
+
+    getters: {
+
+      treatments: getTreatments
+    }
+  },
+
   methods: {
     // Activate ScenarioView.vue with nested route TreatmentDetail.vue using scenarioId passed from html input to data above
     fetchScenario () {
-      this.$router.go('/scenario/' + this.scenarioId + '/treatmentsDetails')
+
+      this.loadScenario(this.scenarioId)
     },
+
     // Change acive state from TRUE to FALSE, shown/hidden via respective v-show
     toggle1 () {
+
       this.active1 = !this.active1
     },
+
     toggle2 () {
+
       this.active2 = !this.active2
+    }
+  },
+
+  watch: {
+
+    'treatments': function (val) {
+
+      if (val.length === 0) {
+
+        alert('Invalid Scenario. Please enter valid Scenario ID')
+      } else {
+
+        this.$router.go('/scenario/' + this.scenarioId + '/treatmentsDetails')
+      }
     }
   }
 }
