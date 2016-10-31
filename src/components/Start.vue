@@ -9,7 +9,7 @@
     <h4>Enter Scenario ID</h4>
     <div class = 'row'>
       <div class="col-lg-4 col-lg-offset-4">
-        <input type="number" class="form-control text-center" placeholder='100' aria-describedby="sizing-addon2" @keyup.enter = "fetchScenario" v-model.number = 'scenarioId'>
+        <typeahead type="number" class="form-control text-center" placeholder='100' aria-describedby="sizing-addon2" :on-hit = 'fetchScenario' :data = 'scenidArr'></typeahead>
       </div>
     </div><br>
     <div class = 'row text-center'>
@@ -30,14 +30,23 @@
 
 import { loadScenario } from '../vuex/actions'
 import { getTreatments } from '../vuex/getters'
+import { typeahead } from 'vue-strap'
 
 export default {
 
+  components: {
+
+    typeahead
+  },
+
   data () {
+
     return {
+
       active1: false,
       active2: false,
-      scenarioId: ''
+      scenarioId: '',
+      scenidArr: ['1846','1847','1848','1849','1850']
     }
   },
 
@@ -55,10 +64,13 @@ export default {
   },
 
   methods: {
+    
     // Activate ScenarioView.vue with nested route TreatmentDetail.vue using scenarioId passed from html input to data above
-    fetchScenario () {
+    fetchScenario (x) {
 
-      this.loadScenario(this.scenarioId)
+      this.scenarioId = x
+
+      this.loadScenario(x)
     },
 
     // Change acive state from TRUE to FALSE, shown/hidden via respective v-show

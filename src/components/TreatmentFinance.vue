@@ -9,7 +9,7 @@
   			<div class = "btn-group btn-group-justified">
   				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></div>
   				<div class="btn-group"><button v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button></div>
-  				<div class="btn-group"><button v-link="{ name: 'pie' }" class="btn btn-primary">Scenario Cost Sharing</button></div>
+  				<div class="btn-group"><button v-show = 'active' v-link="{ name: 'pie' }" class="btn btn-primary">Scenario Cost Sharing</button></div>
   			</div>
         <div class="clearfix"></div>
       </div>
@@ -103,7 +103,7 @@
   </div>
 </template>
 <script>
-import { getSelectedTreatment, getFinanceOptions } from '../vuex/getters'
+import { getSelectedTreatment, getFinanceOptions, getTreatments } from '../vuex/getters'
 import { updateFinTotals, primarysecondaryArray } from '../vuex/actions'
 import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
@@ -118,23 +118,60 @@ export default {
     'cost-type-table-row-final-paying': CostTypeTableRowFinalPaying
   },
   data () {
+
     return {
+
+      active: false,
+      activeArr: []
+    }
+  },
+
+  watch: {
+
+    'treatment': function(val) {
+
+      this.treatment.stage = 2
+      this.activeArr.push([this.treatment.stage])
+
+      if (this.activeArr.length === this.treat.length) {
+
+        this.active = true
+      }
     }
   },
 
   vuex: {
+
     actions: {
+
       updateFinTotals,
       primarysecondaryArray
     },
+
     getters: {
+
       treatment: getSelectedTreatment,
-      financeOptions: getFinanceOptions
+      financeOptions: getFinanceOptions,
+      treat: getTreatments
     }
   },
 
   ready() {
 
+    this.treatment.stage = 2
+
+    for (var i = 0; i < this.treat.length; i++) {
+      
+      if (this.treat[i].stage > 1) {
+
+        this.activeArr.push([this.treat[i].stage])
+      }
+    }
+
+    if (this.activeArr.length === this.treat.length) {
+
+      this.active = true
+    }
   },
 
   computed: {

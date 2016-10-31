@@ -9,7 +9,7 @@
       <!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
 				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></div>
-				<div class="btn-group"><button v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button></div>
+				<div class="btn-group"><button v-show = 'active' v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button></div>
 				<!-- <div class="btn-group"><button v-link="{ name: 'pie' }" class="btn btn-primary">Cost Sharing</button></div>
 				<div class="btn-group"><button v-link="{ name: 'pairedbar' }" class="btn btn-primary">Project & Financing Schedule</button></div> -->
 			</div>
@@ -98,8 +98,11 @@ export default {
   },
 
   data () {
+
     return {
 
+      active: false,
+      activeArr: []
     }
   },
 
@@ -109,6 +112,40 @@ export default {
     onDurationChange( sliderValue ) {
 
       this.updateTreatment( sliderValue[0], this.treatment.duration, this.treatment.treatmentId )
+    }
+  },
+
+  ready() {
+
+    for (var i = 0; i < this.treat.length; i++) {
+
+      if (this.treat[i].stage > 0) {
+
+        this.activeArr.push([this.treat[i].stage])
+      }
+    }
+
+    if (this.activeArr.length === this.treat.length) {
+
+      this.active =  true
+    }
+  },
+
+  watch: {
+
+    'treatment': function(val) {
+
+      if (this.treatment.stage === 0) {
+
+        this.treatment.stage = 1
+
+        this.activeArr.push([this.treatment.stage])
+      }
+
+      if (this.activeArr.length === this.treat.length) {
+
+        this.active = true
+      }
     }
   },
 
