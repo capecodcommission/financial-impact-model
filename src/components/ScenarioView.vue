@@ -7,7 +7,7 @@
 <div class="col-sm-10">
   <router-view></router-view>
   <!-- UNCOMMENT WHEN DEBUGGING -->
-  <!-- <pre>
+ <!--  <pre>
   {{ treatmentIndex | json }}
   </pre>
   <pre>

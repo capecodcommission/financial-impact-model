@@ -1,6 +1,10 @@
 <template>
   <div class="panel panel-primary">
-    <div class="panel-heading"><h3 class="panel-title">Treatments Techs</h3></div>
+    <div class="panel-heading text-center">
+      <tooltip effect = 'scale' placement = 'bottom' content = 'Click on a treatment below to view associated costs to the right'>
+        <button class = 'btn btn-primary'>Treatment Techs</button>
+      </tooltip>
+    </div>
     <div class="panel-body">
       <div id="treatment-sidebar">
         <div class="list-group">
@@ -23,20 +27,33 @@
 <script>
 import { changeTreatmentIndex } from '../vuex/actions'
 import { getTreatments, getTreatmentIndex } from '../vuex/getters'
+import { tooltip } from 'vue-strap'
 
 export default {
+
+  components: {
+
+    tooltip
+  },
+
   vuex: {
+
     actions: {
+
       changeTreatmentIndex
     },
+
     getters: {
+
       treatments: getTreatments,
       treatmentIndex: getTreatmentIndex
     }
   },
 
   filters: {
+
     fullpath ( icon ) {
+
       return 'http://www.cch2o.org/Matrix/icons/' + icon
     }
   },
@@ -46,16 +63,19 @@ export default {
 
     // Activate action to change treatment index on selection of treatment icon
     selectTreatment ( treatment, event ) {
+
       let $treatment = $(event.target).parent()
+
       if(!$treatment.hasClass('active')) {
+
         $('#treatment-sidebar .list-group-item').removeClass('active')
         $treatment.addClass('active')
-
         this.changeTreatmentIndex( $('#treatment-sidebar .active').index() )
       }
     }
   }
 }
+
 </script>
 <style lang="scss" scoped>
 .list-group-item {

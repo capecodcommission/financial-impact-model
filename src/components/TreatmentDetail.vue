@@ -4,8 +4,10 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <panel-heading-title>
-        {{ treatment.treatmentName }} ({{ treatment.treatmentId }})
-      </panel-heading-title>
+        <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
+          <button class = 'btn btn-primary'>{{ treatment.treatmentName }} ({{ treatment.treatmentId }})</button>
+        </tooltip>
+      </panel-heading-title><br><br><br>
       <!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
 				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></div>
@@ -18,7 +20,9 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-4">
-          <h5>Technology Project Start and Duration <small>(in years)</small></h5>
+          <tooltip effect = 'scale' placement = 'bottom' content = 'Select a 20-year range to update costs in the table below'>
+            <button class = 'btn btn-primary'>Technology Project Start and Duration <small>(in years)</small></button>
+          </tooltip>
         </div>
         <div class="col-md-6">
           <duration-slider
@@ -81,6 +85,7 @@
 
 import { updateTreatment } from '../vuex/actions'
 import { getSelectedTreatment, getTreatmentIndex, getTreatments } from '../vuex/getters'
+import { tooltip } from 'vue-strap'
 
 import DurationSlider from './DurationSlider'
 import CostTypeTableRow from './CostTypeTableRow'
@@ -93,7 +98,8 @@ export default {
     'panel-heading-title': PanelHeadingTitle,
     'duration-slider': DurationSlider,
     'cost-type-table-row': CostTypeTableRow,
-    'treatment-summary': TreatmentSummary
+    'treatment-summary': TreatmentSummary,
+    tooltip
 
   },
 
