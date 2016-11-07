@@ -10,7 +10,7 @@
       </panel-heading-title><br><br><br>
       <!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
-				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></div>
+				<div class="btn-group"><tooltip effect = 'scale' placement = 'bottom' content = 'This is your current page'><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></tooltip></div>
 				<div class="btn-group"><button v-show = 'active' v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button></div>
 				<!-- <div class="btn-group"><button v-link="{ name: 'pie' }" class="btn btn-primary">Cost Sharing</button></div>
 				<div class="btn-group"><button v-link="{ name: 'pairedbar' }" class="btn btn-primary">Project & Financing Schedule</button></div> -->
