@@ -3,20 +3,32 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <panel-heading-title>
-          {{ treatment.treatmentName }} ({{ treatment.treatmentId }})
-        </panel-heading-title>
+          <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
+            <button class = 'btn btn-primary'>{{ treatment.treatmentName }} ({{ treatment.treatmentId }})</button>
+          </tooltip>
+        </panel-heading-title><br><br><br>
         <!-- BUTTONS -->
   			<div class = "btn-group btn-group-justified">
-  				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></div>
-  				<div class="btn-group"><button v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button></div>
-  				<div class="btn-group"><button v-show = 'active' v-link="{ name: 'pie' }" class="btn btn-primary">Scenario Cost Sharing</button></div>
+  				<div class="btn-group">
+            <button v-link="{ name: 'treatmentDetail' }" class="btn btn-secondary">Treatment(s) Details</button>
+          </div>
+  				<div class="btn-group">
+            <tooltip effect = 'scale' placement = 'bottom' content = 'This is your current page'>
+              <button v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button>
+            </tooltip>
+          </div>
+  				<div class="btn-group">
+            <button :disabled = "!active" v-link="{ name: 'pie' }" class="btn btn-secondary">Scenario Cost Sharing</button>
+          </div>
   			</div>
         <div class="clearfix"></div>
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12">
-            <h4>Financeables</h4>
+            <tooltip effect = 'scale' placement = 'bottom' content = '<p>Select at least one Finance Type from the cost type table below</p><p>For the cost type with selected finance, enter Principle Forgiveness as a decimal. eg. 0.0325, 0.0214</p>'>
+              <button class = 'btn btn-primary'>Financeables</button>
+            </tooltip>
             <table class="table">
               <colgroup>
                 <col class="col-md-4">
@@ -38,7 +50,9 @@
                 <tr v-for="(index, costType) in treatment.costTypes | filterBy 'true' in 'financeable'" is="cost-type-table-row-finance" :cost-type="costType"></tr>
               </tbody>
             </table>
-            <h4>Non-Financeables</h4>
+            <tooltip effect = 'scale' placement = 'bottom' content = 'Financing not applicable on these cost types'>
+              <button class = 'btn btn-primary'>Non-Financeables</button>
+            </tooltip>
             <table class="table">
               <colgroup>
                 <col class="col-md-4">
@@ -61,7 +75,9 @@
         </div>
         <div class = "row">
           <div class="col-xs-12">
-            <h4>Final Paying</h4>
+            <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Additional Paying Types as decimal. eg. 0.025, 0.0314'>
+              <button class = 'btn btn-primary'>Final Paying</button>
+            </tooltip>
             <table class="table">
               <colgroup>
                 <col class="col-md-2">
@@ -109,13 +125,15 @@ import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
 import CostTypeTableRowFinance from './CostTypeTableRowFinance'
 import CostTypeTableRowFinalPaying from './CostTypeTableRowFinalPaying'
+import { tooltip } from 'vue-strap'
 
 export default {
   components: {
     'panel-heading-title': PanelHeadingTitle,
     'treatment-summary': TreatmentSummary,
     'cost-type-table-row-finance': CostTypeTableRowFinance,
-    'cost-type-table-row-final-paying': CostTypeTableRowFinalPaying
+    'cost-type-table-row-final-paying': CostTypeTableRowFinalPaying,
+    'tooltip':tooltip
   },
   data () {
 
@@ -125,6 +143,8 @@ export default {
       activeArr: []
     }
   },
+
+  props: ['disabled'],
 
   watch: {
 

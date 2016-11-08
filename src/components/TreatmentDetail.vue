@@ -1,5 +1,9 @@
 <template>
-
+<alert :show.sync = "!active" type = "success" placement="top-right" duration = "3000" width="400px" dismissable>
+  <span class="glyphicon glyphicon-plane"></span>
+  <strong>Tutorial</strong>
+  <h1>Mouse-over buttons to learn about the application</h1>
+</alert>
 <div class="treatment-detail-wrapper">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -10,8 +14,14 @@
       </panel-heading-title><br><br><br>
       <!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
-				<div class="btn-group"><tooltip effect = 'scale' placement = 'bottom' content = 'This is your current page'><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></tooltip></div>
-				<div class="btn-group"><button v-show = 'active' v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button></div>
+				<div class="btn-group">
+          <tooltip effect = 'scale' placement = 'bottom' content = 'This is your current page'>
+            <button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button>
+          </tooltip>
+        </div>
+				<div class="btn-group">
+          <button :disabled = "!active" v-link="{ name: 'financeTreatment' }" class="btn btn-secondary">Finance Treatment(s)</button>
+        </div>
 				<!-- <div class="btn-group"><button v-link="{ name: 'pie' }" class="btn btn-primary">Cost Sharing</button></div>
 				<div class="btn-group"><button v-link="{ name: 'pairedbar' }" class="btn btn-primary">Project & Financing Schedule</button></div> -->
 			</div>
@@ -85,7 +95,7 @@
 
 import { updateTreatment } from '../vuex/actions'
 import { getSelectedTreatment, getTreatmentIndex, getTreatments } from '../vuex/getters'
-import { tooltip } from 'vue-strap'
+import { tooltip, alert } from 'vue-strap'
 
 import DurationSlider from './DurationSlider'
 import CostTypeTableRow from './CostTypeTableRow'
@@ -99,7 +109,8 @@ export default {
     'duration-slider': DurationSlider,
     'cost-type-table-row': CostTypeTableRow,
     'treatment-summary': TreatmentSummary,
-    tooltip
+    tooltip,
+    alert
 
   },
 
@@ -111,6 +122,8 @@ export default {
       activeArr: []
     }
   },
+
+  props: ['disabled'],
 
   methods: {
 

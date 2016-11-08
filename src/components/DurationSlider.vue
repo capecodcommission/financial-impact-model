@@ -56,9 +56,7 @@
       	formatter: function(value) {
           if (value[1] - value[0] == 20){
             return 'Start on year ' + value[0] + ' to year ' + value[1]
-          } else {
-            return 'Please set 20 yr duration'
-          }
+          } 
       	}
       })
 

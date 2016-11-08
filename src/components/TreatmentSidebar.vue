@@ -1,7 +1,7 @@
 <template>
   <div class="panel panel-primary">
     <div class="panel-heading text-center">
-      <tooltip effect = 'scale' placement = 'bottom' content = 'Click on a treatment below to view associated costs to the right'>
+      <tooltip effect = 'scale' placement = 'bottom' content = '<p>Select treatment technology below to view and manipulate cost-associated data.</p><p>Navigate to the next page by selecting and configuring each technology.</p>'>
         <button class = 'btn btn-primary'>Treatment Techs</button>
       </tooltip>
     </div>
@@ -9,14 +9,9 @@
       <div id="treatment-sidebar">
         <div class="list-group">
           <template v-for="(index, treatment) in treatments">
-            <div
-              v-bind:class="['list-group-item', index == treatmentIndex ? 'active' : '']"
-            >
+            <div v-bind:class="['list-group-item', index == treatmentIndex ? 'active' : '']">
             <!-- WHY CAN'T WE CHANGE BELOW TO: <img v-bind:src="imgSrc"> -->
-              <img
-                src="{{ treatment.treatmentIcon | fullpath }}"
-                @click="selectTreatment(treatment, $event)"
-              >
+              <img src="{{ treatment.treatmentIcon | fullpath }}" @click="selectTreatment(treatment, $event)">
             </div>
           </template>
         </div>
@@ -49,6 +44,8 @@ export default {
       treatmentIndex: getTreatmentIndex
     }
   },
+
+  props: ['content'],
 
   filters: {
 

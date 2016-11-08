@@ -1,15 +1,20 @@
 <template>
-
 <div class = 'jumbotron full vertical-center'>
   <div class = 'container text-center'>
-    <h1><b>Cape Cod Commission</b></h1>
+      <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class="img-fluid" alt="Responsive image">
+    <!-- <h1><b>Cape Cod Commission</b></h1> -->
     <h2><b>Financial Impact Model</b></h2>
     <br>
     <br>
     <h4>Enter Scenario ID</h4>
     <div class = 'row'>
       <div class="col-lg-4 col-lg-offset-4">
-        <typeahead type="number" class="form-control text-center" placeholder='100' aria-describedby="sizing-addon2" :on-hit = 'fetchScenario' :data = 'scenidArr'></typeahead>
+        <typeahead type="number" class="text-center" placeholder='100' aria-describedby="sizing-addon2" :on-hit = 'fetchScenario' :data = 'scenidArr'></typeahead>
+        <alert :show.sync = "treatments.length === 0" type = "danger" duration="5000" width="400px" dismissable>
+            <span class="glyphicon glyphicon-flag"></span>
+            <strong>Oops!</strong>
+            <h3>No Treatments found. Enter valid scenario id to continue</h3>
+      </alert>
       </div>
     </div><br>
     
@@ -32,13 +37,14 @@
 
 import { loadScenario } from '../vuex/actions'
 import { getTreatments } from '../vuex/getters'
-import { typeahead } from 'vue-strap'
+import { typeahead, alert } from 'vue-strap'
 
 export default {
 
   components: {
 
-    typeahead
+    typeahead,
+    alert
   },
 
   data () {
@@ -525,7 +531,6 @@ export default {
 
       if (val.length === 0) {
 
-        alert('Invalid Scenario. Please enter valid Scenario ID')
       } else {
 
         this.$router.go('/scenario/' + this.scenarioId + '/treatmentsDetails')
