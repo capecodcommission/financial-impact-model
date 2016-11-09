@@ -4,11 +4,15 @@
 		<div class="panel-heading">
 			<!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
-				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-primary">Treatment(s) Details</button></div>
-				<div class="btn-group"><button v-link="{ name: 'financeTreatment' }" class="btn btn-primary">Finance Treatment(s)</button></div>
-				<div class="btn-group"><button v-link="{ name: 'pie' }" class="btn btn-primary">Scenario Cost Sharing</button></div>
-				<div class="btn-group"><button v-link="{ name: 'pairedbar' }" class="btn btn-primary">Project & Financing Schedule</button></div>
-				<div class="btn-group"><button v-link="{ name: 'propertyOwnerCosts' }" class="btn btn-primary">Property Owner Costs</button></div>
+				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-secondary">Treatment(s) Details</button></div>
+				<div class="btn-group"><button v-link="{ name: 'financeTreatment' }" class="btn btn-secondary">Finance Treatment(s)</button></div>
+				<div class="btn-group"><button v-link="{ name: 'pie' }" class="btn btn-secondary">Scenario Cost Sharing</button></div>
+				<div class="btn-group">
+					<tooltip effect = 'scale' placement = 'bottom' content = 'This is your current page'>
+						<button v-link="{ name: 'pairedbar' }" class="btn btn-primary">Project & Financing Schedule</button>
+					</tooltip>
+				</div>
+				<div class="btn-group"><button v-link="{ name: 'propertyOwnerCosts' }" class="btn btn-secondary">Property Owner Costs</button></div>
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -88,6 +92,7 @@ import { getTreatments, getSelectedTreatment } from '../vuex/getters'
 import { calculatetitle5inflated } from '../vuex/actions'
 import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
+import { tooltip } from 'vue-strap'
 
 export default {
 
@@ -255,7 +260,8 @@ export default {
 
 	components: {
 		'panel-heading-title': PanelHeadingTitle,
-		'treatment-summary': TreatmentSummary
+		'treatment-summary': TreatmentSummary,
+		'tooltip': tooltip
 		// 'cost-type-table-row-finance': CostTypeTableRowFinance,
 		// 'cost-type-table-row-final-paying': CostTypeTableRowFinalPaying
 	}
