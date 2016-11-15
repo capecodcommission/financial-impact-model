@@ -108,7 +108,7 @@
             <treatment-summary :treatment="treatment"></treatment-summary>
           </div>
         <div class = "row">
-          <div class = "col-xs-3">
+          <div class = "col-md-12">
             <input class="form-control text-center" type="text" v-model = "treatment.finnotes" placeholder = "User input notes">
           </div>
         </div>

@@ -9,7 +9,7 @@
     <div class="panel-heading">
       <panel-heading-title>
         <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
-          <button class = 'btn btn-primary'>{{ treatment.treatmentName }} ({{ treatment.treatmentId }})</button>
+          <button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
         </tooltip>
       </panel-heading-title><br><br><br>
       <!-- BUTTONS -->
@@ -44,7 +44,7 @@
           >
           </duration-slider>
         </div>
-      </div>
+      </div><br>
       <div class="row">
         <div class="col-xs-12">
           <table class="table">
@@ -56,17 +56,43 @@
             </colgroup>
             <thead>
               <tr>
-                <th>Cost Type</th>
-                <th>Inflated</th>
-                <th class="text-center">
-                  Grants
-                  <div class="row">
-                    <div class="col-md-4">Federal</div>
-                    <div class="col-md-4">Regional</div>
-                    <div class="col-md-4">State</div>
+                <th>
+                  <tooltip effect = 'scale' placement = 'bottom' content = '<p>There are multiple components to the cost of a wastewater technology – capital, replacement, operations and maintenance (O&M), other (both financeable and non-financeable), transport and disposal, and wastewater collection.</p> <p>Not every technology has each cost type, and cost types might be “grantable” (can be paid for with grants) and/or “financeable” (can be financed), or neither.</p>'>
+                    <button class = 'btn btn-primary'>Cost Type</button>
+                  </tooltip>
+                </th>
+                <th>
+                  <tooltip effect = 'scale' placement = 'bottom' content = 'Inflated'>
+                    <button class = 'btn btn-primary'>Inflated</button>
+                  </tooltip>
+                </th>
+                <th>
+                  <tooltip effect = 'scale' placement = 'top' content = 'Amount of money given by an organization (especially government) for a particular purpose. Finance Impact Model allows users to pay for each cost type deemed “grantable” by specifying amounts of grants given by federal, regional, or state agencies.'>
+                    <button class = 'btn btn-primary'>Grants</button>
+                  </tooltip>
+                  <div class="row"><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
+                    <div class="col-md-4">
+                      <tooltip effect = 'scale' placement = 'top' content = 'Enter amount in dollars $'>
+                        <button class = 'btn btn-primary'>Federal</button>
+                      </tooltip>
+                    </div>
+                    <div class="col-md-4">
+                      <tooltip effect = 'scale' placement = 'top' content = 'Enter amount in dollars $'>
+                        <button class = 'btn btn-primary'>Regional</button>
+                      </tooltip>
+                    </div>
+                    <div class="col-md-4">
+                      <tooltip effect = 'scale' placement = 'top' content = 'Enter amount in dollars $'>
+                        <button class = 'btn btn-primary'>State</button>
+                      </tooltip>
+                    </div>
                   </div>
                 </th>
-                <th>Cost</th>
+                <th>
+                  <tooltip effect = 'scale' placement = 'bottom' content = 'Enter amount in dollars $'>
+                    <button class = 'btn btn-primary'>Total (Inflated minus grants)</button>
+                  </tooltip>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -80,7 +106,7 @@
           <treatment-summary :treatment="treatment"></treatment-summary>
       </div>
       <div class = "row">
-        <div class = "col-xs-3">
+        <div class = "col-md-12">
           <input class="form-control text-center" type="text" v-model = "treatment.treatnotes" placeholder = "User input notes">
         </div>
       </div>
