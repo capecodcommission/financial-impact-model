@@ -50,7 +50,7 @@
             <col class="col-md-3">
             <col class="col-md-2">
             <col class="col-md-4">
-            <col class="col-md-2">
+            <col class="col-md-3">
             </colgroup>
             <thead>
               <tr>
@@ -79,7 +79,7 @@
                         <button class = 'btn btn-primary'>Regional</button>
                       </tooltip>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <tooltip effect = 'scale' placement = 'top' content = 'Enter amount in dollars $'>
                         <button class = 'btn btn-primary'>State</button>
                       </tooltip>

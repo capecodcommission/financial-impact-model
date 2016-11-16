@@ -3,7 +3,7 @@
     <td>{{ costType.name }}</td>
     <td>{{ '$' + Math.round(sumOfAnnualCapitalTotals1, 1).toLocaleString() }}</td>
     <td>
-     <div class="input-group">
+     <div class="input-group col-md-12">
         <input type="number" class="form-control input-sm" min="0" max="1" step="0.01" v-model.number="costType.addtlpytyps.Property_TaxesorFees" number />
         <span class="input-group-btn"></span>
         <input type="number" class="form-control input-sm" min="0" max="1" step="0.01" v-model.number="costType.addtlpytyps.Betterments" number />

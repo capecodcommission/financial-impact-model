@@ -41,8 +41,8 @@
                 <tr>
                   <th>Cost Type</th>
                   <th>Finance Type</th>
-                  <th>Finance Duration</th>
-                  <th>Principal Forgiveness</th>
+                  <th class="text-center">Finance Duration</th>
+                  <th class="text-center">Principal Forgiveness</th>
                   <th class="text-center">Total (Financing minus Principal Forgiveness)</th>
                 </tr>
               </thead>
@@ -88,8 +88,8 @@
             <table class="table">
               <colgroup>
                 <col class="col-md-4">
-                <col class="col-md-4">
                 <col class="col-md-2">
+                <col class="col-md-4">
                 <col class="col-md-2">
               </colgroup>
               <thead>
@@ -98,8 +98,8 @@
                   <th>Financed & Non-Financed Costs</th>
                   <th class="text-center"> Additional Paying Types
                     <div class="row text-center"><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
-                      <div class="col-md-5 text-center">Property Taxes</div>
-                      <div class="col-md-2 text-center">Betterments</div>
+                      <div class="col-md-6 text-center">Property Taxes</div>
+                      <div class="col-md-5 text-center">Betterments</div>
                     </div>
                   </th>
                   <th class="text-center">$ Amount Financed/Non-Financeable</th>
