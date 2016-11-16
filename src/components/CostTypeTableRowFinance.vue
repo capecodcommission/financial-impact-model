@@ -1,21 +1,42 @@
 <template>
   <tr>
     <td>{{ costType.name }}</td>
-    <td>
-      <select class="form-control" v-model="costType.financeOption" debounce = "1000">
-        <option v-for="(index,option) in financeOptions" value = "{{option.id}}" debounce = "1000">
-        {{option.name}}
-        </option>
-      </select>
-    </td>
-    <td>
-      <input class="form-control text-center input-sm" type="number" min="1" v-model.number = "costType.finDur" debounce = "1000">
-    </td>
-    <td>
-      <input class="form-control text-center" type="number" min="0" max="1" step="0.01" v-model.number = "costType.prinFor" debounce = "1000">
-    </td>
+      <td>
+        <div v-if = 'costType.financeable'>
+          <select class="form-control" v-model="costType.financeOption" debounce = "1000">
+            <option v-for="(index,option) in financeOptions" value = "{{option.id}}" debounce = "1000">
+            {{option.name}}
+            </option>
+          </select>
+        </div>
+        <div v-else class = 'text-center disabled'>
+          <small>Not financeable</small>
+        </div>
+      </td>
+      <td>
+        <div v-if = 'costType.financeable'>
+          <input class="form-control text-center input-sm" type="number" min="1" v-model.number = "costType.finDur" debounce = "1000">
+        </div>
+        <div v-else class = 'text-center disabled'>
+          <small>Not financeable</small>
+        </div>
+      </td>
+      <td>
+        <div v-if = 'costType.financeable'>
+          <input class="form-control text-center" type="number" min="0" max="1" step="0.01" v-model.number = "costType.prinFor" debounce = "1000">
+        </div>
+        <div v-else class = 'text-center disabled'>
+          <small>Not financeable</small>
+        </div>
+      </td>
+    </div>
     <td class="text-center" type="number">
-      {{ '$' + Math.round(costType.annualized.sumOfAnnualCapitalTotals, 1).toLocaleString() }}
+      <div v-if = 'costType.financeable'>
+        {{ '$' + Math.round(costType.annualized.sumOfAnnualCapitalTotals, 1).toLocaleString() }}
+      </div>
+      <div v-else class = 'text-center'>
+          {{ '$' + Math.round(costType.treatTotal, 1).toLocaleString() }}
+      </div>
     </td>
   </tr>
 </template>

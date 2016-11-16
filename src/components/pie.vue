@@ -16,30 +16,28 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class = 'container-fluid'>
-			<div class = 'row'>
-				<div class = 'jumbotron text-center'>
-					<h1 class = 'display-1'><b>Scenario Cost Sharing</b></h1>
-					<vue-chart :chart-type = "chartType" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
+			<div class = 'jumbotron'>
+				<div class = 'row'>
+					<treatment-summary :treatment="treatment"></treatment-summary>
 				</div>
 			</div>
-		</div>
-		<div class = 'container-fluid'>
-			<div class = 'jumbotron text-center'>
-				<h1 class = 'display-1'>Total Scenario Cost <small>(Including inflation & financing)</small> <br> {{ totalCost | currency }}</h1><br>
-				<ul class = "text-left">
-					<li>Total Federal:<b>{{ totalFed | currency}}</b></li>
-					<li>Total State:<b>{{ totalState | currency}}</b></li>
-					<li>Total Regional:<b>{{ totalReg | currency}}</b></li>
-					<li>Total Principal Forgiveness:<b>{{ totalPrinFor | currency}}</b></li>
-					<li>Total Property Taxes / Fees:<b>{{ totalProp | currency}}</b></li>
-					<li>Total Betterment:<b>{{ totalBtrmnt | currency}}</b></li>
-					<li>Total Unaccounted For:<b>{{ totalUncctFor | currency}}</b></li>
-				</ul>
-			</div>
-		</div>
-		<div class = 'jumbotron'>
 			<div class = 'row'>
-				<treatment-summary :treatment="treatment"></treatment-summary>
+				<div class = 'col-lg-6 text-center'>
+					<h1 class = 'display-1'>Scenario Cost Sharing</h1>
+					<vue-chart :chart-type = "chartType" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
+				</div>
+				<div class = 'col-lg-6 text-center'>
+					<h1 class = 'display-1'>Total Scenario Cost <br><small>(Including inflation & financing)</small> <br><br><br> {{ '$' + Math.round(totalCost,0).toLocaleString() }}</h1><br>
+					<ul class = "text-center">
+						<li>Total Federal:<b>{{ totalFed | currency}}</b></li>
+						<li>Total State:<b>{{ totalState | currency}}</b></li>
+						<li>Total Regional:<b>{{ totalReg | currency}}</b></li>
+						<li>Total Principal Forgiveness:<b>{{ totalPrinFor | currency}}</b></li>
+						<li>Total Property Taxes / Fees:<b>{{ totalProp | currency}}</b></li>
+						<li>Total Betterment:<b>{{ totalBtrmnt | currency}}</b></li>
+						<li>Total Unaccounted For:<b>{{ totalUncctFor | currency}}</b></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -91,8 +89,8 @@ export default {
 				['Unaccounted For', 3000000]
 			],
 			options: {
-				width: 1500,
-				height: 800,
+				width: 600,
+				height: 600,
 				tooltipTemplate: "<% if (label) {%><%=label %>: <%}%><%= value + ' $' %>"
 			}
         }

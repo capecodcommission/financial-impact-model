@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <panel-heading-title>
           <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
-            <button class = 'btn btn-primary'>{{ treatment.treatmentName }} ({{ treatment.treatmentId }})</button>
+            <button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
           </tooltip>
         </panel-heading-title><br><br><br>
         <!-- BUTTONS -->
@@ -42,47 +42,54 @@
                   <th>Cost Type</th>
                   <th>Finance Type</th>
                   <th>Finance Duration</th>
-                  <th>Principle Forgiveness</th>
-                  <th class="text-center">Cost</th>
+                  <th>Principal Forgiveness</th>
+                  <th class="text-center">Total (Financing minus Principal Forgiveness)</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(index, costType) in treatment.costTypes | filterBy 'true' in 'financeable'" is="cost-type-table-row-finance" :cost-type="costType"></tr>
+                <tr v-for="(index, costType) in treatment.costTypes" is="cost-type-table-row-finance" :cost-type="costType"></tr>
               </tbody>
             </table>
-            <tooltip effect = 'scale' placement = 'bottom' content = 'Financing not applicable on these cost types'>
+            <!-- <tooltip effect = 'scale' placement = 'bottom' content = 'Financing not applicable on these cost types'>
               <button class = 'btn btn-primary'>Non-Financeables</button>
             </tooltip>
             <table class="table">
               <colgroup>
-                <col class="col-md-4">
+                <col class="col-md-2">
                 <col class="col-md-8">
+                <col class="col-md-2">
               </colgroup>
               <thead>
                 <tr>
-                  <th>Cost Type</th>
-                  <th>Cost</th>
+                  <th></th>
+                  <th></th>
+                  <th class = 'text-center'>Total (Inflated)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(index, costType) in treatment.costTypes | filterBy 'false' in 'financeable'">
                   <td>{{ costType.name }}</td>
-                  <td>{{ '$' + Math.round(costType.treatTotal, 1).toLocaleString() }}</td>
+                  <td>
+                    <div v-if = '!costType.financeable' class = 'text-center disabled'>
+                      <small>This cost type isn't financeable</small>
+                    </div>
+                  </td>
+                  <td class = 'text-center'>{{ '$' + Math.round(costType.treatTotal, 1).toLocaleString() }}</td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </div>
         </div>
         <div class = "row">
           <div class="col-xs-12">
             <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Additional Paying Types as decimal. eg. 0.025, 0.0314'>
-              <button class = 'btn btn-primary'>Final Paying</button>
+              <button class = 'btn btn-primary'>Additional Payments</button>
             </tooltip>
             <table class="table">
               <colgroup>
+                <col class="col-md-4">
+                <col class="col-md-4">
                 <col class="col-md-2">
-                <col class="col-md-2">
-                <col class="col-md-1">
                 <col class="col-md-2">
               </colgroup>
               <thead>
@@ -90,7 +97,7 @@
                   <th>Cost Type</th>
                   <th>Financed & Non-Financed Costs</th>
                   <th class="text-center"> Additional Paying Types
-                    <div class="row text-center">
+                    <div class="row text-center"><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
                       <div class="col-md-5 text-center">Property Taxes</div>
                       <div class="col-md-2 text-center">Betterments</div>
                     </div>

@@ -1,13 +1,13 @@
 <template>
 
 <div id="scenario-view" class="row">
-  <div class="col-sm-2">
+  <div class="col-xs-2">
     <treatment-sidebar></treatment-sidebar>
 </div>
 <div class="col-sm-10">
   <router-view></router-view>
   <!-- UNCOMMENT WHEN DEBUGGING -->
- <!--  <pre>
+  <!-- <pre>
   {{ treatmentIndex | json }}
   </pre>
   <pre>

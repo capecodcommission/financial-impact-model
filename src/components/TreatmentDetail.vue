@@ -22,19 +22,17 @@
 				<div class="btn-group">
           <button :disabled = "!active" v-link="{ name: 'financeTreatment' }" class="btn btn-secondary">Finance Treatment(s)</button>
         </div>
-				<!-- <div class="btn-group"><button v-link="{ name: 'pie' }" class="btn btn-primary">Cost Sharing</button></div>
-				<div class="btn-group"><button v-link="{ name: 'pairedbar' }" class="btn btn-primary">Project & Financing Schedule</button></div> -->
 			</div>
       <div class="clearfix"></div>
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <tooltip effect = 'scale' placement = 'bottom' content = 'Select a 20-year range to update costs in the table below'>
             <button class = 'btn btn-primary'>Technology Project Start and Duration <small>(in years)</small></button>
           </tooltip>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
           <duration-slider
           :relative-start-year="treatment.relativeStartYear"
           :duration="treatment.duration"
@@ -62,7 +60,7 @@
                   </tooltip>
                 </th>
                 <th>
-                  <tooltip effect = 'scale' placement = 'bottom' content = 'Inflated'>
+                  <tooltip effect = 'scale' placement = 'bottom' content = '<p>Approximated future dollar value of cost type at project start year</p>'>
                     <button class = 'btn btn-primary'>Inflated</button>
                   </tooltip>
                 </th>

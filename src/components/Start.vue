@@ -6,10 +6,11 @@
     <h2><b>Financial Impact Model</b></h2>
     <br>
     <br>
-    <h4>Enter Scenario ID</h4>
+    <h4>Enter <a href = 'http://2016.watershedmvp.org/login'>Scenario ID</a></h4>
     <div class = 'row'>
       <div class="col-lg-4 col-lg-offset-4">
         <typeahead type="number" class="text-center" placeholder='100' aria-describedby="sizing-addon2" :on-hit = 'fetchScenario' :data = 'scenidArr'></typeahead>
+        <button class = 'btn btn-primary' @click = 'fetchScenario' :data = 'scenidArr'>Enter</button>
         <alert :show.sync = "treatments.length === 0" type = "danger" duration="5000" width="400px" dismissable>
             <span class="glyphicon glyphicon-flag"></span>
             <strong>Oops!</strong>

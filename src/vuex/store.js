@@ -57,6 +57,12 @@ const mutations = {
         scenario.treatments[i].costTypes[j]["townprimsec"] = {}
         scenario.treatments[i].costTypes[j]["financeOption"] = 0
         scenario.treatments[i].costTypes[j]["finDur"] = 1
+
+        if (scenario.treatments[i].costTypes[j]["name"] === "OM Cost") {
+          scenario.treatments[i].costTypes[j]["name"] = "Operations & Maintenance xxxx"
+        }
+
+        scenario.treatments[i].costTypes[j]["name"] = scenario.treatments[i].costTypes[j]["name"].slice("Cost",-4)
       }
     }
     state.scenario = scenario
@@ -82,6 +88,12 @@ const mutations = {
       treatment.costTypes[i]["townprimsec"] = {}
       treatment.costTypes[i]["financeOption"] = 0
       treatment.costTypes[i]["finDur"] = 1
+
+      if (treatment.costTypes[i]["name"] === "OM Cost") {
+        treatment.costTypes[i]["name"] = "Operations & Maintenance xxxx"
+      }
+
+      treatment.costTypes[i]["name"] = treatment.costTypes[i]["name"].slice("Cost",-4)
     }
     state.scenario.treatments.splice(index, 1, treatment)
   },

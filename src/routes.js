@@ -26,7 +26,7 @@ export default function (router) {
         '/propertyOwnerCosts': {
           name: 'propertyOwnerCosts',
           component: require('./components/propertyOwnerCosts.vue')
-        },
+        }
       }
     }
   })

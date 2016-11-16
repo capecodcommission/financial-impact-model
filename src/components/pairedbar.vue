@@ -17,69 +17,21 @@
 			<div class="clearfix"></div>
 		</div>
 		<!-- CHART -->
-		<div class = 'container-fluid'>
-			<div class = 'row'>
-				<div class = 'jumbotron text-center'>
-					<h1 class = 'display-1'><b>Project & Financing Schedule</b></h1>
-					<table class = 'table' style = "width: 500px; margin: 10px auto;">
-						<colgroup>
-							<col class = 'col-md-1'>
-							<col class = 'col-md-1'>
-						</colgroup>
-						<tbody>
-							<tr>
-								<td><vue-chart :chart-type = "chartType" :columns = "columns1" :rows = "rows1" :options = "options1"></vue-chart></td>
-							</tr>
-							<tr>
-								<td><vue-chart :chart-type = "chartType" :columns = "columns2" :rows = "rows2" :options = "options2"></vue-chart></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class = 'container-fluid'>
-			<table class="table">
-				<colgroup>
-					<col class="col-md-1">
-					<col class="col-md-1">
-					<col class="col-md-1">
-					<col class="col-md-1">
-					<col class="col-md-1">
-					<col class="col-md-1">
-					<col class="col-md-1">
-				</colgroup>
-				<thead>
-					<tr>
-						<th class="text-center">Treatment ID (treatmentId)</th>
-						<th class="text-center">Treatment Name (treatmentName)</th>
-						<th class="text-center">Treatment Type ID (treatmentTypeId)</th>
-						<th class="text-center">Project Start Year (relativeStartYear)</th>
-						<th class="text-center">Project End Year (relativeStartYear + 20)</th>
-						<th class="text-center">Finance Start Year (relativeStartYear)</th>
-						<th class="text-center">Finance End Year (relativeStartYear + finDur)</th>
-						<th class="text-center">Cost Type (costTypes.name)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<template v-for="treatment in treatments">
-						<tr v-for="(index, costType) in treatment.costTypes | filterBy 'true' in 'financeable'">
-						<td>{{ treatment.treatmentId }}</td>
-						<td>{{ treatment.treatmentName }}</td>
-						<td>{{ treatment.treatmentTypeId }}</td>
-						<td>{{ treatment.relativeStartYear }}</td>
-						<td>{{ treatment.duration }}</td>
-						<td>{{ treatment.relativeStartYear }}</td>
-						<td>{{ costType.finDur }}</td>
-						<td>{{ costType.name }}</td>
-					</tr>
-				</template>
-			</tbody>
-		</table>
-		</div>
 		<div class = 'jumbotron'>
 			<div class = 'row'>
 				<treatment-summary :treatment="treatment"></treatment-summary>
+			</div>
+		</div>
+		<div class = 'container-fluid'>
+			<div class = 'row'>
+				<div class = 'col-md-6 text-center'>
+					<h1 class = 'display-1'><b>Project Schedule</b></h1>
+					<vue-chart :chart-type = "chartType" :columns = "columns1" :rows = "rows1" :options = "options1"></vue-chart>
+				</div>
+				<div class = 'col-md-6 text-center'>	
+					<h1 class = 'display-1'><b>Financing Schedule</b></h1>	
+					<vue-chart :chart-type = "chartType" :columns = "columns2" :rows = "rows2" :options = "options2"></vue-chart>
+				</div>
 			</div>
 		</div>
 	</div>
