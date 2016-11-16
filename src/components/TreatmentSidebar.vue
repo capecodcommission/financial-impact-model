@@ -2,7 +2,7 @@
   <div class="panel panel-primary">
     <div class="panel-heading text-center">
       <tooltip effect = 'scale' placement = 'bottom' content = '<p>Select treatment technology below to view and manipulate cost-associated data.</p><p>Navigate to the next page by selecting and configuring each technology.</p>'>
-        <button class = 'btn btn-primary'>Treatment Techs</button>
+        <button class = 'btn btn-primary'>Description</button>
       </tooltip>
     </div>
     <div class="panel-body">
