@@ -39,10 +39,16 @@
               </colgroup>
               <thead>
                 <tr>
-                  <th>Cost Type</th>
-                  <th>Finance Type</th>
-                  <th class="text-center">Finance Duration</th>
-                  <th class="text-center">Principal Forgiveness</th>
+                  <th class = 'text-center'>Cost Type</th>
+                  <th class = 'text-center'>
+                    <tooltip effect = 'scale' placement = 'bottom' content = 'Select financing option from dropdown'>Finance Type</tooltip>
+                  </th>
+                  <th class="text-center">
+                    <tooltip effect = 'scale' placement = 'bottom' content = 'Enter duration in years'>Finance Duration</tooltip>
+                  </th>
+                  <th class="text-center">
+                    <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Primcipal Forgiveness as a decimal. Eg. .0325, .0214'>Principal Forgiveness</tooltip>
+                  </th>
                   <th class="text-center">Total (Financing minus Principal Forgiveness)</th>
                 </tr>
               </thead>
@@ -61,7 +67,7 @@
               </colgroup>
               <thead>
                 <tr>
-                  <th></th>
+                  <th></th>   
                   <th></th>
                   <th class = 'text-center'>Total (Inflated)</th>
                 </tr>
@@ -94,12 +100,16 @@
               </colgroup>
               <thead>
                 <tr>
-                  <th>Cost Type</th>
-                  <th>Financed & Non-Financed Costs</th>
+                  <th class="text-center">Cost Type</th>
+                  <th class="text-center">Financed & Non-Financed Costs</th>
                   <th class="text-center"> Additional Paying Types
                     <div class="row text-center"><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
-                      <div class="col-md-6 text-center">Property Taxes</div>
-                      <div class="col-md-5 text-center">Betterments</div>
+                      <div class="col-md-6 text-center">
+                        <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Additional Paying Types as decimal. eg. 0.025, 0.0314'>Property Taxes</tooltip>
+                      </div>
+                      <div class="col-md-5 text-center">
+                        <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Additional Paying Types as decimal. eg. 0.025, 0.0314'>Betterments</tooltip>
+                      </div>
                     </div>
                   </th>
                   <th class="text-center">$ Amount Financed/Non-Financeable</th>

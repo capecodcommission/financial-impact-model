@@ -55,14 +55,10 @@
             <thead>
               <tr>
                 <th>
-                  <tooltip effect = 'scale' placement = 'bottom' content = '<p>There are multiple components to the cost of a wastewater technology – capital, replacement, operations and maintenance (O&M), other (both financeable and non-financeable), transport and disposal, and wastewater collection.</p> <p>Not every technology has each cost type, and cost types might be “grantable” (can be paid for with grants) and/or “financeable” (can be financed), or neither.</p>'>
-                    <button class = 'btn btn-primary'>Cost Type</button>
-                  </tooltip>
+                  <tooltip effect = 'scale' placement = 'bottom' content = 'There are multiple components to the cost of a wastewater technology – capital, replacement, operations and maintenance (O&M), other (both financeable and non-financeable), transport and disposal, and wastewater collection. Not every technology has each cost type, and cost types might be “grantable” (can be paid for with grants) and/or “financeable” (can be financed), or neither.'>Cost Type</tooltip>
                 </th>
                 <th>
-                  <tooltip effect = 'scale' placement = 'bottom' content = '<p>Approximated future dollar value of cost type at project start year</p>'>
-                    <button class = 'btn btn-primary'>Inflated</button>
-                  </tooltip>
+                  <tooltip effect = 'scale' placement = 'bottom' content = '<p>Approximated future dollar value of cost type at project start year</p>'>Inflated</tooltip>
                 </th>
                 <th>
                   <tooltip effect = 'scale' placement = 'top' content = 'Amount of money given by an organization (especially government) for a particular purpose. Finance Impact Model allows users to pay for each cost type deemed “grantable” by specifying amounts of grants given by federal, regional, or state agencies.'>

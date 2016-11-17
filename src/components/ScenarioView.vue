@@ -1,9 +1,11 @@
 <template>
 
 <div id="scenario-view" class="row">
-  <tooltip effect = 'scale' placement = 'right' content = '<p>Click to enable treatment technology selector</p>'>
-    <button class = 'btn btn-success text-center' @click = 'showRight = true'>Show treatment window</button>
-  </tooltip>
+  <div class = 'col text-center'>
+    <tooltip effect = 'scale' placement = 'right' content = '<p>Click to enable treatment technology selector</p>'>
+      <button class = 'btn btn-success text-center' @click = 'showRight = true'>Show treatment window</button>
+    </tooltip>
+  </div>
   <aside :show.sync = "showRight" placement="left" header="Treatment Technologies" width="200">
     <div class="col-xs-13">
       <treatment-sidebar></treatment-sidebar>

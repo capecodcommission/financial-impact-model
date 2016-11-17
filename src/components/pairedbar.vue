@@ -112,7 +112,7 @@ export default {
 				vAxis: {title: 'Technology ID'},
 				hAxis: {
 					title: 'Year(s) From Current Year',
-					viewWindow: { min: 0, max: 50 },
+					viewWindow: { min: 0, max: 80 },
 					ticks: []
 				}
 			},

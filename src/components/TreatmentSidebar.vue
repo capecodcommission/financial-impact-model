@@ -1,15 +1,15 @@
 <template>
-  <div class="panel panel-primary">
+  <div class="panel panel-primary" >
     <div class="panel-heading text-center">
       <tooltip effect = 'scale' placement = 'bottom' content = '<p>Select treatment technology below to view and manipulate cost-associated data.</p><p>Navigate to the next page by selecting and configuring each technology.</p>'>
-        <button class = 'btn btn-primary'>Description</button>
+        <button class = 'btn btn-primary'>?</button>
       </tooltip>
     </div>
     <div class="panel-body">
       <div id="treatment-sidebar">
         <div class="list-group">
           <template v-for="(index, treatment) in treatments">
-            <div v-bind:class="['list-group-item', index == treatmentIndex ? 'active' : '']">
+            <div v-bind:class="['list-group-item', index == treatmentIndex ? 'active' : '', treatment.stage == 1 ? 'visited' : '', treatment.stage == 2 ? 'visited1' : '']">
             <!-- WHY CAN'T WE CHANGE BELOW TO: <img v-bind:src="imgSrc"> -->
               <img src="{{ treatment.treatmentIcon | fullpath }}" @click="selectTreatment(treatment, $event)">
             </div>
@@ -69,6 +69,8 @@ export default {
         $treatment.addClass('active')
         this.changeTreatmentIndex( $('#treatment-sidebar .active').index() )
       }
+
+
     }
   }
 }
@@ -79,6 +81,12 @@ export default {
   background-color: #ECECEC;
   &.active {
     background-color: #337ab7;
+  }
+  &.visited {
+    background-color: #80bfff;
+  }
+  &.visited1 {
+    background-color: #ffb366;
   }
 }
 img {
