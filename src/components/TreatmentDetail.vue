@@ -4,6 +4,11 @@
   <strong>Tutorial</strong>
   <h1>Mouse-over buttons to learn about the application</h1>
 </alert>
+<alert :show.sync = "active" type = "success" placement="top-right" duration = "3000" width="400px" dismissable>
+  <span class="glyphicon glyphicon-plane"></span>
+  <strong>Tutorial</strong>
+  <h1>Now that you've gone through all treatments, please continue to the next page</h1>
+</alert>
 <div class="treatment-detail-wrapper">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -108,7 +113,9 @@
   </div>
 </div>
 </div>
-
+<script src="jquery.js"></script>
+<script src="filesaver.js"></script>
+<script src="tableexport.js"></script>
 </template>
 
 <script>
@@ -121,6 +128,7 @@ import DurationSlider from './DurationSlider'
 import CostTypeTableRow from './CostTypeTableRow'
 import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
+import json2csv from 'nice-json2csv'
 
 export default {
   components: {
@@ -151,6 +159,64 @@ export default {
     onDurationChange( sliderValue ) {
 
       this.updateTreatment( sliderValue[0], this.treatment.duration, this.treatment.treatmentId )
+    },
+
+    JSONflatten (data) {
+
+      var result = {};
+
+      function recurse(cur, prop) {
+
+        if (Object(cur) !== cur) {
+
+          result[prop] = cur;
+        } else if (Array.isArray(cur)) {
+
+          for (var i = 0, l = cur.length; i < l; i++)
+
+            recurse(cur[i], prop + "[" + i + "]");
+
+          if (l == 0) result[prop] = [];
+
+        } else {
+          var isEmpty = true;
+
+          for (var p in cur) {
+
+            isEmpty = false;
+            recurse(cur[p], prop ? prop + "." + p : p);
+          }
+
+          if (isEmpty && prop) result[prop] = {};
+        }
+      }
+
+      recurse(data, "");
+      return result;
+    },
+
+    excelExport() {
+
+      var arr = []
+
+      for (var i = 0; i < this.treat.length; i++) {
+
+        for (var j = 0; j < this.treat[i].costTypes.length; j++) {
+
+          arr.push(this.JSONflatten(this.treat[i].costTypes[j]))
+        }
+      }
+
+      var csvContent = json2csv.convert(arr)
+
+      var a = document.createElement('a');
+
+      a.textContent='download';
+      a.download= "Treatments.csv";
+      a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
+      document.body.appendChild(a);
+      a.click()
+      a.remove()
     }
   },
 
@@ -185,6 +251,13 @@ export default {
 
         this.active = true
       }
+
+      // var csvContent = json2csv.convert(this.treat);
+      // var a= document.createElement('a');
+      // a.textContent='download';
+      // a.download="export.csv";
+      // a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
+      // document.body.appendChild(a);
     }
   },
 
