@@ -261,8 +261,8 @@ export default {
 <style lang="scss" scoped>
 
 thead {
- tr {
-   th {
+  tr {
+    th {
      text-align: center;
    }
  }
