@@ -66,32 +66,20 @@
                   <tooltip effect = 'scale' placement = 'bottom' content = '<p>Approximated future dollar value of cost type at project start year</p>'>Inflated</tooltip>
                 </th>
                 <th>
-                  <tooltip effect = 'scale' placement = 'top' content = 'Amount of money given by an organization (especially government) for a particular purpose. Finance Impact Model allows users to pay for each cost type deemed “grantable” by specifying amounts of grants given by federal, regional, or state agencies.'>
-                    <button class = 'btn btn-primary'>Grants</button>
-                  </tooltip>
+                  <tooltip effect = 'scale' placement = 'bottom' content = 'Amount of money given by an organization (especially government) for a particular purpose. Finance Impact Model allows users to pay for each cost type deemed “grantable” by specifying amounts of grants given by federal, regional, or state agencies.'>Grants</tooltip>
                   <div class="row"><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
                     <div class="col-md-4">
-                      <tooltip effect = 'scale' placement = 'top' content = 'Enter amount in dollars $'>
-                        <button class = 'btn btn-primary'>Federal</button>
-                      </tooltip>
+                      <tooltip effect = 'scale' placement = 'bottom' content = 'Enter amount in dollars $'>Federal</tooltip>
                     </div>
                     <div class="col-md-4">
-                      <tooltip effect = 'scale' placement = 'top' content = 'Enter amount in dollars $'>
-                        <button class = 'btn btn-primary'>Regional</button>
-                      </tooltip>
+                      <tooltip effect = 'scale' placement = 'bottom' content = 'Enter amount in dollars $'>Regional</tooltip>
                     </div>
                     <div class="col-md-3">
-                      <tooltip effect = 'scale' placement = 'top' content = 'Enter amount in dollars $'>
-                        <button class = 'btn btn-primary'>State</button>
-                      </tooltip>
+                      <tooltip effect = 'scale' placement = 'bottom' content = 'Enter amount in dollars $'>State</tooltip>
                     </div>
                   </div>
                 </th>
-                <th>
-                  <tooltip effect = 'scale' placement = 'bottom' content = 'Enter amount in dollars $'>
-                    <button class = 'btn btn-primary'>Total (Inflated minus grants)</button>
-                  </tooltip>
-                </th>
+                <th>Total (Inflated minus grants)</th>
               </tr>
             </thead>
             <tbody>
@@ -251,13 +239,6 @@ export default {
 
         this.active = true
       }
-
-      // var csvContent = json2csv.convert(this.treat);
-      // var a= document.createElement('a');
-      // a.textContent='download';
-      // a.download="export.csv";
-      // a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
-      // document.body.appendChild(a);
     }
   },
 

@@ -15,7 +15,7 @@
   <div class="col-sm-12">
     <router-view></router-view>
     <!-- UNCOMMENT WHEN DEBUGGING -->
-    <!-- <pre>
+    <pre>
     {{ treatmentIndex | json }}
     </pre>
     <pre>
@@ -23,7 +23,7 @@
     </pre>
     <pre>
     {{ financeOptions | json }}
-    </pre> -->
+    </pre>
   </div>
 </div>
 

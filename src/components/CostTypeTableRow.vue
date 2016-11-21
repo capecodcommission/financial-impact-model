@@ -1,6 +1,12 @@
 <template>
   <tr>
-    <td>{{ costType.name }}</td>
+    <td 
+      :title = 
+        "[
+          costType.name === 'Operations & Maintenance ' ? 'This cost incorporates the daily Operations and Maintenance expected to incur during the running and maintaining a successfully treatment facility' : 
+          costType.name === 'Wastewater Collection ' ? 'Collection construction includes activities for centralized sewer and satellite facilities comprising of three costs: pipes in the ground to collect wastewater cost, lift cost to move wastewater through the system, and connection cost to connect to the pipes' : 
+          costType.name === 'Wastewater Transport and Disposal ' ? 'This cost incorporates transporting the load from the Collection area to a wastewater treatment facility and from the wastewater treatment facility to the disposal site. It also includes the cost of disposing the load at that site' : ''
+          ]">{{ costType.name }}</td>
     <td class="text-center">
       <div v-if="costType.editable">
         <input type="number" class="form-control input-sm text-center" v-model.number="costType.cost" debounce = "1000"/>
@@ -39,21 +45,8 @@ export default {
       treatment: getSelectedTreatment
     }
   },
-
-  props: {
-    costType: {
-      name: String,
-      inflated: Number,
-      editable: {
-        type: Boolean,
-        default: false
-      },
-      grantable: {
-        type: Boolean
-,        default: true
-      }
-    }
-  },
+  
+  props: ['costType','title'],
 
   // If inflated, total should be inflated minus grants, else 0
   computed: {
@@ -73,6 +66,7 @@ export default {
   // Watch cost. On change, trigger inflation function with changed cost from input
   watch: {
     'costType.cost': function (val) {
+
       this.calculateInflated(val, this.treatment.relativeStartYear, this.treatment.treatmentId, this.costType.name)
     }
   }
