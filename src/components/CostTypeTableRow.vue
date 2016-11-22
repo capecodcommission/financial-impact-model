@@ -8,8 +8,8 @@
           costType.name === 'Wastewater Transport and Disposal ' ? 'This cost incorporates transporting the load from the Collection area to a wastewater treatment facility and from the wastewater treatment facility to the disposal site. It also includes the cost of disposing the load at that site' : 
           costType.name === 'Capital ' ? 'The cost to design, permit and build facilities, including land costs' :
           costType.name === 'Replacement ' ? 'The cost to replace selected technology' : ''
-          ]">
-            {{ costType.name }}
+        ]">
+          {{ costType.name }}
     </td>
     <td class="text-center">
       <div v-if="costType.editable">

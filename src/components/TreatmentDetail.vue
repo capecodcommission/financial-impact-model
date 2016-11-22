@@ -1,22 +1,15 @@
 <template>
-<alert :show.sync = "!active" type = "success" placement="top-right" duration = "3000" width="400px" dismissable>
+<alert :show = "active" type = "success" placement="top-right" width="400px" dismissable>
   <span class="glyphicon glyphicon-plane"></span>
   <strong>Tutorial</strong>
-  <h1>Mouse-over buttons to learn about the application</h1>
-</alert>
-<alert :show.sync = "active" type = "success" placement="top-right" duration = "3000" width="400px" dismissable>
-  <span class="glyphicon glyphicon-plane"></span>
-  <strong>Tutorial</strong>
-  <h1>Now that you've gone through all treatments, please continue to the next page</h1>
+  <h1>Please continue to Finance Treatment</h1>
 </alert>
 <div class="treatment-detail-wrapper">
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <panel-heading-title>
+    <div class="panel-heading col text-center">
         <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
           <button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
-        </tooltip>
-      </panel-heading-title><br><br><br>
+        </tooltip><br><br><br>
       <!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
 				<div class="btn-group">
@@ -50,6 +43,13 @@
       </div><br>
       <div class="row">
         <div class="col-xs-12">
+          <treatment-summary :treatment="treatment"></treatment-summary>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class = 'col text-center'>
+            <button class = 'btn btn-primary'>Inflated & Grants</button>
+          </div>
           <table class="table">
             <colgroup>
             <col class="col-md-3">
@@ -79,7 +79,7 @@
                     </div>
                   </div>
                 </th>
-                <th>Total (Inflated minus grants)</th>
+                <th>Total (Inflated minus Grants)</th>
               </tr>
             </thead>
             <tbody>
@@ -87,10 +87,6 @@
             </tbody>
           </table>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <treatment-summary :treatment="treatment"></treatment-summary>
       </div>
       <div class = "row">
         <div class = "col-md-12">

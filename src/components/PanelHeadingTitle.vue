@@ -1,5 +1,5 @@
 <template>
-  <h3 class="panel-title pull-left">
+  <h3 class="panel-title pull-left col-md-12">
     <slot>
       Treatment Tech Name
     </slot>

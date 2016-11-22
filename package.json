@@ -15,6 +15,7 @@
     "bootstrap-slider": "^7.1.0",
     "chart.js": "^2.2.0-rc.2",
     "d3": "^3.5.17",
+    "intro.js": "^2.3.0",
     "jquery": "^2.2.4",
     "vue": "^1.0.21",
     "vue-resource": "^0.7.2",

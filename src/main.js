@@ -9,6 +9,8 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VueCharts from 'vue-charts'
 
+import introjs from 'intro.js'
+
 
 // Load technology icon path
 const iconPath = 'http://208.capecodcommission.org/Images/AltIcons/'

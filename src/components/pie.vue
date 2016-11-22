@@ -27,8 +27,13 @@
 					<vue-chart :chart-type = "chartType" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
 				</div>
 				<div class = 'col-lg-6 text-center'>
-					<h1 class = 'display-1'>Total Scenario Cost <br><small>(Including inflation & financing)</small> <br><br><br> {{ '$' + Math.round(totalCost,0).toLocaleString() }}</h1><br>
 					<ul class = "text-center">
+						<h1 class = 'display-1'>Total Scenario Cost <br>
+							<small>(Including inflation & financing)</small> 
+							<br><br><br> 
+							{{ '$' + Math.round(totalCost,0).toLocaleString() }}
+						</h1>
+						<br><br><br>
 						<li>Total Federal:<b>{{ totalFed | currency}}</b></li>
 						<li>Total State:<b>{{ totalState | currency}}</b></li>
 						<li>Total Regional:<b>{{ totalReg | currency}}</b></li>
@@ -226,4 +231,10 @@ export default {
 
 </script>
 
-<style></style>
+<style>
+
+ul {
+  list-style-type: none;
+}	
+
+</style>

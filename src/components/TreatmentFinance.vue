@@ -1,12 +1,10 @@
 <template>
   <div class="treatment-detail-wrapper">
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <panel-heading-title>
+      <div class="panel-heading col text-center">
           <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
             <button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
-          </tooltip>
-        </panel-heading-title><br><br><br>
+          </tooltip><br><br><br>
         <!-- BUTTONS -->
   			<div class = "btn-group btn-group-justified">
   				<div class="btn-group">
@@ -26,9 +24,12 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12">
-            <tooltip effect = 'scale' placement = 'bottom' content = '<p>Select at least one Finance Type from the cost type table below</p><p>For the cost type with selected finance, enter Principle Forgiveness as a decimal. eg. 0.0325, 0.0214</p>'>
-              <button class = 'btn btn-primary'>Financeables</button>
-            </tooltip>
+          <treatment-summary :treatment="treatment"></treatment-summary>
+            <div class = 'col text-center'>
+              <tooltip effect = 'scale' placement = 'bottom' content = '<p>Select at least one Finance Type from the cost type table below</p><p>For the cost type with selected finance, enter Principle Forgiveness as a decimal. eg. 0.0325, 0.0214</p>'>
+                <button class = 'btn btn-primary'>Financeables</button>
+              </tooltip>
+            </div>
             <table class="table">
               <colgroup>
                 <col class="col-md-4">
@@ -56,41 +57,15 @@
                 <tr v-for="(index, costType) in treatment.costTypes" is="cost-type-table-row-finance" :cost-type="costType"></tr>
               </tbody>
             </table>
-            <!-- <tooltip effect = 'scale' placement = 'bottom' content = 'Financing not applicable on these cost types'>
-              <button class = 'btn btn-primary'>Non-Financeables</button>
-            </tooltip>
-            <table class="table">
-              <colgroup>
-                <col class="col-md-2">
-                <col class="col-md-8">
-                <col class="col-md-2">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th></th>   
-                  <th></th>
-                  <th class = 'text-center'>Total (Inflated)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(index, costType) in treatment.costTypes | filterBy 'false' in 'financeable'">
-                  <td>{{ costType.name }}</td>
-                  <td>
-                    <div v-if = '!costType.financeable' class = 'text-center disabled'>
-                      <small>This cost type isn't financeable</small>
-                    </div>
-                  </td>
-                  <td class = 'text-center'>{{ '$' + Math.round(costType.treatTotal, 1).toLocaleString() }}</td>
-                </tr>
-              </tbody>
-            </table> -->
           </div>
         </div>
         <div class = "row">
           <div class="col-xs-12">
-            <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Additional Paying Types as decimal. eg. 0.025, 0.0314'>
-              <button class = 'btn btn-primary'>Additional Payments</button>
-            </tooltip>
+            <div class = 'col text-center'>
+              <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Additional Paying Types as decimal. eg. 0.025, 0.0314'>
+                <button class = 'btn btn-primary'>Additional Payments</button>
+              </tooltip>
+            </div>
             <table class="table">
               <colgroup>
                 <col class="col-md-4">
@@ -112,7 +87,7 @@
                       </div>
                     </div>
                   </th>
-                  <th class="text-center">$ Amount Financed/Non-Financeable</th>
+                  <th class="text-center">Grand Total (Financed minus Betterments / Property Taxes)</th>
                 </tr>
               </thead>
               <tbody>
@@ -122,14 +97,8 @@
           </div>
         <div class="row">
           <div class="col-xs-12">
-            <treatment-summary :treatment="treatment"></treatment-summary>
-          </div>
-        <div class = "row">
-          <div class = "col-md-12">
             <input class="form-control text-center" type="text" v-model = "treatment.finnotes" placeholder = "User input notes">
           </div>
-        </div>
-        </div>
         </div>
       </div>
     </div>
