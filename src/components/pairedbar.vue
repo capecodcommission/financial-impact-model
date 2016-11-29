@@ -1,7 +1,10 @@
 <template>
 <div class="treatment-detail-wrapper">
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading text-center">
+			<tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
+            	<button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
+          	</tooltip><br><br><br>
 			<!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
 				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-secondary">Treatment(s) Details</button></div>
@@ -25,12 +28,17 @@
 		<div class = 'container-fluid'>
 			<div class = 'row'>
 				<div class = 'col-md-6 text-center'>
-					<h1 class = 'display-1'><b>Project Schedule</b></h1>
-					<vue-chart :chart-type = "chartType" :columns = "columns1" :rows = "rows1" :options = "options1"></vue-chart>
+					<ul class = 'text-center'>
+						<li><h1 class = 'display-1'><b>Project Schedule</b></h1></li>
+						<li><vue-chart :chart-type = "chartType" :columns = "columns1" :rows = "rows1" :options = "options1"></vue-chart></li>
+					</ul>
 				</div>
 				<div class = 'col-md-6 text-center'>	
-					<h1 class = 'display-1'><b>Financing Schedule</b></h1>	
-					<vue-chart :chart-type = "chartType" :columns = "columns2" :rows = "rows2" :options = "options2"></vue-chart>
+					<ul class = 'text-center'>
+						<li><h1 class = 'display-1'><b>Financing Schedule</b></h1></li>	
+						<li><vue-chart :chart-type = "chartType" :columns = "columns2" :rows = "rows2" :options = "options2"></vue-chart></li>
+						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -45,6 +53,7 @@ import { calculatetitle5inflated } from '../vuex/actions'
 import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
 import { tooltip } from 'vue-strap'
+import json2csv from 'nice-json2csv'
 
 export default {
 
@@ -105,22 +114,26 @@ export default {
 				legend: {
 					position: 'none'
 				},
-				width: 700,
+				width: 800,
 				height: 400,
 				isStacked: true,
 				colors: ['#ffffff', 'blue'],
-				vAxis: {title: 'Technology ID'},
+				vAxis: {title: 'Treatment Name'},
 				hAxis: {
 					title: 'Year(s) From Current Year',
 					viewWindow: { min: 0, max: 80 },
 					ticks: []
+				},
+				chartArea: {
+					width: "50%",
+					height: "90%"
 				}
 			},
 			options2: {
 				legend: {
 					position: 'none'
 				},
-				width: 700,
+				width: 800,
 				height: 400,
 				isStacked: true,
 				colors: ['#ffffff', 'blue'],
@@ -129,6 +142,10 @@ export default {
 					title: 'Year(s) From Current Year',
 					viewWindow: { min: 0, max: 80 },
 					ticks: []
+				},
+				chartArea: {
+					width: "40%",
+					height: "80%"
 				}
 			}
 		}
@@ -152,7 +169,7 @@ export default {
 
 		
 			row1.push([
-				this.treatment.treatmentTypeId.toString(),
+				this.treatment.treatmentName.toString(),
 				this.treatment.relativeStartYear,
 				this.treatment.duration,
 				this.treatment.relativeStartYear + this.treatment.duration
@@ -209,6 +226,67 @@ export default {
 			}
 		}
 	},
+
+	methods: {
+
+	    JSONflatten (data) {
+
+	      var result = {};
+
+	      function recurse(cur, prop) {
+
+	        if (Object(cur) !== cur) {
+
+	          result[prop] = cur;
+	        } else if (Array.isArray(cur)) {
+
+	          for (var i = 0, l = cur.length; i < l; i++)
+
+	            recurse(cur[i], prop + "[" + i + "]");
+
+	          if (l == 0) result[prop] = [];
+
+	        } else {
+	          var isEmpty = true;
+
+	          for (var p in cur) {
+
+	            isEmpty = false;
+	            recurse(cur[p], prop ? prop + "." + p : p);
+	          }
+
+	          if (isEmpty && prop) result[prop] = {};
+	        }
+	      }
+
+	      recurse(data, "");
+	      return result;
+	    },
+
+	    excelExport() {
+
+	      var arr = []
+
+	      for (var i = 0; i < this.treatments.length; i++) {
+
+	        for (var j = 0; j < this.treatments[i].costTypes.length; j++) {
+
+	          arr.push(this.JSONflatten(this.treatments[i].costTypes[j]))
+	        }
+	      }
+
+	      var csvContent = json2csv.convert(arr)
+
+	      var a = document.createElement('a');
+
+	      a.textContent='download';
+	      a.download= "Treatments.csv";
+	      a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
+	      document.body.appendChild(a);
+	      a.click()
+	      a.remove()
+	    }
+  	},
 
 	components: {
 		'panel-heading-title': PanelHeadingTitle,

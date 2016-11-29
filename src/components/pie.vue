@@ -1,7 +1,10 @@
 <template>
 <div class="treatment-detail-wrapper">
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading text-center">
+			<tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
+            	<button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
+          	</tooltip><br><br><br>
 			<!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
 				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-secondary">Treatment(s) Details</button></div>
@@ -23,8 +26,10 @@
 			</div>
 			<div class = 'row'>
 				<div class = 'col-lg-6 text-center'>
-					<h1 class = 'display-1'>Scenario Cost Sharing</h1>
-					<vue-chart :chart-type = "chartType" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
+					<ul class = 'text-center'>
+						<h1 class = 'display-1'>Scenario Cost Sharing</h1>
+						<li><vue-chart :chart-type = "chartType" :columns = "columns" :rows = "rows" :options = "options"></vue-chart></li>
+					</ul>
 				</div>
 				<div class = 'col-lg-6 text-center'>
 					<ul class = "text-center">
@@ -41,12 +46,14 @@
 						<li>Total Property Taxes / Fees:<b>{{ totalProp | currency}}</b></li>
 						<li>Total Betterment:<b>{{ totalBtrmnt | currency}}</b></li>
 						<li>Total Unaccounted For:<b>{{ totalUncctFor | currency}}</b></li>
+						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 </template>
 
 <script>
@@ -56,6 +63,7 @@ import { primarysecondaryArray } from '../vuex/actions'
 import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
 import { tooltip } from 'vue-strap'
+import json2csv from 'nice-json2csv'
 
 export default {
 
@@ -94,9 +102,11 @@ export default {
 				['Unaccounted For', 3000000]
 			],
 			options: {
-				width: 600,
+				width:700,
 				height: 600,
-				tooltipTemplate: "<% if (label) {%><%=label %>: <%}%><%= value + ' $' %>"
+				tooltipTemplate: "<% if (label) {%><%=label %>: <%}%><%= value + ' $' %>",
+				chartArea: {left: 200, width: "100%", height: "100%"},
+				legend: {position: 'bottom', alignment: 'start'}
 			}
         }
 	},
@@ -221,6 +231,67 @@ export default {
 
 	ready() {
 	},
+
+	methods: {
+
+	    JSONflatten (data) {
+
+	      var result = {};
+
+	      function recurse(cur, prop) {
+
+	        if (Object(cur) !== cur) {
+
+	          result[prop] = cur;
+	        } else if (Array.isArray(cur)) {
+
+	          for (var i = 0, l = cur.length; i < l; i++)
+
+	            recurse(cur[i], prop + "[" + i + "]");
+
+	          if (l == 0) result[prop] = [];
+
+	        } else {
+	          var isEmpty = true;
+
+	          for (var p in cur) {
+
+	            isEmpty = false;
+	            recurse(cur[p], prop ? prop + "." + p : p);
+	          }
+
+	          if (isEmpty && prop) result[prop] = {};
+	        }
+	      }
+
+	      recurse(data, "");
+	      return result;
+	    },
+
+	    excelExport() {
+
+	      var arr = []
+
+	      for (var i = 0; i < this.treatments.length; i++) {
+
+	        for (var j = 0; j < this.treatments[i].costTypes.length; j++) {
+
+	          arr.push(this.JSONflatten(this.treatments[i].costTypes[j]))
+	        }
+	      }
+
+	      var csvContent = json2csv.convert(arr)
+
+	      var a = document.createElement('a');
+
+	      a.textContent='download';
+	      a.download= "Treatments.csv";
+	      a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
+	      document.body.appendChild(a);
+	      a.click()
+	      a.remove()
+	    }
+  	},
 
 	components: {
 		'panel-heading-title': PanelHeadingTitle,

@@ -1,7 +1,10 @@
 <template>
 <div class="treatment-detail-wrapper">
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading text-center">
+			<tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
+            	<button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
+          	</tooltip><br><br><br>
 			<!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
 				<div class="btn-group"><button v-link="{ name: 'treatmentDetail' }" class="btn btn-secondary">Treatment(s) Details</button></div>
@@ -16,17 +19,20 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
-		<div class = 'container-fluid'>
-			<div class = 'row'>
-				<div class = 'jumbotron text-center'>
-					<h1 class = 'display-1'><b>Scenario Cost Sharing</b></h1>
-					<vue-chart :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
-				</div>
-			</div>
-		</div>
 		<div class = 'jumbotron'>
 			<div class = 'row'>
 				<treatment-summary :treatment="treatment"></treatment-summary>
+			</div>
+		</div>
+		<div class = 'container-fluid'>
+			<div class = 'row'>
+				<div class = 'jumbotron text-center'>
+					<ul class = 'text-center'>
+						<h1 class = 'display-1'><b>Scenario Cost Sharing</b></h1>
+						<li><vue-chart :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart></li>
+						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -41,6 +47,7 @@ import { calculatetitle5inflated } from '../vuex/actions'
 import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
 import { tooltip } from 'vue-strap'
+import json2csv from 'nice-json2csv'
 
 export default {
 
@@ -87,17 +94,6 @@ export default {
 					'p': {
 						'html': true
 					}
-				},
-				{
-					'type': 'number',
-					'label': 'Title 5 Liability'
-				},
-				{
-					'type': 'string',
-					'role': 'tooltip',
-					'p': {
-						'html': true
-					}
 				}
 			],
 			rows: [],
@@ -115,10 +111,13 @@ export default {
 					title: 'Year(s) From Current Year',
 					viewWindow: { min: 0, max: 80 },
 					ticks: []
+				},
+				chartArea: {
+					left: 200
+				}
 			}
 		}
-	}
-},
+	},
 
 	ready() {
 
@@ -144,8 +143,7 @@ export default {
 					this.treatment.primsecarray[i].year,
 					this.treatment.primsecarray[i].Towns[j].name,
 					this.treatment.primsecarray[i].Towns[j].primary,
-					this.treatment.primsecarray[i].Towns[j].secondary,
-					this.treatment.primsecarray[i].titleFiveInflatedCost
+					this.treatment.primsecarray[i].Towns[j].secondary
 				])	
 
 				yearprim += this.treatment.primsecarray[i].Towns[j].primary
@@ -156,11 +154,9 @@ export default {
 			rows.push([
 				this.treatment.primsecarray[i].year,
 				yearprim,
-				this.customTipprim(this.treatment.primsecarray[i].year,name, yearprim),
+				this.customTipprim(this.treatment.primsecarray[i].year,name, yearprim,this.treatment.primsecarray[i].titleFiveInflatedCost),
 				yearsec,
-				this.customTipsec(this.treatment.primsecarray[i].year,name, yearsec),
-				this.treatment.primsecarray[i].titleFiveInflatedCost,
-				this.customTipt5(this.treatment.primsecarray[i].year,name,this.treatment.primsecarray[i].titleFiveInflatedCost)
+				this.customTipsec(this.treatment.primsecarray[i].year,name, yearsec, this.treatment.primsecarray[i].titleFiveInflatedCost)
 			])
 
 			yearprim = 0
@@ -173,7 +169,7 @@ export default {
 	methods: {
 
 		// Create function to flatten 'name' array into html table for custom toolip by filtering name array by current year
-		customTipprim: function(year,array, primary) {
+		customTipprim: function(year,array, primary,t5) {
 
 			var filtered = array.filter((el) => el[0] === year)
 			var begin = '<div><table>'
@@ -188,11 +184,12 @@ export default {
 
 			var total = '<tr><td>' + 'Total:' + '</td>' + '<td>' + '$' + primary.toFixed(2) + '</td></tr>'
 			var year = '<tr><td>' + 'Year:' + '</td>' + '<td>' + year + '</td></tr>'
+			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + t5 + '</td></tr>'
 
-			return begin + data + total + year + end
+			return begin + data + total + year + title5 + end
 		},
 
-		customTipsec: function(year,array, secondary) {
+		customTipsec: function(year,array, secondary, t5) {
 
 			var filtered = array.filter((el) => el[0] === year)
 			var begin = '<div><table>'
@@ -206,21 +203,67 @@ export default {
 
 			var total = '<tr><td>' + 'Total:' + '</td>' + '<td>' + '$' + secondary.toFixed(2) + '</td></tr>'
 			var year = '<tr><td>' + 'Year:' + '</td>' + '<td>' + year + '</td></tr>'
+			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + t5 + '</td></tr>'
 
-			return begin + data + total + year + end
+			return begin + data + total + year + title5 + end
 		},
-		customTipt5: function(year,array,title5cost) {
+		JSONflatten (data) {
 
-			var filtered = array.filter((el) => el[0] === year)
-			var begin = '<div><table>'
-			var end = '</table></div>'
-			var data = []
+	      var result = {};
 
-			var total = '<tr><td>' + 'Total:' + '</td>' + '<td><b>' + '$' + title5cost.toFixed(2) + '</td></tr>'
-			var year = '<tr><td>' + 'Year:' + '</td>' + '<td>' + year + '</td></tr>'
+	      function recurse(cur, prop) {
 
-			return begin + data + total + year + end
-		}
+	        if (Object(cur) !== cur) {
+
+	          result[prop] = cur;
+	        } else if (Array.isArray(cur)) {
+
+	          for (var i = 0, l = cur.length; i < l; i++)
+
+	            recurse(cur[i], prop + "[" + i + "]");
+
+	          if (l == 0) result[prop] = [];
+
+	        } else {
+	          var isEmpty = true;
+
+	          for (var p in cur) {
+
+	            isEmpty = false;
+	            recurse(cur[p], prop ? prop + "." + p : p);
+	          }
+
+	          if (isEmpty && prop) result[prop] = {};
+	        }
+	      }
+
+	      recurse(data, "");
+	      return result;
+	    },
+
+	    excelExport() {
+
+	      var arr = []
+
+	      for (var i = 0; i < this.treatments.length; i++) {
+
+	        for (var j = 0; j < this.treatments[i].costTypes.length; j++) {
+
+	          arr.push(this.JSONflatten(this.treatments[i].costTypes[j]))
+	        }
+	      }
+
+	      var csvContent = json2csv.convert(arr)
+
+	      var a = document.createElement('a');
+
+	      a.textContent='download';
+	      a.download= "Treatments.csv";
+	      a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
+	      document.body.appendChild(a);
+	      a.click()
+	      a.remove()
+	    }		
 	},
 
 	watch: {
@@ -248,8 +291,7 @@ export default {
 						this.treatment.primsecarray[i].year,
 						this.treatment.primsecarray[i].Towns[j].name,
 						this.treatment.primsecarray[i].Towns[j].primary,
-						this.treatment.primsecarray[i].Towns[j].secondary,
-						this.treatment.primsecarray[i].titleFiveInflatedCost
+						this.treatment.primsecarray[i].Towns[j].secondary
 					])	
 
 					yearprim += this.treatment.primsecarray[i].Towns[j].primary
@@ -260,11 +302,9 @@ export default {
 				rows.push([
 					this.treatment.primsecarray[i].year,
 					yearprim,
-					this.customTipprim(this.treatment.primsecarray[i].year,name, yearprim),
+					this.customTipprim(this.treatment.primsecarray[i].year,name, yearprim, this.treatment.primsecarray[i].titleFiveInflatedCost),
 					yearsec,
-					this.customTipsec(this.treatment.primsecarray[i].year,name, yearsec),
-					this.treatment.primsecarray[i].titleFiveInflatedCost,
-					this.customTipt5(this.treatment.primsecarray[i].year,name,this.treatment.primsecarray[i].titleFiveInflatedCost)
+					this.customTipsec(this.treatment.primsecarray[i].year,name, yearsec, this.treatment.primsecarray[i].titleFiveInflatedCost)
 				])
 
 				yearprim = 0

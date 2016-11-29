@@ -8,6 +8,8 @@
     data-slider-step="1"
     data-slider-value="[{{ sliderValue }}]"
     data-duration="{{ duration }}"
+    data-slider-ticks = "[1,10,20,30,40,50,60,70,80]"
+    data-slider-ticks-labels = "[1,10,20,30,40,50,60,70,80]"
     />
 </template>
 <script>

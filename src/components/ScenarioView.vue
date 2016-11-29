@@ -5,14 +5,14 @@
     <tooltip effect = 'scale' placement = 'right' content = '<p>Click to enable treatment technology selector</p>'>
       <button class = 'btn btn-success text-center' @click = 'showRight = true'>Show treatment window</button>
     </tooltip>
-    <button class = 'btn btn-primary' @click = 'excelExport'>export</button>
+    <!-- <button class = 'btn btn-primary' @click = 'excelExport'>export</button> -->
   </div>
   <aside :show.sync = "showRight" placement="left" header="Treatment Technologies" width="200">
     <div class="col-xs-13">
       <treatment-sidebar></treatment-sidebar>
     </div>
   </aside>
-  <div class="col-sm-12">
+  <div class="col">
     <router-view></router-view>
     <!-- UNCOMMENT WHEN DEBUGGING -->
     <!-- <pre>
