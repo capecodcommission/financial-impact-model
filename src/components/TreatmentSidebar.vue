@@ -51,7 +51,7 @@ export default {
 
     fullpath ( icon ) {
 
-      return 'http://www.cch2o.org/Matrix/icons/' + icon
+      return 'http://2016.watershedmvp.org/images/SVG/' + icon
     }
   },
 
