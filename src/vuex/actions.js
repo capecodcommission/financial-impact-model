@@ -110,13 +110,7 @@ export const annualTownTreatment = function({ dispatch, state }, treatmentId, co
 // Get array of primary / secondary homes by town by cost type
 export const primarysecondaryArray = function({ dispatch, state }, treatmentId, array) {
 
-  // let arr = []
-
-  // arr.push(array)
-
-  let arrstr = JSON.stringify(array)
-
-  api.townPrimarySecondary (arrstr).then(function (response) {
+  api.townPrimarySecondary (array).then(function (response) {
 
     dispatch('UPDATE_TOWNPRIMSEC', treatmentId, response.data)
 

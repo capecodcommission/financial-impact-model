@@ -8,7 +8,7 @@
   <div class="panel panel-default">
     <div class="panel-heading col text-center">
         <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
-          <button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
+          <button @click = 'gotm_Id' class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
         </tooltip><br><br><br>
       <!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
@@ -135,14 +135,32 @@ export default {
     }
   },
 
-  props: ['disabled'],
+  props: ['disabled','href'],
 
   methods: {
 
     // When slider is updated, activeate action to reload treatment JSON using relative start year, duration, and current treatment selected
     onDurationChange( sliderValue ) {
 
+      if (sliderValue[0] > 30) {
+        sliderValue[0] = 30
+      }
+
       this.updateTreatment( sliderValue[0], this.treatment.duration, this.treatment.treatmentId )
+    },
+
+    gotm_Id() {
+
+      var win = window.open('http://www.cch2o.org/Matrix/detail.php?treatment=' + this.treatment.tm_Id, '_blank');
+
+      if (win) {
+          //Browser has allowed it to be opened
+          win.focus();
+      } else {
+          //Browser has blocked it
+          alert('Please allow popups for this website');
+      }
+
     },
 
     JSONflatten (data) {

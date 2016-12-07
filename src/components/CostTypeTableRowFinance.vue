@@ -63,7 +63,9 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      townarray: []
+    }
   },
 
   vuex: {
@@ -139,51 +141,66 @@ export default {
   // Watch properties for changes, if any property changes, trigger functions
   watch: {
     'costType.finDur': function(val) {
-      this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor)
-      this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
-      this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
-      this.primarysecondaryArray(this.treatment.treatmentId, this.costType.annualtownarray)
       this.setfinDurParams(val)
 
+      // this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor)
+      // this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
+      // this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
+      // this.primarysecondaryArray(this.treatment.treatmentId, this.costType.annualtownarray)
     },
+
     'costType.prinFor': function(val) {
+
+      this.setprinFor(val)
       this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,val)
       this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,val,this.costType.name)
       this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,val,this.costType.name)
-      this.primarysecondaryArray(this.treatment.treatmentId, this.costType.annualtownarray)
-      this.setprinFor(val)
     },
+
     'costType.financeOption': function(val) {
+
+      this.setFinDurToFinanceOptionsMaxDuration(val)
       this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,val,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor)
       this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,val,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
       this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,val,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
-      this.primarysecondaryArray(this.treatment.treatmentId,this.costType.annualtownarray)
-      this.setFinDurToFinanceOptionsMaxDuration(val)
     },
+
     'treatment.treatmentId': function(val) {
-      this.updateFinTotals(val,this.costType.treatTotal,val,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor)
-      this.updateCapTotalTownTreatment(val,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
-      this.annualTownTreatment(val,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
-      this.primarysecondaryArray(val, this.costType.annualtownarray)
+  
+    },
+
+    'costType.annualtownarray': function(val) {
+
+      for (var i = 0; i < this.treatment.costTypes.length; i++) {
+
+        if (!Object.keys(this.treatment.costTypes[i].annualtownarray).length == 0) {
+
+          this.townarray.push(this.treatment.costTypes[i].annualtownarray)
+        }
+      }
+
+      var newarray = JSON.stringify(this.townarray)
+
+      this.primarysecondaryArray(this.treatment.treatmentId,newarray)
     }
   },
 
   ready () {
     this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor)
-    this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
-    this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
+    // this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
+    // this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,this.costType.finDur,this.costType.prinFor,this.costType.name)
 
-    var newarray = []
+    // var newarray = []
 
-    for (var i = 0; i < this.treatment.costTypes.length; i++) {
+    // for (var i = 0; i < this.treatment.costTypes.length; i++) {
 
-      if (!Object.keys(this.treatment.costTypes[i].annualtownarray).length == 0) {
+    //   if (!Object.keys(this.treatment.costTypes[i].annualtownarray).length == 0) {
 
-        newarray.push(this.treatment.costTypes[i].annualtownarray)
-      }
-    }
+    //     newarray.push(this.treatment.costTypes[i].annualtownarray)
+    //   }
+    // }
 
-    this.primarysecondaryArray(this.treatment.treatmentId,newarray)
+    // this.primarysecondaryArray(this.treatment.treatmentId,newarray)
   }
 }
 </script>

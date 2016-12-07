@@ -45,6 +45,14 @@ export default {
     }
   },
 
+  data () {
+
+    return {
+
+      activeArr: []
+    }
+  },
+
   props: ['content'],
 
   filters: {
@@ -69,8 +77,6 @@ export default {
         $treatment.addClass('active')
         this.changeTreatmentIndex( $('#treatment-sidebar .active').index() )
       }
-
-
     }
   }
 }

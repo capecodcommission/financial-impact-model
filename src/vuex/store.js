@@ -72,6 +72,7 @@ const mutations = {
   UPDATE_TREATMENT (state, treatment) {
     let index = state.treatmentIndex
     for (var i = 0; i < treatment.costTypes.length; i++) {
+      treatment['stage'] = 1
       treatment.costTypes[i]["treatTotal"] = 0
       treatment.costTypes[i]["finDur"] = 20
       treatment.costTypes[i]["prinFor"] = 0

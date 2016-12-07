@@ -3,7 +3,7 @@
 <div id="scenario-view" class="row">
   <div class = 'col text-center'>
     <tooltip effect = 'scale' placement = 'right' content = '<p>Click to enable treatment technology selector</p>'>
-      <button class = 'btn btn-success text-center' @click = 'showRight = true'>Show treatment window</button>
+      <button class = 'bt btn-lg btn-success text-center' @click = 'showRight = true'>Show treatment window</button>
     </tooltip>
     <!-- <button class = 'btn btn-primary' @click = 'excelExport'>export</button> -->
   </div>
@@ -15,7 +15,7 @@
   <div class="col">
     <router-view></router-view>
     <!-- UNCOMMENT WHEN DEBUGGING -->
-    <!-- <pre>
+    <pre>
     {{ treatmentIndex | json }}
     </pre>
     <pre>
@@ -23,7 +23,7 @@
     </pre>
     <pre>
     {{ financeOptions | json }}
-    </pre> -->
+    </pre>
   </div>
 </div>
 

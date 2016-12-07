@@ -28,7 +28,7 @@
 			<div class = 'row'>
 				<div class = 'jumbotron text-center'>
 					<ul class = 'text-center'>
-						<h1 class = 'display-1'><b>Scenario Cost Sharing</b></h1>
+						<h1 class = 'display-1 text-center'><b>Scenario Cost Sharing</b></h1>
 						<li><vue-chart :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart></li>
 						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
@@ -163,6 +163,10 @@ export default {
 			yearsec = 0
 		}
 
+		const newrows = rows.find( (t) => t[1] )
+		const index = rows.indexOf(newrows)
+		rows.splice(index,1)
+
 		this.options.hAxis.ticks.push([80])
 	},
 
@@ -172,6 +176,7 @@ export default {
 		customTipprim: function(year,array, primary,t5) {
 
 			var filtered = array.filter((el) => el[0] === year)
+			
 			var begin = '<div><table>'
 			var end = '</table></div>'
 			var data = []
@@ -192,6 +197,7 @@ export default {
 		customTipsec: function(year,array, secondary, t5) {
 
 			var filtered = array.filter((el) => el[0] === year)
+			
 			var begin = '<div><table>'
 			var end = '</table></div>'
 			var data = []

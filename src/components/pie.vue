@@ -39,9 +39,9 @@
 							{{ '$' + Math.round(totalCost,0).toLocaleString() }}
 						</h1>
 						<br><br><br>
-						<li>Total Federal:<b>{{ totalFed | currency}}</b></li>
-						<li>Total State:<b>{{ totalState | currency}}</b></li>
-						<li>Total Regional:<b>{{ totalReg | currency}}</b></li>
+						<li>Total Federal Grants:<b>{{ totalFed | currency}}</b></li>
+						<li>Total State Grants:<b>{{ totalState | currency}}</b></li>
+						<li>Total Regional Grants:<b>{{ totalReg | currency}}</b></li>
 						<li>Total Principal Forgiveness:<b>{{ totalPrinFor | currency}}</b></li>
 						<li>Total Property Taxes / Fees:<b>{{ totalProp | currency}}</b></li>
 						<li>Total Betterment:<b>{{ totalBtrmnt | currency}}</b></li>
@@ -93,9 +93,9 @@ export default {
 				}
 			],
 			rows: [
-				['Federal', 6000000],
-				['State', 6050000],
-				['Regional', 6200000],
+				['Federal Grants', 6000000],
+				['State Grants', 6050000],
+				['Regional Grants', 6200000],
 				['Property Tax / Fees', 5000000],
 				['Betterments', 3000000],
 				['Principal Forgiveness', 3000000],
