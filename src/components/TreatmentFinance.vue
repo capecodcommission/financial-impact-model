@@ -3,7 +3,7 @@
     <div class="panel panel-default">
       <div class="panel-heading col text-center">
           <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
-            <button @click = 'gotm_id' class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
+            <button @click = 'gotm_Id' class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
           </tooltip><br><br><br>
         <!-- BUTTONS -->
   			<div class = "btn-group btn-group-justified">
