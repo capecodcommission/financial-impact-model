@@ -3,7 +3,7 @@
     <div class="panel panel-default">
       <div class="panel-heading col text-center">
           <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
-            <button class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
+            <button @click = 'gotm_id' class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
           </tooltip><br><br><br>
         <!-- BUTTONS -->
   			<div class = "btn-group btn-group-justified">
@@ -131,6 +131,23 @@ export default {
   },
 
   props: ['disabled'],
+
+  methods: {
+
+    gotm_Id() {
+
+      var win = window.open('http://www.cch2o.org/Matrix/detail.php?treatment=' + this.treatment.tm_Id, '_blank');
+
+      if (win) {
+          //Browser has allowed it to be opened
+          win.focus();
+      } else {
+          //Browser has blocked it
+          alert('Please allow popups for this website');
+      }
+
+    }
+  },
 
   watch: {
 

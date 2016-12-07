@@ -143,10 +143,9 @@ export default {
     'costType.finDur': function(val) {
       this.setfinDurParams(val)
 
-      // this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor)
-      // this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
-      // this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
-      // this.primarysecondaryArray(this.treatment.treatmentId, this.costType.annualtownarray)
+      this.updateFinTotals(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor)
+      this.updateCapTotalTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
+      this.annualTownTreatment(this.treatment.treatmentId,this.costType.treatTotal,this.costType.financeOption,this.treatment.relativeStartYear,val,this.costType.prinFor,this.costType.name)
     },
 
     'costType.prinFor': function(val) {
