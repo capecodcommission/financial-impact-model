@@ -16,6 +16,10 @@ export default {
     return Vue.http.get(API_ROOT + 'getFinanceOptions')
   },
 
+  getScenarios() {
+    return Vue.http.get(API_ROOT + 'getScenarios')
+  },
+
   // Obtain treatment arrays based on scenario id
   getScenario (id) {
     return Vue.http.get(API_ROOT + 'getScenario/' + id)

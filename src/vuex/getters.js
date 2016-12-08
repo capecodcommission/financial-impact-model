@@ -18,3 +18,7 @@ export function getTreatments (state) {
 export function getSelectedTreatment (state) {
   return state.scenario.treatments[state.treatmentIndex]
 }
+
+export function getScenarios (state) {
+	return state.scenarios
+}

@@ -16,6 +16,18 @@ export const loadFinanceOptions = function ({ dispatch, state }) {
   })
 }
 
+export const loadScenarios = function({dispatch, state}) {
+
+  api.getScenarios().then(function (response) {
+
+    dispatch('LOAD_SCENARIOS', response.data)
+
+  }, function (response) {
+
+    console.log(response)
+  })
+}
+
 // Load treatments array from API given the scenario id
 export const loadScenario = function ({ dispatch, state }, scenarioId) {
 

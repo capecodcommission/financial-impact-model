@@ -12,7 +12,7 @@
           {{ costType.name }}
     </td>
     <td class="text-center">
-      <div v-if="costType.editable">
+      <div data-step = '5' data-intro = 'For other cost types, enter an amount to be inflated out to the project start year' v-if="costType.editable">
         <input type="number" class="form-control input-sm text-center" v-model.number="costType.cost" debounce = "1000"/>
       </div>
       <div v-else>

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
   treatmentIndex: 0,
+  scenarios: [],
 
   financeOptions: [],
 
@@ -26,6 +27,11 @@ const state = {
 
 // Create mutations; functions to change data in the state
 const mutations = {
+
+  LOAD_SCENARIOS (state, scenarios) {
+
+    state.scenarios = scenarios
+  },
 
   // Load finace option JSON, remove O&M Cost (last item in array)
   LOAD_FINANCE_OPTIONS (state, options) {

@@ -3,8 +3,9 @@
 <div id="scenario-view" class="row">
   <div class = 'col text-center'>
     <tooltip effect = 'scale' placement = 'right' content = '<p>Click to enable treatment technology selector</p>'>
-      <button class = 'bt btn-lg btn-success text-center' @click = 'showRight = true'>Show treatment window</button>
+      <button data-step = '6' data-intro = "Once you've entered inflated costs and applied grants, select this button to open the treatment window and navigate to your next treatment technology" class = 'btn btn-lg btn-success text-center' @click = 'showRight = true'>Show treatment window</button>
     </tooltip>
+    <button @click = 'startIntro' class = 'btn btn-success pull-left'>Help</button>
     <!-- <button class = 'btn btn-primary' @click = 'excelExport'>export</button> -->
   </div>
   <aside :show.sync = "showRight" placement="left" header="Treatment Technologies" width="200">
@@ -36,6 +37,7 @@ import { getScenario, getTreatmentIndex, getFinanceOptions, getTreatments } from
 import { aside, tooltip } from 'vue-strap'
 import TreatmentSidebar from './TreatmentSidebar'
 import json2csv from 'nice-json2csv'
+import {introJs} from '../../node_modules/intro.js/intro.js'
 
 export default {
 
@@ -75,6 +77,11 @@ export default {
   },
 
   methods: {
+
+    startIntro() {
+
+      introJs().start()
+    },
 
     JSONflatten (data) {
 

@@ -26,9 +26,9 @@
 		</div>
 		<div class = 'container-fluid'>
 			<div class = 'row'>
-				<div class = 'jumbotron text-center'>
+				<div class = 'col text-center'>
 					<ul class = 'text-center'>
-						<h1 class = 'display-1 text-center'><b>Scenario Cost Sharing</b></h1>
+						<li><h1 class = 'display-1 text-center'><b>Scenario Cost Sharing</b></h1></li>
 						<li><vue-chart :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart></li>
 						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
@@ -98,8 +98,8 @@ export default {
 			],
 			rows: [],
 			options: {
-				width: 1500,
-				height: 800,
+				width: 1380,
+				height: 600,
 				tooltip: {
 					isHtml: true
 				},
@@ -113,7 +113,9 @@ export default {
 					ticks: []
 				},
 				chartArea: {
-					left: 200
+					left: 500,
+					width: '50%',
+					height: '80%'
 				}
 			}
 		}
@@ -203,7 +205,7 @@ export default {
 
 			var total = '<tr><td>' + 'Total:' + '</td>' + '<td>' + '$' + primary.toFixed(2) + '</td></tr>'
 			var year = '<tr><td>' + 'Year:' + '</td>' + '<td>' + year + '</td></tr>'
-			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + t5 + '</td></tr>'
+			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + '$' + t5 + '</td></tr>'
 
 			return begin + data + total + year + title5 + end
 		},
@@ -223,7 +225,7 @@ export default {
 
 			var total = '<tr><td>' + 'Total:' + '</td>' + '<td>' + '$' + secondary.toFixed(2) + '</td></tr>'
 			var year = '<tr><td>' + 'Year:' + '</td>' + '<td>' + year + '</td></tr>'
-			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + t5 + '</td></tr>'
+			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + '$' + t5 + '</td></tr>'
 
 			return begin + data + total + year + title5 + end
 		},

@@ -7,9 +7,9 @@
     </div>
     <div class="panel-body">
       <div id="treatment-sidebar">
-        <div class="list-group">
+        <div data-step = '2' data-intro = 'this is the treatment sidebar' class="list-group">
           <template v-for="(index, treatment) in treatments">
-            <div v-bind:class="['list-group-item', index == treatmentIndex ? 'active' : '', treatment.stage == 1 ? 'visited' : '', treatment.stage == 2 ? 'visited1' : '']">
+            <div  v-bind:class="['list-group-item', index == treatmentIndex ? 'active' : '', treatment.stage == 1 ? 'visited' : '', treatment.stage == 2 ? 'visited1' : '']">
             <!-- WHY CAN'T WE CHANGE BELOW TO: <img v-bind:src="imgSrc"> -->
               <img src="{{ treatment.treatmentIcon | fullpath }}" @click="selectTreatment(treatment, $event)">
             </div>

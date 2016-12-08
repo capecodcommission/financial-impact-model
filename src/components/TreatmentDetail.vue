@@ -8,7 +8,7 @@
   <div class="panel panel-default">
     <div class="panel-heading col text-center">
         <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected treatment technology'>
-          <button @click = 'gotm_Id' class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
+          <button data-step = '1' data-intro = 'This is the name of your selected treatment technology. You can click this button to read a description of the technology' @click = 'gotm_Id' class = 'btn btn-primary'>{{ treatment.treatmentName }}</button>
         </tooltip><br><br><br>
       <!-- BUTTONS -->
 			<div class = "btn-group btn-group-justified">
@@ -30,7 +30,7 @@
             <button class = 'btn btn-primary'>Technology Project Start and Duration <small>(in years)</small></button>
           </tooltip>
         </div>
-        <div class="col-md-5">
+        <div data-step = '2' data-intro = 'Select a project start year using the left slider knob' class="col-md-5">
           <duration-slider
           :relative-start-year="treatment.relativeStartYear"
           :duration="treatment.duration"
@@ -59,7 +59,7 @@
             </colgroup>
             <thead>
               <tr>
-                <th>
+                <th data-step = '3' data-intro = 'Mouse-over each cost type for a description'>
                   <tooltip effect = 'scale' placement = 'bottom' content = 'There are multiple components to the cost of a wastewater technology – capital, replacement, operations and maintenance (O&M), other (both financeable and non-financeable), transport and disposal, and wastewater collection. Not every technology has each cost type, and cost types might be “grantable” (can be paid for with grants) and/or “financeable” (can be financed), or neither.'>Cost Type</tooltip>
                 </th>
                 <th>
@@ -67,7 +67,7 @@
                 </th>
                 <th>
                   <tooltip effect = 'scale' placement = 'bottom' content = 'Amount of money given by an organization (especially government) for a particular purpose. Finance Impact Model allows users to pay for each cost type deemed “grantable” by specifying amounts of grants given by federal, regional, or state agencies.'>Grants</tooltip>
-                  <div class="row"><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
+                  <div class="row" data-step = '4' data-intro = 'Users can choose to input Federal, Regional, and State grants for each cost type'><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
                     <div class="col-md-4">
                       <tooltip effect = 'scale' placement = 'bottom' content = 'Enter amount in dollars $'>Federal</tooltip>
                     </div>
@@ -113,6 +113,7 @@ import CostTypeTableRow from './CostTypeTableRow'
 import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
 import json2csv from 'nice-json2csv'
+import {introJs} from '../../node_modules/intro.js/intro.js'
 
 export default {
   components: {
@@ -219,6 +220,11 @@ export default {
       document.body.appendChild(a);
       a.click()
       a.remove()
+    },
+
+    startIntro() {
+
+      introJs().start()
     }
   },
 
@@ -273,7 +279,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@import '../../node_modules/intro.js/introjs.css';
 thead {
   tr {
     th {
