@@ -4,9 +4,11 @@
       <td>
         <div v-if = 'costType.financeable'>
           <select class="form-control" v-model="costType.financeOption" debounce = "1000">
-            <option v-for="(index,option) in financeOptions" value = "{{option.id}}" debounce = "1000">
-            {{option.name}}
-            </option>
+            <tooltip effect = 'scale' placement = 'bottom' content = 'This is your current page'>
+              <option v-for="(index,option) in financeOptions" value = "{{option.id}}" debounce = "1000">
+              {{option.name}}
+              </option>
+            </tooltip>
           </select>
         </div>
         <div v-else class = 'text-center disabled'>
@@ -22,8 +24,9 @@
         </div>
       </td>
       <td>
-        <div v-if = 'costType.financeable'>
+        <div data-step = '3' data-intro = 'Once a Finance Type is selected, enter a Principal Forgiveness rate as a decimal (eg. .0325, .0214)' v-if = 'costType.financeable'>
           <input class="form-control text-center" type="number" min="0" max="1" step="0.01" v-model.number = "costType.prinFor" debounce = "1000">
+          <small>{{(costType.prinFor * 100).toFixed(2) + '%'}}</small>
         </div>
         <div v-else class = 'text-center disabled'>
           <small>Not financeable</small>
@@ -45,8 +48,15 @@
 // Import getter and action functions from vuex/
 import { getSelectedTreatment, getFinanceOptions } from '../vuex/getters'
 import { updateFinTotals, updateCapTotalTownTreatment, annualTownTreatment, primarysecondaryArray } from '../vuex/actions'
+import {tooltip} from 'vue-strap'
 
 export default {
+
+  components: {
+
+    tooltip
+  },
+
   props: {
     costType: {
       name: String,

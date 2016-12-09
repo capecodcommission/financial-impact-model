@@ -24,8 +24,9 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12">
-          <treatment-summary :treatment="treatment"></treatment-summary>
-            <div class = 'col text-center'>
+          <treatment-summary data-step = '1' data-intro = 'For reference, this is your working Scenario ID and Embayment selected within the Scenario' :treatment="treatment"></treatment-summary>
+            <div class = 'col-md-12 text-center'>
+              <button class = 'btn btn-success pull-right' @click = 'startIntro'>Help</button><br>
               <tooltip effect = 'scale' placement = 'bottom' content = '<p>Select at least one Finance Type from the cost type table below</p><p>For the cost type with selected finance, enter Principle Forgiveness as a decimal. eg. 0.0325, 0.0214</p>'>
                 <button class = 'btn btn-primary'>Financeables</button>
               </tooltip>
@@ -41,7 +42,7 @@
               <thead>
                 <tr>
                   <th class = 'text-center'>Cost Type</th>
-                  <th class = 'text-center'>
+                  <th data-step = '2' data-intro = 'Select 1 of 4 financing types for each Cost Type, along with a financing duration and Principal Forgivess rate.' class = 'text-center'>
                     <tooltip effect = 'scale' placement = 'bottom' content = 'Select financing option from dropdown'>Finance Type</tooltip>
                   </th>
                   <th class="text-center">
@@ -77,7 +78,7 @@
                 <tr>
                   <th class="text-center">Cost Type</th>
                   <th class="text-center">Financed & Non-Financed Costs</th>
-                  <th class="text-center"> Additional Paying Types
+                  <th data-step = '4' data-intro = 'Enter additional Property Taxes and Betterments as a percent-reduction to costs' class="text-center"> Additional Paying Types
                     <div class="row text-center"><hr style="width: 90%; color: black; height: 1px; background-color:black;" />
                       <div class="col-md-6 text-center">
                         <tooltip effect = 'scale' placement = 'bottom' content = 'Enter Additional Paying Types as decimal. eg. 0.025, 0.0314'>Property Taxes</tooltip>
@@ -112,6 +113,7 @@ import TreatmentSummary from './TreatmentSummary'
 import CostTypeTableRowFinance from './CostTypeTableRowFinance'
 import CostTypeTableRowFinalPaying from './CostTypeTableRowFinalPaying'
 import { tooltip } from 'vue-strap'
+import {introJs} from '../../node_modules/intro.js/intro.js'
 
 export default {
   components: {
@@ -146,6 +148,11 @@ export default {
           alert('Please allow popups for this website');
       }
 
+    },
+
+    startIntro() {
+
+      introJs().start()
     }
   },
 

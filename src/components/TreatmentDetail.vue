@@ -47,7 +47,8 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class = 'col text-center'>
+          <div class = 'col-md-12 text-center'>
+            <button class = 'btn btn-success pull-right' @click = 'startIntro'>Help</button><br><br>
             <button class = 'btn btn-primary'>Inflated & Grants</button>
           </div>
           <table class="table">

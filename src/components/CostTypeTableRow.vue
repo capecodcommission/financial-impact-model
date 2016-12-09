@@ -13,7 +13,8 @@
     </td>
     <td class="text-center">
       <div data-step = '5' data-intro = 'For other cost types, enter an amount to be inflated out to the project start year' v-if="costType.editable">
-        <input type="number" class="form-control input-sm text-center" v-model.number="costType.cost" debounce = "1000"/>
+        <input type="number" class="form-control input-sm text-center" v-model.number="costType.cost"/>
+        <small>{{'$'+Math.round(costType.cost,1).toLocaleString()}}</small>
       </div>
       <div v-else>
         {{ '$' + Math.round(costType.inflated, 1).toLocaleString() }}
@@ -21,11 +22,11 @@
     </td>
     <td>
       <div v-if="costType.grantable" class="input-group">
-        <input type="number" class="form-control input-sm" v-model.number="costType.grants.federal" number />
+        <input type="number" class="form-control input-sm" v-model.number="costType.grants.federal" number /><br><small>{{'$'+costType.grants.federal.toLocaleString()}}</small>
         <span class="input-group-btn"></span>
-        <input type="number" class="form-control input-sm" v-model.number="costType.grants.regional" number style="margin-left:-1px" />
+        <input type="number" class="form-control input-sm" v-model.number="costType.grants.regional" number style="margin-left:-1px" /><br><small>{{'$'+costType.grants.regional.toLocaleString()}}</small>
         <span class="input-group-btn"></span>
-        <input type="number" class="form-control input-sm" v-model.number="costType.grants.state" number style="margin-left:-2px" />
+        <input type="number" class="form-control input-sm" v-model.number="costType.grants.state" number style="margin-left:-2px" /><br><small>{{'$'+costType.grants.state.toLocaleString()}}</small>
       </div>
       <div v-else class="text-center disabled">
         <small>This cost type isn't grantable</small>

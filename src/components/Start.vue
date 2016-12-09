@@ -10,7 +10,7 @@
     <h4>Enter <a href = 'http://2016.watershedmvp.org/login'>Scenario ID</a></h4>
     <div class = 'row'>
       <div class="col-lg-4 col-lg-offset-4">
-        <typeahead data-step = '2' data-intro = 'Enter scenario ID below to continue' type="number" class="text-center" placeholder='100' aria-describedby="sizing-addon2" :on-hit = 'fetchScenario' :data = 'scenidArr'></typeahead>
+        <typeahead data-step = '2' data-intro = 'Enter a partial or full Scenario ID, then use the arrow keys or mouse to select a result' type="number" class="text-center" placeholder='100' aria-describedby="sizing-addon2" :on-hit = 'fetchScenario' :data = 'scenidArr'></typeahead>
         <small>Click result or use keyboard arrows in search results to select</small>
         <alert :show.sync = "treatments.length === 0" type = "danger" duration="5000" width="400px" dismissable>
             <span class="glyphicon glyphicon-flag"></span>

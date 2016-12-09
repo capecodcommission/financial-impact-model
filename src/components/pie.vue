@@ -27,25 +27,29 @@
 			<div class = 'row'>
 				<div class = 'col-lg-6 text-center'>
 					<ul class = 'text-center'>
-						<h1 class = 'display-1'>Scenario Cost Sharing</h1>
+						<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the visual breakdown of grants, taxes, and betterments across all treatments for this scenario'>
+							<h1 class = 'display-1'><b>Scenario Cost Sharing</b></h1>
+						</tooltip>
 						<li><vue-chart :chart-type = "chartType" :columns = "columns" :rows = "rows" :options = "options"></vue-chart></li>
 					</ul>
 				</div>
 				<div class = 'col-lg-6 text-center'>
 					<ul class = "text-center">
-						<h1 class = 'display-1'>Total Scenario Cost <br>
+						<h1 class = 'display-1'>
+							<tooltip effect = 'scale' placement = 'left' content = 'This chart displays the numerical breakdown of grants, taxes, and betterments across all treatments for this scenario'>
+								<b>Total Scenario Cost</b></tooltip> <br>
 							<small>(Including inflation & financing)</small> 
 							<br><br><br> 
 							{{ '$' + Math.round(totalCost,0).toLocaleString() }}
 						</h1>
-						<br><br><br>
-						<li>Total Federal Grants:<b>{{ totalFed | currency}}</b></li>
-						<li>Total State Grants:<b>{{ totalState | currency}}</b></li>
-						<li>Total Regional Grants:<b>{{ totalReg | currency}}</b></li>
-						<li>Total Principal Forgiveness:<b>{{ totalPrinFor | currency}}</b></li>
-						<li>Total Property Taxes / Fees:<b>{{ totalProp | currency}}</b></li>
-						<li>Total Betterment:<b>{{ totalBtrmnt | currency}}</b></li>
-						<li>Total Unaccounted For:<b>{{ totalUncctFor | currency}}</b></li>
+						<br><br>
+						<li>Total Federal Grants:<b>{{'$' + Math.round(totalFed).toLocaleString()}}</b></li>
+						<li>Total State Grants:<b>{{'$' + Math.round(totalState).toLocaleString()}}</b></li>
+						<li>Total Regional Grants:<b>{{'$' + Math.round(totalReg).toLocaleString()}}</b></li>
+						<li>Total Principal Forgiveness:<b>{{'$' + Math.round(totalPrinFor).toLocaleString()}}</b></li>
+						<li>Total Property Taxes / Fees:<b>{{'$' + Math.round(totalProp).toLocaleString()}}</b></li>
+						<li>Total Betterment:<b>{{'$' + Math.round(totalBtrmnt).toLocaleString()}}</b></li>
+						<li>Total Unaccounted For:<b>{{'$' + Math.round(totalUncctFor).toLocaleString()}}</b></li>
 						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
 				</div>
@@ -321,5 +325,8 @@ export default {
 ul {
   list-style-type: none;
 }	
+li {
+	margin: 10px 0;
+}
 
 </style>

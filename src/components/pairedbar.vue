@@ -29,13 +29,25 @@
 			<div class = 'row'>
 				<div class = 'col-md-6 text-center'>
 					<ul class = 'text-center'>
-						<li><h1 class = 'display-1'><b>Project Schedule</b></h1></li>
+						<li>
+							<h1 class = 'display-1'>
+								<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the project timeline for this treatment'>
+									<b>Project Schedule</b>
+								</tooltip>
+							</h1>
+						</li>
 						<li><vue-chart :chart-type = "chartType" :columns = "columns1" :rows = "rows1" :options = "options1"></vue-chart></li>
 					</ul>
 				</div>
 				<div class = 'col-md-6 text-center'>	
 					<ul class = 'text-center'>
-						<li><h1 class = 'display-1'><b>Financing Schedule</b></h1></li>	
+						<li>
+							<h1 class = 'display-1'>
+								<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the financing timeline for each cost type of this treatment'>
+									<b>Financing Schedule</b>
+								</tooltip>
+							</h1>
+						</li>	
 						<li><vue-chart :chart-type = "chartType" :columns = "columns2" :rows = "rows2" :options = "options2"></vue-chart></li>
 						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
