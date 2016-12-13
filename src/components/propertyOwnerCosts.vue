@@ -25,11 +25,23 @@
 			</div>
 		</div>
 		<div class = 'container-fluid'>
+			<button @click = 'startIntro' class = 'btn btn-success pull-right'>Help</button>
 			<div class = 'row'>
 				<div class = 'col text-center'>
 					<ul class = 'text-center'>
-						<li><h1 class = 'display-1 text-center'><b>Scenario Cost Sharing</b></h1></li>
-						<li><vue-chart :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart></li>
+						<li>
+							<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the individual primary and secondary homeowner costs by town by year given selected financing types, durations, principle forgivess, taxes, and betterments, compared to the cost of a title 5 septic system over the same project and financing years'>
+								<h1 data-position = 'top' data-step = '1' data-intro = 'This chart displays the individual primary and secondary homeowner costs by town by year given selected financing types, durations, principle forgivess, taxes, and betterments, compared to the cost of a title 5 septic system over the same project and financing years' class = 'display-1 text-center'><b>Scenario Cost Sharing</b></h1>
+							</tooltip>
+						</li>
+						<li data-position = 'top' data-step = '2' data-intro = 'Each line represents the individual costs of a Primary or Secondary homeowner by town'>
+							<div v-if = "treatment.primsecarray">
+								<vue-chart data-position = 'top' data-step = '6' data-intro = 'Mouse-over each line to see cost breakdown by town, compared to the cost of a title 5 system' :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
+							</div>
+							<div v-else class = 'text-center disabled'>
+								<small>No applicable Financing selected</small>
+							</div>
+						</li>
 						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
 				</div>
@@ -48,6 +60,7 @@ import PanelHeadingTitle from './PanelHeadingTitle'
 import TreatmentSummary from './TreatmentSummary'
 import { tooltip } from 'vue-strap'
 import json2csv from 'nice-json2csv'
+import {introJs} from '../../node_modules/intro.js/intro.js'
 
 export default {
 
@@ -285,6 +298,11 @@ export default {
 	      document.body.appendChild(a);
 	      a.click()
 	      a.remove()
+	    },
+
+	    startIntro() {
+
+	      introJs().setOption('showProgress', true).start()
 	    }		
 	},
 

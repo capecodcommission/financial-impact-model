@@ -2,7 +2,7 @@
   <tr>
     <td>{{ costType.name }}</td>
     <td class="text-center">{{ '$' + Math.round(sumOfAnnualCapitalTotals1, 1).toLocaleString() }}</td>
-    <td>
+    <td class = 'text-center'>
      <div class="input-group col-md-12">
         <input type="number" class="form-control input-sm" min="0" max="1" step="0.01" v-model.number="costType.addtlpytyps.Property_TaxesorFees" number /><br><small>{{(costType.addtlpytyps.Property_TaxesorFees * 100).toFixed(2) + '%'}}</small>
         <span class="input-group-btn"></span>

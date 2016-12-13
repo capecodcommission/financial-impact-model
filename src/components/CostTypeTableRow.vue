@@ -20,7 +20,7 @@
         {{ '$' + Math.round(costType.inflated, 1).toLocaleString() }}
       </div>
     </td>
-    <td>
+    <td class = 'text-center'>
       <div v-if="costType.grantable" class="input-group">
         <input type="number" class="form-control input-sm" v-model.number="costType.grants.federal" number /><br><small>{{'$'+costType.grants.federal.toLocaleString()}}</small>
         <span class="input-group-btn"></span>

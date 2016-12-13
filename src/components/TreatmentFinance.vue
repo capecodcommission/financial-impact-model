@@ -152,7 +152,7 @@ export default {
 
     startIntro() {
 
-      introJs().start()
+      introJs().setOption('showProgress', true).start()
     }
   },
 

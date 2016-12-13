@@ -23,7 +23,7 @@
           <small>Not financeable</small>
         </div>
       </td>
-      <td>
+      <td class = 'text-center'>
         <div data-step = '3' data-intro = 'Once a Finance Type is selected, enter a Principal Forgiveness rate as a decimal (eg. .0325, .0214)' v-if = 'costType.financeable'>
           <input class="form-control text-center" type="number" min="0" max="1" step="0.01" v-model.number = "costType.prinFor" debounce = "1000">
           <small>{{(costType.prinFor * 100).toFixed(2) + '%'}}</small>

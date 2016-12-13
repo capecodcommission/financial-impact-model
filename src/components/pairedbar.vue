@@ -138,7 +138,7 @@ export default {
 				},
 				chartArea: {
 					width: "50%",
-					height: "90%"
+					height: "80%"
 				}
 			},
 			options2: {

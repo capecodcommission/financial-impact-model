@@ -48,7 +48,7 @@
 						<li>Total Regional Grants:<b>{{'$' + Math.round(totalReg).toLocaleString()}}</b></li>
 						<li>Total Principal Forgiveness:<b>{{'$' + Math.round(totalPrinFor).toLocaleString()}}</b></li>
 						<li>Total Property Taxes / Fees:<b>{{'$' + Math.round(totalProp).toLocaleString()}}</b></li>
-						<li>Total Betterment:<b>{{'$' + Math.round(totalBtrmnt).toLocaleString()}}</b></li>
+						<li>Total Betterments:<b>{{'$' + Math.round(totalBtrmnt).toLocaleString()}}</b></li>
 						<li>Total Unaccounted For:<b>{{'$' + Math.round(totalUncctFor).toLocaleString()}}</b></li>
 						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
