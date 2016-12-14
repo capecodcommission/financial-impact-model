@@ -12,7 +12,8 @@
             <div  v-bind:class="['list-group-item', index == treatmentIndex ? 'active' : '', treatment.stage == 1 ? 'visited' : '', treatment.stage == 2 ? 'visited1' : '']">
             <!-- WHY CAN'T WE CHANGE BELOW TO: <img v-bind:src="imgSrc"> -->
               <img src="{{ treatment.treatmentIcon | fullpath }}" @click="selectTreatment(treatment, $event)">
-            </div>
+              <small>{{ treatment.treatmentId }}</small>
+            </div>  
           </template>
         </div>
       </div>
@@ -53,7 +54,7 @@ export default {
     }
   },
 
-  props: ['content'],
+  props: ['src'],
 
   filters: {
 

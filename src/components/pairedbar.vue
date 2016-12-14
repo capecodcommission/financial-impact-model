@@ -31,19 +31,22 @@
 					<ul class = 'text-center'>
 						<li>
 							<h1 class = 'display-1'>
-								<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the project timeline for this treatment'>
+								<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the project timeline for all treatments'>
 									<b>Project Schedule</b>
 								</tooltip>
 							</h1>
 						</li>
-						<li><vue-chart :chart-type = "chartType" :columns = "columns1" :rows = "rows1" :options = "options1"></vue-chart></li>
+						<li>
+							<!-- <img style = "width: 10%; height: 10%" src="{{ treatment.treatmentIcon | fullpath }}"> -->
+							<vue-chart :chart-type = "chartType" :columns = "columns1" :rows = "rows1" :options = "options1"></vue-chart>
+						</li>
 					</ul>
 				</div>
 				<div class = 'col-md-6 text-center'>	
 					<ul class = 'text-center'>
 						<li>
 							<h1 class = 'display-1'>
-								<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the financing timeline for each cost type of this treatment'>
+								<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the financing timeline for each financed cost type for all treatments'>
 									<b>Financing Schedule</b>
 								</tooltip>
 							</h1>
@@ -77,6 +80,14 @@ export default {
 		actions: {
 			inflate: calculatetitle5inflated
 		}
+	},
+
+	filters: {
+
+	    fullpath ( icon ) {
+
+	      return 'http://2016.watershedmvp.org/images/SVG/' + icon
+	    }
 	},
 
 	data () {
@@ -179,22 +190,41 @@ export default {
 			// this.inflate(this.treatment.treatmentId,title5cost,this.treatment.primsecarray.Years[k].year)
 		}
 
+			for (var i = 0; i < this.treatments.length; i++) {
+
+				row1.push([
+					'(' + this.treatments[i].treatmentId.toString() + ')' + ' ' + this.treatments[i].treatmentName.toString(),
+					this.treatments[i].relativeStartYear,
+					this.treatments[i].duration,
+					this.treatments[i].relativeStartYear + this.treatments[i].duration
+				])
+
+				for (var j = 0; j < this.treatments[i].costTypes.length; j++) {
+					
+					if (this.treatments[i].costTypes[j].financeable & this.treatments[i].costTypes[j].finDur > 1) {
+
+						row2.push([
+							'(' + this.treatments[i].treatmentId.toString() + ')' + ' ' + this.treatments[i].costTypes[j].name,
+							this.treatments[i].relativeStartYear,
+							Number(this.treatments[i].costTypes[j].finDur),
+							this.treatments[i].relativeStartYear + Number(this.treatments[i].costTypes[j].finDur)
+						])
+					}
+				}
+			}
 		
-			row1.push([
-				this.treatment.treatmentName.toString(),
-				this.treatment.relativeStartYear,
-				this.treatment.duration,
-				this.treatment.relativeStartYear + this.treatment.duration
-			])
-		
-		for (var j = 0; j < this.treatment.costTypes.length; j++) {1
-			row2.push([
-				this.treatment.costTypes[j].name,
-				this.treatment.relativeStartYear,
-				Number(this.treatment.costTypes[j].finDur),
-				this.treatment.relativeStartYear + Number(this.treatment.costTypes[j].finDur)
-			])
-		}
+		// for (var j = 0; j < this.treatment.costTypes.length; j++) {
+
+		// 	if (this.treatment.costTypes[j].financeable & this.) {
+
+		// 		row2.push([
+		// 			this.treatment.costTypes[j].name,
+		// 			this.treatment.relativeStartYear,
+		// 			Number(this.treatment.costTypes[j].finDur),
+		// 			this.treatment.relativeStartYear + Number(this.treatment.costTypes[j].finDur)
+		// 		])
+		// 	}
+		// }
 		this.options2.hAxis.ticks.push([80])
 
 		for (var i = 0; i < this.treatment.primsecarray.length; i++) {
@@ -210,32 +240,27 @@ export default {
 
 	watch: {
 		'treatment.treatmentId': function (val) {
-			var row1 = this.rows1 = []
-			this.rows2 = []
-			var row2 = this.rows2
+			// var row1 = this.rows1 = []
+			// this.rows2 = []
+			// var row2 = this.rows2
 
-			var title5cost = 12880
+			// var title5cost = 12880
 
-			row1.push([
-				this.treatment.treatmentTypeId.toString(),
-				this.treatment.relativeStartYear,
-				this.treatment.duration,
-				this.treatment.relativeStartYear + this.treatment.duration
-			])
+			// row1.push([
+			// 	this.treatment.treatmentTypeId.toString(),
+			// 	this.treatment.relativeStartYear,
+			// 	this.treatment.duration,
+			// 	this.treatment.relativeStartYear + this.treatment.duration
+			// ])
 
-			// for (var k = 0; k < this.treatment.primsecarray.Years.length; k++) {
-
-			// 	this.inflate(this.treatment.treatmentId,title5cost,this.treatment.primsecarray.Years[k].year)
+			// for (var i = 0; i < this.treatment.costTypes.length; i++) {
+			// 	row2.push([
+			// 		this.treatment.costTypes[i].name,
+			// 		this.treatment.relativeStartYear,
+			// 		Number(this.treatment.costTypes[i].finDur),
+			// 		this.treatment.relativeStartYear + Number(this.treatment.costTypes[i].finDur)
+			// 	])
 			// }
-
-			for (var i = 0; i < this.treatment.costTypes.length; i++) {
-				row2.push([
-					this.treatment.costTypes[i].name,
-					this.treatment.relativeStartYear,
-					Number(this.treatment.costTypes[i].finDur),
-					this.treatment.relativeStartYear + Number(this.treatment.costTypes[i].finDur)
-				])
-			}
 		}
 	},
 

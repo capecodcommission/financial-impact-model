@@ -22,21 +22,37 @@
 		<div class = 'jumbotron'>
 			<div class = 'row'>
 				<treatment-summary :treatment="treatment"></treatment-summary>
+				<button @click = 'startIntro' class = 'btn btn-success pull-right'>Help</button>
 			</div>
 		</div>
+
 		<div class = 'container-fluid'>
-			<button @click = 'startIntro' class = 'btn btn-success pull-right'>Help</button>
 			<div class = 'row'>
-				<div class = 'col text-center'>
+				<div class = 'col-md-6 text-center'>
+					<ul class = 'text-center'>
+						<li>
+							<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the first-year cost breakdown of primary/secondary water users by town'>
+								<h1 data-position = 'top' data-step = '4' data-intro = 'This chart displays the first-year cost breakdown of primary/secondary water users by town' class = 'display-1 text-center'><b>First Project Year Breakdown</b></h1>
+							</tooltip>
+						</li><br><br><br>
+						<li class = 'pull-left'><b>Primary:</b></li>
+						<li data-position = 'top' data-step = '6' data-intro = 'Here is the town breakdown' v-html = "rows1[0][2].substring(0,rows1[0][2].indexOf('Year'))"></li><br>
+						<li class = 'pull-left'><b>Secondary:</b></li>
+						<li v-html = "rows1[0][4].substring(0,rows1[0][4].indexOf('Year'))"></li><br>
+						<li class = 'pull-left'><b>Title 5 Cost:    <br><br><br><br><br><br><br></b></li>
+						<li class = 'pull-left' v-html = "rows1[0][4].substring(rows1[0][4].indexOf('Title 5 Cost:') + 18)"></li>
+					</ul>
+				</div>
+				<div class = 'col-md-6 text-center'>
 					<ul class = 'text-center'>
 						<li>
 							<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the individual primary and secondary homeowner costs by town by year given selected financing types, durations, principle forgivess, taxes, and betterments, compared to the cost of a title 5 septic system over the same project and financing years'>
 								<h1 data-position = 'top' data-step = '1' data-intro = 'This chart displays the individual primary and secondary homeowner costs by town by year given selected financing types, durations, principle forgivess, taxes, and betterments, compared to the cost of a title 5 septic system over the same project and financing years' class = 'display-1 text-center'><b>Scenario Cost Sharing</b></h1>
 							</tooltip>
 						</li>
-						<li data-position = 'top' data-step = '2' data-intro = 'Each line represents the individual costs of a Primary or Secondary homeowner by town'>
+						<li data-position = 'top' data-step = '2' data-intro = 'Each line represents the individual costs of a Primary or Secondary homeowner by town. A Primary water user is a year-round resident, while a Secondary water user is a seasonal resident'>
 							<div v-if = "treatment.primsecarray">
-								<vue-chart data-position = 'top' data-step = '6' data-intro = 'Mouse-over each line to see cost breakdown by town, compared to the cost of a title 5 system' :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
+								<vue-chart data-position = 'top' data-step = '3' data-intro = 'Mouse-over each line to see cost breakdown by town, compared to the cost of a title 5 system' :chart-type = "chartType" :chart-events = "chartEvents" :columns = "columns" :rows = "rows" :options = "options"></vue-chart>
 							</div>
 							<div v-else class = 'text-center disabled'>
 								<small>No applicable Financing selected</small>
@@ -44,6 +60,7 @@
 						</li>
 						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
 					</ul>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -88,7 +105,7 @@ export default {
 				},
 				{
 					'type': 'number',
-					'label': 'Primary'
+					'label': 'Primary Water User'
 				},
 				{ // Create custom html toolips for each line
 					'type': 'string',
@@ -99,7 +116,7 @@ export default {
 				},
 				{
 					'type': 'number',
-					'label': 'Secondary'
+					'label': 'Secondary Water User'
 				},
 				{
 					'type': 'string',
@@ -110,9 +127,10 @@ export default {
 				}
 			],
 			rows: [],
+			rows1: [],
 			options: {
-				width: 1380,
-				height: 600,
+				width: 800,
+				height: 400,
 				tooltip: {
 					isHtml: true
 				},
@@ -126,7 +144,6 @@ export default {
 					ticks: []
 				},
 				chartArea: {
-					left: 500,
 					width: '50%',
 					height: '80%'
 				}
@@ -179,6 +196,8 @@ export default {
 		}
 
 		const newrows = rows.find( (t) => t[1] )
+		this.rows1 = []
+		this.rows1.push(newrows)
 		const index = rows.indexOf(newrows)
 		rows.splice(index,1)
 
@@ -216,9 +235,9 @@ export default {
 				data += '<tr><td>' + filtered[i][1] + '</td>' + '<td><b> ' + '$' + filtered[i][2].toFixed(2) + '</b></td></tr>'
 			}
 
-			var total = '<tr><td>' + 'Total:' + '</td>' + '<td>' + '$' + primary.toFixed(2) + '</td></tr>'
-			var year = '<tr><td>' + 'Year:' + '</td>' + '<td>' + year + '</td></tr>'
-			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + '$' + t5 + '</td></tr>'
+			var total = '<tr><td>' + 'Total:' + '</td>' + '<td><b>' + '$' + primary.toFixed(2) + '</b></td></tr>'
+			var year = '<tr><td>' + 'Year:' + '</td>' + '<td><b>' + year + '</b></td></tr>'
+			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td><b>' + '$' + t5 + '</b></td></tr>'
 
 			return begin + data + total + year + title5 + end
 		},
@@ -236,9 +255,9 @@ export default {
 				data += '<tr><td>' + filtered[i][1] + '</td>' + '<td><b> ' + '$' + filtered[i][3].toFixed(2) + '</b></td></tr>'
 			}
 
-			var total = '<tr><td>' + 'Total:' + '</td>' + '<td>' + '$' + secondary.toFixed(2) + '</td></tr>'
-			var year = '<tr><td>' + 'Year:' + '</td>' + '<td>' + year + '</td></tr>'
-			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td>' + '$' + t5 + '</td></tr>'
+			var total = '<tr><td>' + 'Total:' + '</td>' + '<td><b>' + '$' + secondary.toFixed(2) + '</b></td></tr>'
+			var year = '<tr><td>' + 'Year:' + '</td>' + '<td><b>' + year + '</b></td></tr>'
+			var title5 = '<tr><td>' + 'Title 5 Cost:' + '</td>' + '<td><b>' + '$' + t5 + '</b></td></tr>'
 
 			return begin + data + total + year + title5 + end
 		},
@@ -350,6 +369,12 @@ export default {
 				yearprim = 0
 				yearsec = 0
 			}
+
+			const newrows = rows.find( (t) => t[1] )
+			this.rows1 = []
+			this.rows1.push(newrows)
+			const index = rows.indexOf(newrows)
+			rows.splice(index,1)
 		}
 	},
 
@@ -369,5 +394,11 @@ td {
 table {
 	border-collapse: separate;
 	border-spacing: 10px 0;
+}
+ul {
+  list-style-type: none;
+}	
+li {
+	margin: 10px 0;
 }
 </style>
