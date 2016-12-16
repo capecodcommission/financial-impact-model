@@ -111,6 +111,14 @@ export default {
 				{
 					'type': 'number',
 					'role': 'annotation'
+					
+				},
+				{
+					'type': 'string',
+					'role': 'tooltip',
+					'p': {
+						'html': true
+					}
 				}
 			],
 			columns2: [
@@ -137,6 +145,9 @@ export default {
 				legend: {
 					position: 'none'
 				},
+				tooltip: {
+					isHtml: true
+				},
 				width: 800,
 				height: 400,
 				isStacked: true,
@@ -145,7 +156,10 @@ export default {
 				hAxis: {
 					title: 'Year(s) From Current Year',
 					viewWindow: { min: 0, max: 80 },
-					ticks: []
+					ticks: [],
+					gridlines: {
+						count: 8
+					}
 				},
 				chartArea: {
 					width: "50%",
@@ -196,7 +210,8 @@ export default {
 					'(' + this.treatments[i].treatmentId.toString() + ')' + ' ' + this.treatments[i].treatmentName.toString(),
 					this.treatments[i].relativeStartYear,
 					this.treatments[i].duration,
-					this.treatments[i].relativeStartYear + this.treatments[i].duration
+					this.treatments[i].relativeStartYear + this.treatments[i].duration,
+					this.customtooltip(this.treatments[i].treatmentIcon,this.treatments[i].treatmentId,this.treatments[i].treatmentName)
 				])
 
 				for (var j = 0; j < this.treatments[i].costTypes.length; j++) {
@@ -238,33 +253,18 @@ export default {
 		}
 	},
 
-	watch: {
-		'treatment.treatmentId': function (val) {
-			// var row1 = this.rows1 = []
-			// this.rows2 = []
-			// var row2 = this.rows2
-
-			// var title5cost = 12880
-
-			// row1.push([
-			// 	this.treatment.treatmentTypeId.toString(),
-			// 	this.treatment.relativeStartYear,
-			// 	this.treatment.duration,
-			// 	this.treatment.relativeStartYear + this.treatment.duration
-			// ])
-
-			// for (var i = 0; i < this.treatment.costTypes.length; i++) {
-			// 	row2.push([
-			// 		this.treatment.costTypes[i].name,
-			// 		this.treatment.relativeStartYear,
-			// 		Number(this.treatment.costTypes[i].finDur),
-			// 		this.treatment.relativeStartYear + Number(this.treatment.costTypes[i].finDur)
-			// 	])
-			// }
-		}
-	},
-
 	methods: {
+
+		customtooltip (icon, id, name) {
+
+			var tableBegin = '<div><table>'
+			var img = "<tr><td><img style = 'width: 50%; height: 50%' src = http://2016.watershedmvp.org/images/SVG/" + icon + '/></td></tr>'
+			var id = '<tr><td>' + 'ID: ' + id + '</td></tr>'
+			var name = '<tr><td>' + 'Name: ' + name + '</td></tr>'
+			var tableEnd = '</table></div>'
+
+			return tableBegin + img + id + name + tableEnd
+		},
 
 		gotm_Id() {
 
