@@ -16,7 +16,7 @@ const state = {
       {
         treatmentName: 'TreatmentName',
         treatmentId: 2,
-        treatmentIcon: 'Cluster.png',
+        treatmentIcon: 'TwoStageCluster.svg',
         costTypes: [],
         relativeStartYear: 7,
         duration: 2
