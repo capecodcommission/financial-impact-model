@@ -23,6 +23,9 @@
 			<div class = 'row'>
 				<treatment-summary :treatment="treatment"></treatment-summary>
 				<button @click = 'startIntro' class = 'btn btn-success pull-right'>Help</button>
+			</div><br>
+			<div class = 'row'>
+				<button class = 'btn btn-primary pull-right' @click = 'excelExport'>Export</button>
 			</div>
 		</div>
 
@@ -43,7 +46,7 @@
 						<li class = 'pull-left' v-html = "rows1[0][4].substring(rows1[0][4].indexOf('Title 5 Cost:') + 18)"></li>
 					</ul>
 				</div>
-				<div class = 'col-md-6 text-center'>
+				<div class = 'col-md-5 text-center'>
 					<ul class = 'text-center'>
 						<li>
 							<tooltip effect = 'scale' placement = 'bottom' content = 'This chart displays the individual primary and secondary homeowner costs by town by year given selected financing types, durations, principle forgivess, taxes, and betterments, compared to the cost of a title 5 septic system over the same project and financing years'>
@@ -58,9 +61,10 @@
 								<small>No applicable Financing selected</small>
 							</div>
 						</li>
-						<li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li>
+						<!-- <li><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></li> -->
 					</ul>
 				</div>
+				<!-- <div class = 'row'><button class = 'btn btn-primary pull-right' @click = 'excelExport'>export</button></div> -->
 				</div>
 			</div>
 		</div>
