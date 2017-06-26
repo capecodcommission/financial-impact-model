@@ -193,15 +193,18 @@ export default {
 		var row2 = this.rows2
 		var title5cost = 12880
 
-		for (var k = 0; k < this.treatment.primsecarray.length; k++) {
+		if(this.treatment.primsecarray) {
 
-			if (!(k % 5)) {
+			for (var k = 0; k < this.treatment.primsecarray.length; k++) {
 
-				this.options1.hAxis.ticks.push([k])
-				this.options2.hAxis.ticks.push([k])
+				if (!(k % 5)) {
+
+					this.options1.hAxis.ticks.push([k])
+					this.options2.hAxis.ticks.push([k])
+				}
+
+				// this.inflate(this.treatment.treatmentId,title5cost,this.treatment.primsecarray.Years[k].year)
 			}
-
-			// this.inflate(this.treatment.treatmentId,title5cost,this.treatment.primsecarray.Years[k].year)
 		}
 
 			for (var i = 0; i < this.treatments.length; i++) {

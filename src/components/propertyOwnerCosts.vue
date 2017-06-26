@@ -340,38 +340,41 @@ export default {
 			var rows = this.rows = []
 			this.options.hAxis.ticks = []
 
-			for (var i = 0; i < this.treatment.primsecarray.length; i++) {
+			if(this.treatment.primsecarray) {
 
-				if (!(i % 5)) {
+				for (var i = 0; i < this.treatment.primsecarray.length; i++) {
 
-					this.options.hAxis.ticks.push([i])
-				}
+					if (!(i % 5)) {
 
-				for (var j = 0; j < this.treatment.primsecarray[i].Towns.length; j++) {
+						this.options.hAxis.ticks.push([i])
+					}
 
-					// Intermediary array push: [["1","Sandwich",100,200],["1","Mashpee",100,200], etc...]
-					name.push([
+					for (var j = 0; j < this.treatment.primsecarray[i].Towns.length; j++) {
+
+						// Intermediary array push: [["1","Sandwich",100,200],["1","Mashpee",100,200], etc...]
+						name.push([
+							this.treatment.primsecarray[i].year,
+							this.treatment.primsecarray[i].Towns[j].name,
+							this.treatment.primsecarray[i].Towns[j].primary,
+							this.treatment.primsecarray[i].Towns[j].secondary
+						])	
+
+						yearprim += this.treatment.primsecarray[i].Towns[j].primary
+						yearsec += this.treatment.primsecarray[i].Towns[j].secondary
+					}
+					
+					// Push year, primary/secondary yearly totals, and custom tooltips (html tables)
+					rows.push([
 						this.treatment.primsecarray[i].year,
-						this.treatment.primsecarray[i].Towns[j].name,
-						this.treatment.primsecarray[i].Towns[j].primary,
-						this.treatment.primsecarray[i].Towns[j].secondary
-					])	
+						yearprim,
+						this.customTipprim(this.treatment.primsecarray[i].year,name, yearprim, this.treatment.primsecarray[i].titleFiveInflatedCost),
+						yearsec,
+						this.customTipsec(this.treatment.primsecarray[i].year,name, yearsec, this.treatment.primsecarray[i].titleFiveInflatedCost)
+					])
 
-					yearprim += this.treatment.primsecarray[i].Towns[j].primary
-					yearsec += this.treatment.primsecarray[i].Towns[j].secondary
+					yearprim = 0
+					yearsec = 0
 				}
-				
-				// Push year, primary/secondary yearly totals, and custom tooltips (html tables)
-				rows.push([
-					this.treatment.primsecarray[i].year,
-					yearprim,
-					this.customTipprim(this.treatment.primsecarray[i].year,name, yearprim, this.treatment.primsecarray[i].titleFiveInflatedCost),
-					yearsec,
-					this.customTipsec(this.treatment.primsecarray[i].year,name, yearsec, this.treatment.primsecarray[i].titleFiveInflatedCost)
-				])
-
-				yearprim = 0
-				yearsec = 0
 			}
 
 			const newrows = rows.find( (t) => t[1] )
