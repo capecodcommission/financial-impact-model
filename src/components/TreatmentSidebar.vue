@@ -60,7 +60,7 @@ export default {
 
     fullpath ( icon ) {
 
-      return 'http://2016.watershedmvp.org/images/SVG/' + icon
+      return 'http://www.watershedmvp.org/images/SVG/' + icon
     }
   },
 

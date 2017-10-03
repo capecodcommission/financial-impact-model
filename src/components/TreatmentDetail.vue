@@ -1,9 +1,4 @@
 <template>
-<!-- <alert :show = "active" type = "success" placement="top-right" width="400px" dismissable>
-  <span class="glyphicon glyphicon-plane"></span>
-  <strong>Tutorial</strong>
-  <h1>Please continue to Finance Treatment</h1>
-</alert> -->
 <div class="treatment-detail-wrapper">
   <div class="panel panel-default">
     <div class="panel-heading col text-center">
