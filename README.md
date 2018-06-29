@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+## TODO
+>  1. Adding/removing property taxes or betterments does not update cost/property owner values.
+>  2. Within shared scenario cost, the total cost displayed might only be total capital costs, not total all cost types.
+
 ## Build Setup
 
 ``` bash
