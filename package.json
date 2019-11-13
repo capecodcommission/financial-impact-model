@@ -16,13 +16,13 @@
     "chart.js": "^2.2.0-rc.2",
     "d3": "^3.5.17",
     "intro.js": "^2.3.0",
-    "jquery": "^2.2.4",
+    "jquery": ">=3.4.0",
     "nice-json2csv": "^0.2.2",
     "vue": "^1.0.21",
     "vue-resource": "^0.7.2",
     "vue-router": "^0.7.13",
     "vue-strap": "^1.0.11",
-    "vuex": "^0.6.3"
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -38,11 +38,11 @@
     "file-loader": "^0.8.4",
     "function-bind": "^1.0.2",
     "html-webpack-plugin": "^2.8.1",
-    "http-proxy-middleware": "^0.12.0",
+    "http-proxy-middleware": "^0.20.0",
     "json-loader": "^0.5.4",
-    "node-sass": "^3.7.0",
+    "node-sass": "^4.13.0",
     "ora": "^0.2.0",
-    "sass-loader": "^3.2.0",
+    "sass-loader": "^7.3.1",
     "shelljs": "^0.6.0",
     "url-loader": "^0.5.7",
     "vue-charts": "^0.1.14",
@@ -57,7 +57,7 @@
   },
   "main": "index.js",
   "repository": {
-    "url": "https://webrgp@bitbucket.org/ccc_fim/financial-model.git",
+    "url": "https://github.com/capecodcommission/financial-impact-model.git",
     "type": "git"
   },
   "license": "MIT"
